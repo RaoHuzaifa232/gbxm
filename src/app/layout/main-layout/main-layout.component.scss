@@ -1,20 +1,26 @@
 @use '@gbxm/styles/_variables.scss' as *;
 
 .layout {
-	height: calc(100vh - 72px);
+    height: calc(100vh - 72px);
+    box-sizing: border-box;
 
-	&__sidenav {
-		width: 280px;
-		border-right: 0;
-		background: $color-surface-inverse;
-	}
+    &__sidenav {
+        max-width: 264px;
+        border-right: 0;
+        background: $color-surface-inverse;
+        overflow: hidden;
+        border-radius: 0px;
 
-	&__content {
-		background: #f6f7f9;
-	}
+    }
 
-	main {
-		min-height: 100%;
-		padding: 16px;
-	}
+    &__content {
+        background: #f6f7f9;
+    }
+
+    main {
+        min-height: 100%;
+        padding: 16px;
+        margin: 0;
+        box-sizing: border-box;
+    }
 }

@@ -1,13 +1,14 @@
 @use '@gbxm/styles/_variables.scss' as *;
 
 .sidebar {
-    min-height: 100%;
-    padding: 28px 16px 0px;
+    padding: 28px 16px 12px;
+    padding-right: 10px;
     background: $color-surface-inverse;
     color: $color-text-inverse;
     display: flex;
     flex-direction: column;
     gap: 12px;
+    overflow: hidden;
 
     &__label {
         font-weight: 600;
@@ -36,6 +37,10 @@
         ::ng-deep {
             .mat-expansion-panel-body {
                 padding: 0px;
+
+                .mdc-list {
+                    padding: 0px;
+                }
             }
         }
     }
@@ -49,12 +54,25 @@
 
         .mat-expansion-panel-header {
             padding: 12px;
-            font-size: 14px;
+            font-size: 16px;
             font-weight: 500;
             height: auto;
 
             .mat-expansion-panel-header-title {
                 color: $color-text-panel-title;
+                gap: 8px;
+
+                .sidebar__icon {
+                    width: 16px;
+                    height: 16px;
+                    display: inline-block;
+                    background-color: currentColor;
+                    -webkit-mask: var(--icon-url) no-repeat center;
+                    mask: var(--icon-url) no-repeat center;
+                    -webkit-mask-size: contain;
+                    mask-size: contain;
+                    flex: 0 0 20px;
+                }
             }
 
             ::ng-deep {
@@ -71,23 +89,116 @@
             .mat-expansion-panel-header-title {
                 color: $color-text-inverse;
             }
-                ::ng-deep {
-                    .mat-expansion-indicator svg {
-                        fill: $color-text-inverse;
-                    }
+
+            ::ng-deep {
+                .mat-expansion-indicator svg {
+                    fill: $color-text-inverse;
                 }
+            }
         }
 
+        // --- Visible Nesting Hierarchy ---
+        ::ng-deep .mat-expansion-panel-content {
+            // Level 1 Nesting (Inside Main Expansion)
+            position: relative;
+            margin-left: 12px;
+
+            &::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 0;
+                bottom: 6px;
+                width: 1px;
+                background: rgba(255, 255, 255, 0.1);
+            }
+
+            .mat-nav-list {
+                padding: 4px 0;
+            }
+
+            // Reset for Level 1 Items
+            a.mat-mdc-list-item {
+                padding-left: 12px !important;
+                margin-left: 0;
+            }
+
+            // Nested Expansion Panels (Level 1 Sub-menus)
+            .sidebar__group {
+                background: transparent;
+                border-radius: 0;
+
+                .mat-expansion-panel-header {
+                    padding-left: 12px;
+                    font-size: 14px;
+                    max-height: 32px;
+
+                    .mat-expansion-panel-header-title {
+                        color: $color-text-on-inverse-muted;
+                    }
+
+                    &:hover {
+                        background: rgba(255, 255, 255, 0.05);
+
+                        .mat-expansion-panel-header-title {
+                            color: $color-text-inverse;
+                        }
+                    }
+                }
+
+                .mat-expansion-panel-header.mat-expanded {
+                    background: transparent;
+                }
+
+                // Level 2 Nesting (Inside Sub-menu)
+                .mat-expansion-panel-content {
+                    position: relative;
+                    margin-left: 12px;
+
+                    &::before {
+                        content: '';
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        bottom: 6px;
+                        width: 1px;
+                        background: rgba(255, 255, 255, 0.1);
+                    }
+
+                    a.mat-mdc-list-item {
+                        padding-left: 12px !important;
+                    }
+                }
+            }
+        }
 
         ::ng-deep {
-
             a.mat-mdc-list-item {
                 border-radius: 6px;
                 font-size: 13px;
                 max-height: 32px;
+                padding: 0px 12px;
 
                 .mdc-list-item__primary-text {
                     color: $color-text-panel-title;
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    gap: 8px;
+                    font-size: 14px;
+                    font-weight: 500;
+                }
+
+                .sidebar__icon {
+                    width: 16px;
+                    height: 16px;
+                    display: inline-block;
+                    background-color: currentColor;
+                    -webkit-mask: var(--icon-url) no-repeat center;
+                    mask: var(--icon-url) no-repeat center;
+                    -webkit-mask-size: contain;
+                    mask-size: contain;
+                    flex: 0 0 20px;
                 }
             }
 
