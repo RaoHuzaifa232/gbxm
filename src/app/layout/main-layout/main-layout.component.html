@@ -1,10 +1,14 @@
 <app-header />
 
-<div>
-    <app-sidebar />
+<mat-sidenav-container class="layout">
+    <mat-sidenav class="layout__sidenav" mode="side" opened>
+        <app-sidebar />
+    </mat-sidenav>
 
-    <main>
-        <router-outlet />
-        <p>main-layout works!</p>
-    </main>
-</div>
+    <mat-sidenav-content class="layout__content">
+        <main>
+            <router-outlet />
+            <p>main-layout works!</p>
+        </main>
+    </mat-sidenav-content>
+</mat-sidenav-container>

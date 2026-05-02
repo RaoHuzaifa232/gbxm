@@ -1,0 +1,103 @@
+@use '@gbxm/styles/_variables.scss' as *;
+
+.sidebar {
+    min-height: 100%;
+    padding: 28px 16px 0px;
+    background: $color-surface-inverse;
+    color: $color-text-inverse;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    &__label {
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 100%;
+        letter-spacing: 6%;
+        vertical-align: middle;
+        text-transform: uppercase;
+        color: $color-text-on-inverse-muted;
+    }
+
+    &__nav {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+
+        .mat-expansion-panel {
+            border-radius: 4px;
+
+        }
+
+        .mat-expansion-panel-spacing {
+            margin: 0px;
+        }
+
+        ::ng-deep {
+            .mat-expansion-panel-body {
+                padding: 0px;
+            }
+        }
+    }
+
+    &__group {
+        background: $color-surface-muted;
+        border-radius: 4px;
+        overflow: hidden;
+        box-shadow: none;
+        border: 0;
+
+        .mat-expansion-panel-header {
+            padding: 12px;
+            font-size: 14px;
+            font-weight: 500;
+            height: auto;
+
+            .mat-expansion-panel-header-title {
+                color: $color-text-panel-title;
+            }
+
+            ::ng-deep {
+                .mat-expansion-indicator svg {
+                    fill: $color-text-panel-title;
+                }
+            }
+        }
+
+        .mat-expansion-panel-header.mat-expanded {
+            background: $color-surface-muted;
+            color: $color-text-inverse;
+
+            .mat-expansion-panel-header-title {
+                color: $color-text-inverse;
+            }
+                ::ng-deep {
+                    .mat-expansion-indicator svg {
+                        fill: $color-text-inverse;
+                    }
+                }
+        }
+
+
+        ::ng-deep {
+
+            a.mat-mdc-list-item {
+                border-radius: 6px;
+                font-size: 13px;
+                max-height: 32px;
+
+                .mdc-list-item__primary-text {
+                    color: $color-text-panel-title;
+                }
+            }
+
+            a.mat-mdc-list-item:hover {
+                background: $color-accent;
+
+                .mdc-list-item__primary-text {
+                    color: $color-text-inverse;
+                }
+            }
+        }
+    }
+}

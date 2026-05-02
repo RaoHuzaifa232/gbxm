@@ -18,7 +18,12 @@
     "target": "ES2022",
     "module": "ES2022",
     "paths": {
-      "@gbxm/layout/*": ["./src/app/layout/*"]
+      "@gbxm/layout/*": [
+        "./src/app/layout/*"
+      ],
+      "@gbxm/styles/*": [
+        "./src/styles/*"
+      ]
     }
   },
   "angularCompilerOptions": {

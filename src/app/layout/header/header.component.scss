@@ -1,0 +1,49 @@
+@use '@gbxm/styles/_variables.scss' as *;
+
+.header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 16px;
+
+	&__logo {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+
+		img {
+			width: 48px;
+			height: 48px;
+			object-fit: contain;
+			display: block;
+		}
+
+		p {
+			margin: 0;
+            font-size: 28px;
+			color: $color-text-strong;
+		}
+	}
+
+	&__actions {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+
+		mat-icon {
+			width: 24px;
+			height: 24px;
+			font-size: 24px;
+			line-height: 24px;
+			color: $color-icon-primary;
+		}
+
+		img {
+			display: block;
+			object-fit: cover;
+			width: 40px;
+			height: 40px;
+			border-radius: 50%;
+		}
+	}
+}
