@@ -27,7 +27,6 @@
 
         .mat-expansion-panel {
             border-radius: 4px;
-
         }
 
         .mat-expansion-panel-spacing {
@@ -41,6 +40,10 @@
                 .mdc-list {
                     padding: 0px;
                 }
+            }
+
+            .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled=true]):hover {
+                background: $color-surface-muted;
             }
         }
     }
