@@ -1,5 +1,12 @@
 <aside class="sidebar">
-    <div class="sidebar__label">MENU</div>
+    <div class="sidebar__header">
+        <div class="sidebar__label">MENU</div>
+        @if (isMobile()) {
+        <button class="sidebar__close-btn" (click)="closeSidebar.emit()">
+            <span class="sidebar__close-icon" style="--icon-url: url('assets/icons/arrow-back.svg');"></span>
+        </button>
+        }
+    </div>
 
     <mat-accordion class="sidebar__nav" multi aria-label="Sidebar navigation">
         <mat-expansion-panel class="sidebar__group">
