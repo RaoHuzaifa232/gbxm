@@ -9,12 +9,14 @@
     </div>
 
     <mat-accordion class="sidebar__nav" multi aria-label="Sidebar navigation">
-        <mat-expansion-panel class="sidebar__group">
+        <mat-expansion-panel class="sidebar__group" routerLinkActive #rlaOperator="routerLinkActive"
+            [expanded]="rlaOperator.isActive">
             <mat-expansion-panel-header>
                 <mat-panel-title>Operator Console</mat-panel-title>
             </mat-expansion-panel-header>
             <mat-nav-list>
-                <a mat-list-item class="has-icon" href="#">
+                <a mat-list-item class="has-icon" routerLink="/operator-console/edit-my-profile"
+                    routerLinkActive="active">
                     <span class="sidebar__icon" style="--icon-url: url('./assets/icons/person_edit.svg');"
                         aria-hidden="true"></span>
                     <span>Edit My Profile</span>

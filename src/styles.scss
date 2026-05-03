@@ -31,3 +31,80 @@ body {
     background: rgba(255, 255, 255, 0.2);
     border-radius: 8px;
 }
+
+/* Generic 40px height fix and color theme for Angular Material Outline Form Fields (Excluding Textareas) */
+.mat-mdc-form-field.mat-form-field-appearance-outline {
+    // Theme Colors
+    --mdc-outlined-text-field-outline-color: #{variables.$color-border-muted};
+    --mdc-outlined-text-field-hover-outline-color: #{variables.$color-border-muted};
+    --mdc-outlined-text-field-focus-outline-color: #{variables.$color-border-muted};
+    --mdc-outlined-text-field-label-text-color: #{variables.$color-text-primary};
+    --mdc-outlined-text-field-hover-label-text-color: #{variables.$color-border-muted};
+    --mdc-outlined-text-field-focus-label-text-color: #{variables.$color-border-muted};
+
+    &:not(:has(textarea)) {
+        .mat-mdc-text-field-wrapper {
+            height: 40px;
+        }
+
+        .mat-mdc-form-field-flex {
+            height: 40px;
+            align-items: center;
+        }
+
+        .mat-mdc-form-field-infix {
+            padding-top: 8px !important;
+            padding-bottom: 8px !important;
+            min-height: 40px !important;
+        }
+
+        /* Fix Resting Label Centering */
+        .mdc-floating-label:not(.mdc-floating-label--float-above) {
+            top: 50% !important;
+            transform: translateY(-50%) !important;
+        }
+
+        /* Fix Floating Label Position */
+        .mdc-floating-label--float-above {
+            transform: translateY(-38px) scale(0.75) !important;
+        }
+    }
+}
+
+/* HIGH SPECIFICITY FIX: Force filled/disabled border color */
+.mat-mdc-form-field.mat-form-field-appearance-outline.mat-form-field-should-float,
+.mat-mdc-form-field.mat-form-field-appearance-outline.mat-form-field-disabled,
+.mat-mdc-form-field.mat-form-field-appearance-outline:has(input:not(:placeholder-shown)),
+.mat-mdc-form-field.mat-form-field-appearance-outline:has(.ng-dirty:not(.ng-pristine)) {
+    --mdc-outlined-text-field-outline-color: #{variables.$color-field-border-filled} !important;
+    --mdc-outlined-text-field-focus-outline-color: #{variables.$color-field-border-filled} !important;
+    --mdc-outlined-text-field-hover-outline-color: #{variables.$color-field-border-filled} !important;
+    --mdc-outlined-text-field-disabled-outline-color: #{variables.$color-field-border-filled} !important;
+
+    .mdc-notched-outline__leading,
+    .mdc-notched-outline__notch,
+    .mdc-notched-outline__trailing {
+        border-color: #{variables.$color-field-border-filled} !important;
+        border-width: 1px !important;
+        opacity: 1 !important;
+    }
+
+    .mdc-text-field, .mdc-notched-outline, .mdc-notched-outline > div {
+        border-color: #{variables.$color-field-border-filled} !important;
+    }
+}
+
+/* Global Styles for all rectangular Material Buttons */
+.mat-mdc-button,
+.mat-mdc-raised-button,
+.mat-mdc-flat-button,
+.mat-mdc-stroked-button,
+.mat-mdc-outlined-button {
+    border-radius: 6px !important;
+    min-width: 80px !important;
+}
+
+/* Global Border Radius for Dialogs */
+.mat-mdc-dialog-container .mdc-dialog__surface {
+    border-radius: 6px !important;
+}

@@ -242,7 +242,8 @@
                 }
             }
 
-            a.mat-mdc-list-item:hover {
+            a.mat-mdc-list-item:hover,
+            a.mat-mdc-list-item.active {
                 background: $color-accent;
 
                 .mdc-list-item__primary-text {

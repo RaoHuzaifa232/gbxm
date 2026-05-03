@@ -23,6 +23,9 @@
       ],
       "@gbxm/styles/*": [
         "./src/styles/*"
+      ],
+      "@gbxm/items/*": [
+        "./src/app/layout/sidebar/items/*"
       ]
     }
   },

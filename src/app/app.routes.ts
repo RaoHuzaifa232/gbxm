@@ -5,5 +5,16 @@ export const routes: Routes = [
   {
     path: '',
     component: MainLayoutComponent,
+    children: [
+      {
+        path: 'operator-console/edit-my-profile',
+        loadComponent: () => import('@gbxm/items/operator-console/operator-console.component').then(m => m.OperatorConsoleComponent)
+      },
+      // {
+      //   path: '',
+      //   redirectTo: 'operator-console',
+      //   pathMatch: 'full'
+      // }
+    ]
   }
 ];
