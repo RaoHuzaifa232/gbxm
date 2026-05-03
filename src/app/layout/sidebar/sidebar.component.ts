@@ -14,4 +14,10 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 export class SidebarComponent {
   isMobile = input(false);
   closeSidebar = output<void>();
+
+  onItemClick() {
+    if (this.isMobile()) {
+      this.closeSidebar.emit();
+    }
+  }
 }
