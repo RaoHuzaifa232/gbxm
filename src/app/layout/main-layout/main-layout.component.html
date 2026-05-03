@@ -8,10 +8,7 @@
     <mat-sidenav-content class="layout__content">
         @if (isMobile() && !sidenav.opened) {
         <button class="layout__open-handle" (click)="sidenav.open()">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
-                stroke-linejoin="round">
-                <path d="M9 18l6-6-6-6" />
-            </svg>
+            <mat-icon>chevron_right</mat-icon>
         </button>
         }
 

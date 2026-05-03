@@ -20,11 +20,10 @@
     }
 
     &__open-handle {
-        position: absolute;
+        position: fixed;
         left: 0;
-        top: 6%;
-        transform: translateY(-50%);
-        width: 24px;
+        top: 78px;
+        width: 14px;
         height: 36px;
         background-color: $color-surface-muted;
         border: none;
@@ -38,10 +37,14 @@
         z-index: 1000;
         box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
 
-        svg {
+        mat-icon {
+            font-size: 18px;
             width: 18px;
             height: 18px;
             margin-right: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
     }
 

@@ -15,8 +15,12 @@
 .profile-container {
     background: #ffffff;
     border-radius: 8px;
-    padding: 24px;
+    padding: 16px;
     border: 1px solid #e0e0e0;
+
+    @media (min-width: 768px) {
+        padding: 24px;
+    }
 
     .profile-title {
         font-size: 20px;
@@ -55,6 +59,8 @@
             button {
                 border-color: $color-action-primary;
                 color: $color-action-primary;
+                min-width: unset; // Allow button to shrink on small screens
+                padding: 0 12px;
             }
         }
 
@@ -82,14 +88,16 @@
         display: grid;
         gap: 16px;
         margin-bottom: 8px;
+        grid-template-columns: 1fr;
 
-        &.grid-2 {
-            grid-template-columns: 1fr 1fr;
-        }
+        @media (min-width: 768px) {
+            &.grid-2 {
+                grid-template-columns: 1fr 1fr;
+            }
 
-        &.grid-preferred-operator-user {
-            // Adjust proportions based on visual design
-            grid-template-columns: 2fr 2fr 1fr;
+            &.grid-preferred-operator-user {
+                grid-template-columns: 2fr 2fr 1fr;
+            }
         }
 
         mat-form-field {
@@ -101,7 +109,6 @@
         margin-top: 8px;
     }
 
-    // Custom styling for file upload wrapper to mimic the design
     .file-upload-wrapper {
         position: relative;
         display: flex;
@@ -111,7 +118,7 @@
         border: 1px solid $color-border-muted;
         border-radius: 4px;
         padding: 0 16px;
-        margin-bottom: 22px; // Match standard mat-form-field bottom margin
+        margin-bottom: 22px;
 
         &.has-value {
             border-color: $color-field-border-filled;
@@ -173,7 +180,7 @@
     .file-error {
         color: $color-error;
         font-size: 12px;
-        margin-top: -18px; // Pull it up so it doesn't add massive gap
+        margin-top: -18px;
         margin-bottom: 18px;
         margin-left: 12px;
         display: block;
@@ -181,23 +188,38 @@
 
     .form-actions {
         display: flex;
-        gap: 10px;
-        margin-top: 14px;
+        flex-direction: row;
+        gap: 12px;
+        margin-top: 32px;
+        width: 100%;
+        justify-content: flex-start;
+
+        @media (min-width: 600px) {
+            margin-top: 24px;
+        }
 
         button {
             height: 40px;
+            flex: 1;
+            font-weight: 500;
+            letter-spacing: 0.5px;
             border-radius: 6px;
-            background-color: $color-action-primary;
-            color: white;
 
-            &:first-child {
+            @media (min-width: 600px) {
+                flex: none;
+                width: auto;
+                min-width: 120px;
+            }
+
+            &[mat-flat-button] {
                 background-color: $color-action-primary;
+                color: white;
             }
         }
     }
 }
 
-// Dialog button styles (must pierce encapsulation since dialog is attached to the body)
+// Dialog button styles
 ::ng-deep {
     .dialog-save-btn {
         --mdc-filled-button-container-color: #{$color-action-primary};

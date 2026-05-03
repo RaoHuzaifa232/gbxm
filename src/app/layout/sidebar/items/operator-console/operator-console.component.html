@@ -1,7 +1,6 @@
 <h1 class="page-main-title">Operator Console</h1>
 <div class="profile-container">
     <h1 class="profile-title">Edit My Profile</h1>
-    <!-- mat divder tak full width -->
     <mat-divider class="section-divider" />
     <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="profile-form">
         <!-- Section 1 -->
@@ -144,7 +143,8 @@
 
         <div class="form-grid grid-2">
             <div class="file-column">
-                <div class="file-upload-wrapper" [class.has-value]="profileForm.get('picture')?.value" [matTooltipDisabled]="isPictureClearHovered"
+                <div class="file-upload-wrapper" [class.has-value]="profileForm.get('picture')?.value"
+                    [matTooltipDisabled]="isPictureClearHovered"
                     matTooltip="Select a profile picture to upload (JPG, PNG only)">
                     <span class="file-upload-label">Upload Picture</span>
                     <input type="file" #pictureInput class="file-input" accept=".jpg,.jpeg,.png"
@@ -163,8 +163,8 @@
             </div>
 
             <div class="file-column">
-                <div class="file-upload-wrapper" [class.has-value]="profileForm.get('cv')?.value" [matTooltipDisabled]="isCVClearHovered"
-                    matTooltip="Select your CV document to upload (PDF only)">
+                <div class="file-upload-wrapper" [class.has-value]="profileForm.get('cv')?.value"
+                    [matTooltipDisabled]="isCVClearHovered" matTooltip="Select your CV document to upload (PDF only)">
                     <span class="file-upload-label">Upload CV</span>
                     <input type="file" #cvInput class="file-input" accept=".pdf"
                         (change)="onFileSelected($event, 'cv', ['.pdf'])">

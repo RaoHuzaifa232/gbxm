@@ -1,6 +1,7 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { MatIcon } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from '@gbxm/layout/header/header.component';
@@ -10,7 +11,7 @@ import { map } from 'rxjs';
 @Component({
   selector: 'app-main-layout',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent, SidebarComponent, MatSidenavModule],
+  imports: [RouterOutlet, HeaderComponent, SidebarComponent, MatSidenavModule, MatIcon],
   templateUrl: './main-layout.component.html',
   styleUrl: './main-layout.component.scss'
 })
