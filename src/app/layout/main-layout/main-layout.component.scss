@@ -17,6 +17,9 @@
     &__content {
         background: #f6f7f9;
         position: relative;
+        height: 100%;
+        overflow: auto; // Let the sidenav content handle the scroll
+        -webkit-overflow-scrolling: touch;
     }
 
     &__open-handle {
