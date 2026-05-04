@@ -121,7 +121,9 @@
             <div class="about-me-header">
                 <span>A Little About Me ...</span>
                 <button mat-stroked-button color="primary" type="button" (click)="openAboutMeDialog()">
-                    <mat-icon style="margin-right: 4px;">edit</mat-icon> Edit Notes
+                    <mat-icon style="margin-right: 4px;">{{ profileForm.get('aboutMe')?.value ? 'edit' : 'add'
+                        }}</mat-icon>
+                    {{ profileForm.get('aboutMe')?.value ? 'Edit Notes' : 'Add Note' }}
                 </button>
             </div>
 
@@ -131,7 +133,7 @@
             </div>
             } @else {
             <div class="about-me-empty">
-                No biography added yet. Click 'Edit Notes' to add a short summary about yourself.
+                No biography added yet. Click 'Add Notes' to add a short summary about yourself.
             </div>
             }
         </div>
