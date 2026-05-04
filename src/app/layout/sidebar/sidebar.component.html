@@ -15,8 +15,8 @@
                 <mat-panel-title>Operator Console</mat-panel-title>
             </mat-expansion-panel-header>
             <mat-nav-list>
-                <a mat-list-item (click)="onItemClick()" class="has-icon" routerLink="/operator-console/edit-my-profile/"
-                    routerLinkActive="active">
+                <a mat-list-item (click)="onItemClick()" class="has-icon"
+                    routerLink="/operator-console/edit-my-profile/" routerLinkActive="active">
                     <span class="sidebar__icon" style="--icon-url: url('./assets/icons/person_edit.svg');"
                         aria-hidden="true"></span>
                     <span>Edit My Profile</span>
@@ -34,12 +34,14 @@
             </mat-nav-list>
         </mat-expansion-panel>
 
-        <mat-expansion-panel class="sidebar__group">
+        <mat-expansion-panel class="sidebar__group" routerLinkActive #rlaCampaigns="routerLinkActive"
+            [expanded]="rlaCampaigns.isActive">
             <mat-expansion-panel-header>
                 <mat-panel-title>Campaigns</mat-panel-title>
             </mat-expansion-panel-header>
             <mat-nav-list>
-                <mat-expansion-panel class="sidebar__group">
+                <mat-expansion-panel class="sidebar__group" routerLinkActive #rlaAllCampaigns="routerLinkActive"
+                    [expanded]="rlaAllCampaigns.isActive">
                     <mat-expansion-panel-header>
                         <mat-panel-title>
                             <span class="sidebar__icon" style="--icon-url: url('./assets/icons/holiday_village.svg');"
@@ -48,6 +50,12 @@
                         </mat-panel-title>
                     </mat-expansion-panel-header>
                     <mat-nav-list>
+                        <a mat-list-item (click)="onItemClick()" routerLink="/campaigns/all-campaigns"
+                            routerLinkActive="active">
+                            <span class="sidebar__icon" style="--icon-url: url('./assets/icons/holiday_village.svg');"
+                                aria-hidden="true"></span>
+                            <span>All Campaigns</span>
+                        </a>
                         <a mat-list-item (click)="onItemClick()" href="#">
                             <span class="sidebar__icon"
                                 style="--icon-url: url('./assets/icons/quick_reference_all.svg');"
@@ -86,7 +94,11 @@
                 </mat-expansion-panel>
                 <mat-expansion-panel class="sidebar__group">
                     <mat-expansion-panel-header>
-                        <mat-panel-title>Add Pick Lists</mat-panel-title>
+                        <mat-panel-title>
+                            <span class="sidebar__icon" style="--icon-url: url('./assets/icons/note_add.svg');"
+                                aria-hidden="true"></span>
+                            <span>Add Pick Lists</span>
+                        </mat-panel-title>
                     </mat-expansion-panel-header>
                     <mat-nav-list>
                         <a mat-list-item (click)="onItemClick()" href="#">

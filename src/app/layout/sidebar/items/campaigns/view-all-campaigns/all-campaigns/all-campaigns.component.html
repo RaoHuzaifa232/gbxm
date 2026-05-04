@@ -1,0 +1,68 @@
+	<form class="campaigns__filters" aria-label="Campaign filters">
+			<div class="filters__row">
+				<mat-form-field class="filters__field" appearance="outline">
+					<mat-label>Select Operator</mat-label>
+					<mat-select>
+						<mat-option value="all">All</mat-option>
+						<mat-option value="operator-1">Operator 1</mat-option>
+						<mat-option value="operator-2">Operator 2</mat-option>
+					</mat-select>
+				</mat-form-field>
+			</div>
+
+			<div class="filters__row filters__row--options">
+				<mat-radio-group class="filters__radio-group" aria-label="Campaign type" value="all">
+					<mat-radio-button value="all">All</mat-radio-button>
+					<mat-radio-button value="agent">Agent</mat-radio-button>
+					<mat-radio-button value="brand">Brand/syndicate</mat-radio-button>
+					<mat-radio-button value="geo">Geographic</mat-radio-button>
+					<mat-radio-button value="thematic">Thematic</mat-radio-button>
+				</mat-radio-group>
+
+				<mat-checkbox class="filters__checkbox" checked>View No Pick Lists</mat-checkbox>
+			</div>
+		</form>
+
+		<div class="campaigns__table" aria-label="Campaign list">
+			<table mat-table [dataSource]="campaigns" class="campaigns__mat-table">
+				<ng-container matColumnDef="id">
+					<th mat-header-cell *matHeaderCellDef>ID</th>
+					<td mat-cell *matCellDef="let campaign">{{ campaign.id }}</td>
+				</ng-container>
+
+				<ng-container matColumnDef="name">
+					<th mat-header-cell *matHeaderCellDef>Name</th>
+					<td mat-cell *matCellDef="let campaign">{{ campaign.name }}</td>
+				</ng-container>
+
+				<ng-container matColumnDef="type">
+					<th mat-header-cell *matHeaderCellDef>Type</th>
+					<td mat-cell *matCellDef="let campaign">{{ campaign.type }}</td>
+				</ng-container>
+
+				<ng-container matColumnDef="pickListDate">
+					<th mat-header-cell *matHeaderCellDef>Pick List Date</th>
+					<td mat-cell *matCellDef="let campaign">{{ campaign.pickListDate }}</td>
+				</ng-container>
+
+				<ng-container matColumnDef="count">
+					<th mat-header-cell *matHeaderCellDef>No</th>
+					<td mat-cell *matCellDef="let campaign">{{ campaign.count }}</td>
+				</ng-container>
+
+				<ng-container matColumnDef="action">
+					<th mat-header-cell *matHeaderCellDef></th>
+					<td mat-cell *matCellDef="let campaign">
+						<button mat-icon-button class="cell cell--action" type="button"
+							[attr.aria-label]="'View campaign ' + campaign.id">
+							<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+								<path d="M12 5c-5.25 0-9.5 4.02-11 7 1.5 2.98 5.75 7 11 7s9.5-4.02 11-7c-1.5-2.98-5.75-7-11-7zm0 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm0-2.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"></path>
+							</svg>
+						</button>
+					</td>
+				</ng-container>
+
+				<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+				<tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+			</table>
+		</div>

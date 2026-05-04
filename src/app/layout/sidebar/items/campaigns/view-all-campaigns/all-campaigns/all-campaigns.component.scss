@@ -1,0 +1,171 @@
+@use '@gbxm/styles/_variables.scss' as *;
+
+.campaigns__filters {
+	padding: 16px 20px 8px 20px;
+	border-bottom: 1px solid $color-divider;
+}
+
+.campaigns__table {
+	padding: 0 20px 8px 20px;
+}
+
+.campaigns__mat-table {
+	width: 100%;
+	border-collapse: collapse;
+    background-color: transparent;
+
+	.mat-mdc-header-row,
+	.mat-mdc-row {
+		display: grid;
+		grid-template-columns: 110px 1.4fr 1fr 1fr 80px 48px;
+		align-items: center;
+		column-gap: 16px;
+	}
+
+	.mat-mdc-header-row {
+		padding: 10px 0;
+		font-size: 12px;
+		font-weight: 600;
+		letter-spacing: 0.2px;
+		color: $color-text-tertiary;
+		border-bottom: 1px solid $color-divider;
+	}
+
+	.mat-mdc-row {
+		padding: 12px 0;
+		border-bottom: 1px solid $color-divider;
+		font-size: 14px;
+		color: $color-text-primary;
+	}
+
+	.mat-mdc-header-cell,
+	.mat-mdc-cell {
+		padding: 0 4px;
+		border-bottom: none;
+		white-space: nowrap;
+        color: $color-text-primary;
+	}
+
+	.mat-mdc-cell {
+		font-weight: 400;
+		color: $color-text-primary;
+	}
+
+	.mat-mdc-cell.mat-column-name,
+	.mat-mdc-cell.mat-column-type {
+		color: $color-text-primary;
+	}
+
+	.mat-mdc-cell.mat-column-action {
+		display: flex;
+		justify-content: flex-end;
+	}
+}
+
+.filters {
+	&__row {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 16px 24px;
+		margin-bottom: 16px;
+
+		&--options {
+			margin-bottom: 8px;
+			justify-content: space-between;
+		}
+	}
+
+	&__field {
+		width: 320px;
+		max-width: 100%;
+	}
+
+	&__radio-group {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 16px 24px;
+		align-items: center;
+		color: $color-text-primary;
+		--mdc-radio-selected-icon-color: #{$color-action-primary};
+		--mdc-radio-selected-pressed-icon-color: #{$color-action-primary};
+		--mdc-radio-unselected-icon-color: #{$color-border-muted};
+		--mdc-radio-unselected-pressed-icon-color: #{$color-border-muted};
+	}
+
+	&__checkbox {
+		color: $color-text-primary;
+		--mdc-checkbox-selected-checkmark-color: #ffffff;
+		--mdc-checkbox-selected-icon-color: #{$color-action-primary};
+		--mdc-checkbox-unselected-icon-color: #{$color-border-muted};
+	}
+}
+
+.cell {
+	&--action {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 32px;
+		height: 32px;
+		border: 1px solid transparent;
+		border-radius: 50%;
+		background: transparent;
+		color: $color-text-tertiary;
+		cursor: pointer;
+		padding: 0;
+		justify-self: end;
+
+		svg {
+			width: 18px;
+			height: 18px;
+			fill: currentColor;
+		}
+
+		&:hover {
+			color: $color-action-primary;
+			border-color: rgba(28, 108, 228, 0.2);
+			background: rgba(28, 108, 228, 0.08);
+		}
+	}
+}
+
+@media (max-width: 960px) {
+	.campaigns__table {
+		padding: 0 16px 8px 16px;
+	}
+
+	.campaigns__filters {
+		padding-left: 16px;
+		padding-right: 16px;
+	}
+
+	.campaigns__mat-table {
+		.mat-mdc-header-row,
+		.mat-mdc-row {
+			grid-template-columns: 90px 1fr 1fr 1fr 60px 40px;
+		}
+	}
+}
+
+@media (max-width: 720px) {
+	.campaigns__mat-table {
+		.mat-mdc-header-row,
+		.mat-mdc-row {
+			grid-template-columns: 80px 1fr 1fr 1fr;
+			row-gap: 8px;
+		}
+
+		.mat-column-pickListDate,
+		.mat-column-count,
+		.mat-column-action {
+			display: none;
+		}
+	}
+
+	.filters {
+		&__row--options {
+			align-items: flex-start;
+		}
+	}
+}
