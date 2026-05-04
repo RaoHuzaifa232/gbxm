@@ -146,7 +146,7 @@
                 <div class="file-upload-wrapper" [class.has-value]="profileForm.get('picture')?.value"
                     [matTooltipDisabled]="isPictureClearHovered"
                     matTooltip="Select a profile picture to upload (JPG, PNG only)">
-                    <span class="file-upload-label">Upload Picture</span>
+                    <span class="file-upload-label">Upload Picture (PNG, JPG)</span>
                     <input type="file" #pictureInput class="file-input" accept=".jpg,.jpeg,.png"
                         (change)="onFileSelected($event, 'picture', ['.jpg', '.jpeg', '.png'])">
                     @if (profileForm.get('picture')?.value) {
@@ -165,7 +165,7 @@
             <div class="file-column">
                 <div class="file-upload-wrapper" [class.has-value]="profileForm.get('cv')?.value"
                     [matTooltipDisabled]="isCVClearHovered" matTooltip="Select your CV document to upload (PDF only)">
-                    <span class="file-upload-label">Upload CV</span>
+                    <span class="file-upload-label">Upload CV (PDF)</span>
                     <input type="file" #cvInput class="file-input" accept=".pdf"
                         (change)="onFileSelected($event, 'cv', ['.pdf'])">
                     @if (profileForm.get('cv')?.value) {

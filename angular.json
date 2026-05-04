@@ -34,7 +34,8 @@
                 "glob": "**/*",
                 "input": "src/assets",
                 "output": "assets"
-              }
+              },
+              "src/404.html"
             ],
             "styles": [
               "@angular/material/prebuilt-themes/azure-blue.css",
