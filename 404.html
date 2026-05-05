@@ -3,18 +3,70 @@
 
 <head>
   <meta charset="utf-8">
-  <title>GBXM</title>
-  <base href="/">
+  <title>GBXM - 404</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="./assets/gbxm.ico">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Roboto', Arial, sans-serif;
+      background: #fafafa;
+      color: #404c54;
+      display: grid;
+      place-items: center;
+      min-height: 100vh;
+    }
+    .card {
+      background: #ffffff;
+      border: 1px solid #e4e6e8;
+      border-radius: 10px;
+      padding: 28px 24px;
+      text-align: center;
+      width: min(520px, 100%);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
+    }
+    .code {
+      font-size: 48px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      color: #1d222b;
+      margin-bottom: 8px;
+    }
+    h1 {
+      margin: 0 0 6px;
+      font-size: 20px;
+      font-weight: 500;
+      color: #1d222b;
+    }
+    p {
+      margin: 0 0 18px;
+      color: #747a84;
+      font-size: 14px;
+    }
+    a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 140px;
+      height: 40px;
+      padding: 0 16px;
+      border-radius: 6px;
+      background: #1c6ce4;
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+    }
+  </style>
 </head>
 
-<body class="mat-typography">
-  <app-root></app-root>
+<body>
+  <div class="card">
+    <div class="code">404</div>
+    <h1>Page not found</h1>
+    <p>The page you are looking for does not exist or has been moved.</p>
+    <a href="/">Go to dashboard</a>
+  </div>
 </body>
 
 </html>
