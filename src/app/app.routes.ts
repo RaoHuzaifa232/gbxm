@@ -11,8 +11,13 @@ export const routes: Routes = [
         loadComponent: () => import('@gbxm/pages/dashboard/dashboard.component').then(m => m.DashboardComponent)
       },
       {
-        path: 'coming-soon',
+        path: 'coming-soon/:feature',
         loadComponent: () => import('@gbxm/pages/coming-soon/coming-soon.component').then(m => m.ComingSoonComponent)
+      },
+      {
+        path: 'coming-soon',
+        redirectTo: 'coming-soon/default',
+        pathMatch: 'full'
       },
       {
         path: 'operator-console/edit-my-profile',
