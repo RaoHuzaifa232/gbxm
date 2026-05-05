@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -20,7 +20,8 @@ import { MatTableModule } from '@angular/material/table';
     MatTableModule
   ],
   templateUrl: './all-campaigns.component.html',
-  styleUrl: './all-campaigns.component.scss'
+  styleUrl: './all-campaigns.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AllCampaignsComponent {
   displayedColumns = ['id', 'name', 'type', 'pickListDate', 'count', 'action'];

@@ -1,4 +1,4 @@
-import { Component, inject, TemplateRef, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -24,7 +24,8 @@ import { CommonModule } from '@angular/common';
     MatIconModule
   ],
   templateUrl: './operator-console.component.html',
-  styleUrl: './operator-console.component.scss'
+  styleUrl: './operator-console.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class OperatorConsoleComponent {
   private fb = inject(FormBuilder);

@@ -1,5 +1,5 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { MatIcon } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -13,7 +13,8 @@ import { map } from 'rxjs';
   standalone: true,
   imports: [RouterOutlet, HeaderComponent, SidebarComponent, MatSidenavModule, MatIcon],
   templateUrl: './main-layout.component.html',
-  styleUrl: './main-layout.component.scss'
+  styleUrl: './main-layout.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MainLayoutComponent {
   private breakpointObserver = inject(BreakpointObserver);
