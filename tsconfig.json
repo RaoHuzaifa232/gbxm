@@ -26,6 +26,9 @@
       ],
       "@gbxm/items/*": [
         "./src/app/layout/sidebar/items/*"
+      ],
+      "@gbxm/pages/*": [
+        "./src/app/pages/*"
       ]
     }
   },
