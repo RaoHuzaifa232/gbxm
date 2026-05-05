@@ -29,6 +29,9 @@
       ],
       "@gbxm/pages/*": [
         "./src/app/pages/*"
+      ],
+      "@gbxm/core/*": [
+        "./src/app/core/*"
       ]
     }
   },

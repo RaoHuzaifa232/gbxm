@@ -1,23 +1,29 @@
 <section class="define-campaign">
 	<header class="card__header">
 		<h2>Define Campaigns</h2>
-		<button mat-flat-button class="define-campaign__save" type="button" (click)="onSave()">Save</button>
+		<button mat-flat-button class="define-campaign__save" type="submit" form="campaignForm">Save</button>
 	</header>
 
-	<form class="define-campaign__form" [formGroup]="form">
+	<form id="campaignForm" class="define-campaign__form" [formGroup]="form" (ngSubmit)="onSave()">
 		<div class="grid grid--2">
 			<mat-form-field appearance="outline" matTooltip="Choose the campaign type">
 				<mat-label>Select Type</mat-label>
-				<mat-select formControlName="type">
+				<mat-select formControlName="type" required>
 					@for (item of typeOptions; track item) {
 					<mat-option [value]="item">{{ item }}</mat-option>
 					}
 				</mat-select>
+				@if (form.get('type')?.hasError('required')) {
+				<mat-error>Campaign type is required</mat-error>
+				}
 			</mat-form-field>
 
 			<mat-form-field appearance="outline" matTooltip="Enter the campaign name">
 				<mat-label>Name of Campaign</mat-label>
-				<input matInput formControlName="name" placeholder="e.g. Southeast Asia Resorts" />
+				<input matInput formControlName="name" placeholder="e.g. Southeast Asia Resorts" required />
+				@if (form.get('name')?.hasError('required')) {
+				<mat-error>Campaign name is required</mat-error>
+				}
 			</mat-form-field>
 		</div>
 
@@ -29,7 +35,10 @@
 
 			<mat-form-field appearance="outline" matTooltip="Unique campaign identifier">
 				<mat-label>Campaign ID</mat-label>
-				<input matInput formControlName="campaignId" placeholder="e.g. 00001" />
+				<input matInput formControlName="campaignId" placeholder="e.g. 00001" required />
+				@if (form.get('campaignId')?.hasError('required')) {
+				<mat-error>Campaign ID is required</mat-error>
+				}
 			</mat-form-field>
 		</div>
 
@@ -41,109 +50,132 @@
 
 			<mat-form-field appearance="outline" matTooltip="Select the license manager">
 				<mat-label>License Manager</mat-label>
-				<mat-select formControlName="licenseManager">
+				<mat-select formControlName="licenseManager" required>
 					@for (item of licenseManagerOptions; track item) {
 					<mat-option [value]="item">{{ item }}</mat-option>
 					}
 				</mat-select>
+				@if (form.get('licenseManager')?.hasError('required')) {
+				<mat-error>License manager is required</mat-error>
+				}
 			</mat-form-field>
 		</div>
 
 		<div class="grid grid--2">
 			<mat-form-field appearance="outline" matTooltip="Select the director">
 				<mat-label>Select Director</mat-label>
-				<mat-select formControlName="director">
+				<mat-select formControlName="director" required>
 					@for (item of directorOptions; track item) {
 					<mat-option [value]="item">{{ item }}</mat-option>
 					}
 				</mat-select>
+				@if (form.get('director')?.hasError('required')) {
+				<mat-error>Director is required</mat-error>
+				}
 			</mat-form-field>
 
 			<mat-form-field appearance="outline" matTooltip="Select the campaign lead">
 				<mat-label>Campaign Lead</mat-label>
-				<mat-select formControlName="campaignLead">
+				<mat-select formControlName="campaignLead" required>
 					@for (item of campaignLeadOptions; track item) {
 					<mat-option [value]="item">{{ item }}</mat-option>
 					}
 				</mat-select>
+				@if (form.get('campaignLead')?.hasError('required')) {
+				<mat-error>Campaign lead is required</mat-error>
+				}
 			</mat-form-field>
 		</div>
 
 		<div class="grid grid--2">
 			<mat-form-field appearance="outline" matTooltip="Select the data collator">
 				<mat-label>Select data collator</mat-label>
-				<mat-select formControlName="dataCollator">
+				<mat-select formControlName="dataCollator" required>
 					@for (item of dataCollatorOptions; track item) {
 					<mat-option [value]="item">{{ item }}</mat-option>
 					}
 				</mat-select>
+				@if (form.get('dataCollator')?.hasError('required')) {
+				<mat-error>Data collator is required</mat-error>
+				}
 			</mat-form-field>
 
 			<mat-form-field appearance="outline" matTooltip="Select the associate representative">
 				<mat-label>Associate Representative</mat-label>
-				<mat-select formControlName="associateRep">
+				<mat-select formControlName="associateRep" required>
 					@for (item of associateRepOptions; track item) {
 					<mat-option [value]="item">{{ item }}</mat-option>
 					}
 				</mat-select>
+				@if (form.get('associateRep')?.hasError('required')) {
+				<mat-error>Associate representative is required</mat-error>
+				}
 			</mat-form-field>
 		</div>
 
 		<div class="grid grid--2 align-center">
 			<div class="radio-group" matTooltip="Choose whether this campaign is self licensed">
-				<label class="radio-group__label">Self Licensing</label>
-				<mat-radio-group formControlName="selfLicensing">
+				<label id="selfLicensingLabel" class="radio-group__label">Self Licensing *</label>
+				<mat-radio-group formControlName="selfLicensing" aria-labelledby="selfLicensingLabel" required>
 					<mat-radio-button value="yes">Yes</mat-radio-button>
 					<mat-radio-button value="no">No</mat-radio-button>
 				</mat-radio-group>
+				@if (form.get('selfLicensing')?.invalid && form.get('selfLicensing')?.touched) {
+				<span class="file-error">Please select an option</span>
+				}
 			</div>
 
 			<mat-form-field appearance="outline" matTooltip="Select the license type">
 				<mat-label>Select License</mat-label>
-				<mat-select formControlName="licenseType">
+				<mat-select formControlName="licenseType" required>
 					@for (item of licenseOptions; track item) {
 					<mat-option [value]="item">{{ item }}</mat-option>
 					}
 				</mat-select>
+				@if (form.get('licenseType')?.hasError('required')) {
+				<mat-error>License type is required</mat-error>
+				}
 			</mat-form-field>
 		</div>
 
 		<div class="grid grid--2">
 			<div class="file-column">
-				<div class="file-upload-wrapper" matTooltip="Select a campaign image to upload (JPG, PNG only)"
+				<label class="file-upload-wrapper" matTooltip="Select a campaign image to upload (JPG, PNG only)"
 					[matTooltipDisabled]="isImageClearHovered"
 					[class.has-value]="form.get('imageFile')?.value">
 					<span class="file-upload-label">Upload Image</span>
 					<input type="file" #imageInput class="file-input" accept="image/*"
+						aria-label="Upload campaign image"
 						(change)="onFileSelected($event, 'imageFile', ['.jpg', '.jpeg', '.png'])">
 					@if (form.get('imageFile')?.value) {
-					<span class="file-clear-icon" (click)="clearFile('imageFile', imageInput)"
+					<span class="file-clear-icon" (click)="clearFile('imageFile', imageInput); $event.preventDefault()"
 						(mouseenter)="isImageClearHovered = true" (mouseleave)="isImageClearHovered = false"
-						matTooltip="Remove image">
+						matTooltip="Remove image" role="button" aria-label="Remove image" tabindex="0">
 						<mat-icon>close</mat-icon>
 					</span>
 					}
-				</div>
+				</label>
 				@if (form.get('imageFile')?.hasError('invalidFormat')) {
 				<span class="file-error">Please upload a JPG or PNG file</span>
 				}
 			</div>
 
 			<div class="file-column">
-				<div class="file-upload-wrapper" matTooltip="Select a campaign PDF to upload (PDF only)"
+				<label class="file-upload-wrapper" matTooltip="Select a campaign PDF to upload (PDF only)"
 					[matTooltipDisabled]="isPdfClearHovered"
 					[class.has-value]="form.get('pdfFile')?.value">
 					<span class="file-upload-label">Upload PDF</span>
 					<input type="file" #pdfInput class="file-input" accept=".pdf"
+						aria-label="Upload campaign PDF"
 						(change)="onFileSelected($event, 'pdfFile', ['.pdf'])">
 					@if (form.get('pdfFile')?.value) {
-					<span class="file-clear-icon" (click)="clearFile('pdfFile', pdfInput)"
+					<span class="file-clear-icon" (click)="clearFile('pdfFile', pdfInput); $event.preventDefault()"
 						(mouseenter)="isPdfClearHovered = true" (mouseleave)="isPdfClearHovered = false"
-						matTooltip="Remove PDF">
+						matTooltip="Remove PDF" role="button" aria-label="Remove PDF" tabindex="0">
 						<mat-icon>close</mat-icon>
 					</span>
 					}
-				</div>
+				</label>
 				@if (form.get('pdfFile')?.hasError('invalidFormat')) {
 				<span class="file-error">Please upload a PDF file</span>
 				}
@@ -154,16 +186,20 @@
 			<mat-form-field appearance="outline" matTooltip="Paste a valid URL">
 				<mat-label>Campaign URL</mat-label>
 				<input matInput type="url" formControlName="urlLink" placeholder="https://example.com" />
-				@if (form.get('urlLink')?.hasError('pattern')) {
-				<mat-error>Please enter a valid URL</mat-error>
+				@if (form.get('urlLink')?.invalid && (form.get('urlLink')?.dirty || form.get('urlLink')?.touched)) {
+					@if (form.get('urlLink')?.hasError('pattern')) {
+					<mat-error>Please enter a valid URL</mat-error>
+					}
 				}
 			</mat-form-field>
 
 			<mat-form-field appearance="outline" matTooltip="Paste a valid video URL">
 				<mat-label>Campaign Video URL</mat-label>
 				<input matInput type="url" formControlName="videoLink" placeholder="https://example.com/video" />
-				@if (form.get('videoLink')?.hasError('pattern')) {
-				<mat-error>Please enter a valid URL</mat-error>
+				@if (form.get('videoLink')?.invalid && (form.get('videoLink')?.dirty || form.get('videoLink')?.touched)) {
+					@if (form.get('videoLink')?.hasError('pattern')) {
+					<mat-error>Please enter a valid URL</mat-error>
+					}
 				}
 			</mat-form-field>
 		</div>
@@ -184,6 +220,9 @@
 			<mat-form-field appearance="outline" matTooltip="Total properties in this campaign">
 				<mat-label>Number of Properties</mat-label>
 				<input matInput formControlName="numberOfProperties" placeholder="e.g. 25" />
+				@if (form.get('numberOfProperties')?.hasError('pattern')) {
+				<mat-error>Please enter a valid number</mat-error>
+				}
 			</mat-form-field>
 
 			<mat-form-field appearance="outline" matTooltip="Select price variance band">

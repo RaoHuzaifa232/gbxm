@@ -1,4 +1,5 @@
-import { ApplicationConfig, provideExperimentalZonelessChangeDetection } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom, provideExperimentalZonelessChangeDetection } from '@angular/core';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { PreloadAllModules, provideRouter, withPreloading } from '@angular/router';
@@ -9,6 +10,7 @@ export const appConfig: ApplicationConfig = {
     provideExperimentalZonelessChangeDetection(),
     provideRouter(routes, withPreloading(PreloadAllModules)),
     provideAnimationsAsync(),
-    provideClientHydration(withEventReplay())
+    provideClientHydration(withEventReplay()),
+    importProvidersFrom(MatSnackBarModule)
   ]
 };

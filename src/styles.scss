@@ -89,7 +89,9 @@ body {
         opacity: 1 !important;
     }
 
-    .mdc-text-field, .mdc-notched-outline, .mdc-notched-outline > div {
+    .mdc-text-field,
+    .mdc-notched-outline,
+    .mdc-notched-outline>div {
         border-color: #{variables.$color-field-border-filled} !important;
     }
 }
@@ -107,4 +109,23 @@ body {
 /* Global Border Radius for Dialogs */
 .mat-mdc-dialog-container .mdc-dialog__surface {
     border-radius: 6px !important;
+}
+
+/* Toast Styles */
+.toast-success {
+    --mdc-snackbar-container-color: #{variables.$color-toast-success};
+    --mat-snack-bar-button-color: #{variables.$color-text-inverse};
+    --mdc-snackbar-supporting-text-color: #{variables.$color-text-inverse};
+}
+
+.toast-error {
+    --mdc-snackbar-container-color: #{variables.$color-toast-error};
+    --mat-snack-bar-button-color: #{variables.$color-text-inverse};
+    --mdc-snackbar-supporting-text-color: #{variables.$color-text-inverse};
+}
+
+.toast-info {
+    --mdc-snackbar-container-color: #{variables.$color-toast-info};
+    --mat-snack-bar-button-color: #{variables.$color-text-inverse};
+    --mdc-snackbar-supporting-text-color: #{variables.$color-text-inverse};
 }

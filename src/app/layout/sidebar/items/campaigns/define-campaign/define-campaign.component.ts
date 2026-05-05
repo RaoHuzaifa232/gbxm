@@ -1,22 +1,20 @@
-import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, inject, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroupDirective, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatNativeDateModule } from '@angular/material/core';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { ToastService } from '@gbxm/core/services/toast.service';
 
 @Component({
   selector: 'app-define-campaign',
-  standalone: true,
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
@@ -35,6 +33,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 })
 export class DefineCampaignComponent {
   private fb = inject(FormBuilder);
+  private toast = inject(ToastService);
+
+  @ViewChild(FormGroupDirective) formDirective!: FormGroupDirective;
 
   typeOptions = ['Agent Specific', 'Geographic', 'Brand/Syndicate', 'Thematic'];
   directorOptions = ['Kim Powley', 'Ava Brooks', 'Jordan Lee'];
@@ -56,7 +57,7 @@ export class DefineCampaignComponent {
     '60%',
     '80%',
     '90%',
-    '100% '
+    '100%'
   ];
   successFeeOptions = ['3%', '5%', '10%', '15%', '20%', '25%'];
 
@@ -79,7 +80,7 @@ export class DefineCampaignComponent {
     videoLink: ['', Validators.pattern('https?://.+')],
     notesInternal: [''],
     notesExternal: [''],
-    numberOfProperties: [''],
+    numberOfProperties: ['', [Validators.pattern('^[0-9]*$')]],
     productPriceVary: [null],
     agentSuccessFee: [null],
     dateInitiated: [null]
@@ -118,9 +119,13 @@ export class DefineCampaignComponent {
   onSave() {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
+      this.toast.error('Please fix the errors in the form.');
       return;
     }
-    console.log('Define campaign saved', this.form.value);
+    this.toast.success('Campaign saved successfully!');
+
+    // resetForm() clears values AND the "submitted" state, which prevents error messages from showing
+    this.formDirective.resetForm();
   }
 
 }

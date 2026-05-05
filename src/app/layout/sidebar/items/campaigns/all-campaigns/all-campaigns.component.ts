@@ -9,7 +9,6 @@ import { MatTableModule } from '@angular/material/table';
 
 @Component({
   selector: 'app-all-campaigns',
-  standalone: true,
   imports: [
     CommonModule,
     MatButtonModule,

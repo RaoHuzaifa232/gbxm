@@ -10,7 +10,6 @@ import { map } from 'rxjs';
 
 @Component({
   selector: 'app-main-layout',
-  standalone: true,
   imports: [RouterOutlet, HeaderComponent, SidebarComponent, MatSidenavModule, MatIcon],
   templateUrl: './main-layout.component.html',
   styleUrl: './main-layout.component.scss',

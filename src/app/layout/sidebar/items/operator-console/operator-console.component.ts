@@ -1,17 +1,16 @@
-import { ChangeDetectionStrategy, Component, inject, TemplateRef, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, inject, TemplateRef, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-operator-console',
-  standalone: true,
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -56,7 +55,7 @@ export class OperatorConsoleComponent {
     if (file) {
       const fileName = file.name.toLowerCase();
       const isValid = allowedExtensions.some(ext => fileName.endsWith(ext.toLowerCase()));
-      
+
       if (isValid) {
         this.profileForm.patchValue({ [controlName]: file });
         this.profileForm.get(controlName)?.setErrors(null);

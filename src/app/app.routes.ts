@@ -7,6 +7,10 @@ export const routes: Routes = [
     component: MainLayoutComponent,
     children: [
       {
+        path: 'dashboard',
+        loadComponent: () => import('@gbxm/pages/dashboard/dashboard.component').then(m => m.DashboardComponent)
+      },
+      {
         path: 'operator-console/edit-my-profile',
         loadComponent: () => import('@gbxm/items/operator-console/operator-console.component').then(m => m.OperatorConsoleComponent)
       },
@@ -25,14 +29,14 @@ export const routes: Routes = [
         ]
       },
       {
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'full'
+      },
+      {
         path: '**',
         loadComponent: () => import('@gbxm/pages/not-found/not-found.component').then(m => m.NotFoundComponent)
       }
-      // {
-      //   path: '',
-      //   redirectTo: 'operator-console',
-      //   pathMatch: 'full'
-      // }
     ]
   }
 ];
