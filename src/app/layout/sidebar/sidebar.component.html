@@ -40,109 +40,31 @@
                 <mat-panel-title>Campaigns</mat-panel-title>
             </mat-expansion-panel-header>
             <mat-nav-list>
-                <mat-expansion-panel class="sidebar__group" routerLinkActive #rlaAllCampaigns="routerLinkActive"
-                    [expanded]="rlaAllCampaigns.isActive">
-                    <mat-expansion-panel-header>
-                        <mat-panel-title>
-                            <span class="sidebar__icon" style="--icon-url: url('./assets/icons/holiday_village.svg');"
-                                aria-hidden="true"></span>
-                            <span>View All Campaigns</span>
-                        </mat-panel-title>
-                    </mat-expansion-panel-header>
-                    <mat-nav-list>
-                        <a mat-list-item (click)="onItemClick()" routerLink="/campaigns/all-campaigns"
-                            routerLinkActive="active">
-                            <span class="sidebar__icon" style="--icon-url: url('./assets/icons/holiday_village.svg');"
-                                aria-hidden="true"></span>
-                            <span>All Campaigns</span>
-                        </a>
-                        <a mat-list-item (click)="onItemClick()" href="#">
-                            <span class="sidebar__icon"
-                                style="--icon-url: url('./assets/icons/quick_reference_all.svg');"
-                                aria-hidden="true"></span>
-                            <span>Define Campaigns</span>
-                        </a>
-                        <a mat-list-item (click)="onItemClick()" href="#">
-                            <span class="sidebar__icon" style="--icon-url: url('./assets/icons/note_add.svg');"
-                                aria-hidden="true"></span>
-                            <span>Agent Specific</span>
-                        </a>
-                        <a mat-list-item (click)="onItemClick()" href="#">
-                            <span class="sidebar__icon"
-                                style="--icon-url: url('./assets/icons/source_environment.svg');"
-                                aria-hidden="true"></span>
-                            <span>Brand/Syndicate</span>
-                        </a>
-                        <mat-expansion-panel class="sidebar__group">
-                            <mat-expansion-panel-header>
-                                <mat-panel-title>Geographic</mat-panel-title>
-                            </mat-expansion-panel-header>
-                            <mat-nav-list>
-                                <a mat-list-item (click)="onItemClick()" href="#">
-                                    <!-- <span class="sidebar__icon" style="--icon-url: url('./assets/icons/');"
-                                        aria-hidden="true"></span> -->
-                                    <span>Upload Geo Data</span>
-                                </a>
-                                <a mat-list-item (click)="onItemClick()" href="#">
-                                    <!-- <span class="sidebar__icon" style="--icon-url: url('./assets/icons/');"
-                                        aria-hidden="true"></span> -->
-                                    <span>Choose Geography</span>
-                                </a>
-                            </mat-nav-list>
-                        </mat-expansion-panel>
-                    </mat-nav-list>
-                </mat-expansion-panel>
-                <mat-expansion-panel class="sidebar__group">
-                    <mat-expansion-panel-header>
-                        <mat-panel-title>
-                            <span class="sidebar__icon" style="--icon-url: url('./assets/icons/note_add.svg');"
-                                aria-hidden="true"></span>
-                            <span>Add Pick Lists</span>
-                        </mat-panel-title>
-                    </mat-expansion-panel-header>
-                    <mat-nav-list>
-                        <a mat-list-item (click)="onItemClick()" href="#">
-                            <!--  <span class="sidebar__icon" style="--icon-url: url('./assets/icons/');"
-                                aria-hidden="true"></span> -->
-                            <span>Upload Campaign Data</span>
-                        </a>
-                    </mat-nav-list>
-                </mat-expansion-panel>
-                <mat-expansion-panel class="sidebar__group">
-                    <mat-expansion-panel-header>
-                        <mat-panel-title>My Campaigns Draft</mat-panel-title>
-                    </mat-expansion-panel-header>
-                    <mat-nav-list>
-                        <a mat-list-item (click)="onItemClick()" href="#">
-                            <!--  <span class="sidebar__icon" style="--icon-url: url('./assets/icons/');"
-                                aria-hidden="true"></span> -->
-                            <span>Detail Campaign View</span>
-                        </a>
-                        <a mat-list-item (click)="onItemClick()" href="#">
-                            <!--  <span class="sidebar__icon" style="--icon-url: url('./assets/icons/');"
-                                aria-hidden="true"></span> -->
-                            <span>Detail Property View</span>
-                        </a>
-                    </mat-nav-list>
-                </mat-expansion-panel>
-                <a mat-list-item (click)="onItemClick()" href="#">
-                    <!-- <span class="sidebar__icon" style="--icon-url: url('./assets/icons/');"
-                        aria-hidden="true"></span> -->
-                    <span>My Campaigns All</span>
+                <a mat-list-item (click)="onItemClick()" routerLink="/campaigns/all-campaigns"
+                    routerLinkActive="active">
+                    <span class="sidebar__icon" style="--icon-url: url('./assets/icons/holiday_village.svg');"
+                        aria-hidden="true"></span>
+                    <span>All Campaigns</span>
+                </a>
+                <a mat-list-item (click)="onItemClick()" routerLink="/campaigns/define-campaign"
+                    routerLinkActive="active">
+                    <span class="sidebar__icon" style="--icon-url: url('./assets/icons/quick_reference_all.svg');"
+                        aria-hidden="true"></span>
+                    <span>Define Campaigns</span>
                 </a>
                 <a mat-list-item (click)="onItemClick()" href="#">
-                    <!-- <span class="sidebar__icon" style="--icon-url: url('./assets/icons/');"
-                        aria-hidden="true"></span> -->
-                    <span>My Campaigns Live</span>
+                    <span class="sidebar__icon" style="--icon-url: url('./assets/icons/note_add.svg');"
+                        aria-hidden="true"></span>
+                    <span>Add Pick Lists</span>
                 </a>
                 <a mat-list-item (click)="onItemClick()" href="#">
-                    <!-- <span class="sidebar__icon" style="--icon-url: url('./assets/icons/');"
-                        aria-hidden="true"></span> -->
-                    <span>Thematic</span>
+                    <span class="sidebar__icon" style="--icon-url: url('./assets/icons/source_environment.svg');"
+                        aria-hidden="true"></span>
+                    <span>My Campaigns</span>
                 </a>
                 <a mat-list-item (click)="onItemClick()" href="#">
-                    <!-- <span class="sidebar__icon" style="--icon-url: url('./assets/icons/');"
-                        aria-hidden="true"></span> -->
+                    <span class="sidebar__icon" style="--icon-url: url('./assets/icons/real-estate-property.svg');"
+                        aria-hidden="true"></span>
                     <span>Access Property View</span>
                 </a>
             </mat-nav-list>

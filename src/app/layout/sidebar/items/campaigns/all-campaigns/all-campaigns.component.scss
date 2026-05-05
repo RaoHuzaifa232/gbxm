@@ -1,9 +1,11 @@
 @use '@gbxm/styles/_variables.scss' as *;
+@use '@gbxm/styles/_header-card.scss' as *;
 
 .campaigns__filters {
 	padding: 16px 20px 8px 20px;
 	border-bottom: 1px solid $color-divider;
 }
+
 
 .campaigns__table {
 	padding: 0 20px 8px 20px;

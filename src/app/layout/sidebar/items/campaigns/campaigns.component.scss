@@ -1,14 +1,8 @@
 @use '@gbxm/styles/_variables.scss' as *;
+@use '@gbxm/styles/_page-titles.scss' as *;
 
 .campaigns {
 	color: $color-text-primary;
-
-	&__page-title {
-		margin: 0 0 16px 0;
-		font-size: 24px;
-		font-weight: 500;
-		line-height: 32px;
-	}
 
 	&__card {
 		background: #ffffff;

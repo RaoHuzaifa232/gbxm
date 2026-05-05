@@ -1,0 +1,217 @@
+<section class="define-campaign">
+	<header class="card__header">
+		<h2>Define Campaigns</h2>
+		<button mat-flat-button class="define-campaign__save" type="button" (click)="onSave()">Save</button>
+	</header>
+
+	<form class="define-campaign__form" [formGroup]="form">
+		<div class="grid grid--2">
+			<mat-form-field appearance="outline" matTooltip="Choose the campaign type">
+				<mat-label>Select Type</mat-label>
+				<mat-select formControlName="type">
+					@for (item of typeOptions; track item) {
+					<mat-option [value]="item">{{ item }}</mat-option>
+					}
+				</mat-select>
+			</mat-form-field>
+
+			<mat-form-field appearance="outline" matTooltip="Enter the campaign name">
+				<mat-label>Name of Campaign</mat-label>
+				<input matInput formControlName="name" placeholder="e.g. Southeast Asia Resorts" />
+			</mat-form-field>
+		</div>
+
+		<div class="grid grid--2">
+			<mat-form-field appearance="outline" matTooltip="Short internal descriptor">
+				<mat-label>Optional Descriptor</mat-label>
+				<input matInput formControlName="descriptor" placeholder="e.g. Resorts in Frank Brown's network" />
+			</mat-form-field>
+
+			<mat-form-field appearance="outline" matTooltip="Unique campaign identifier">
+				<mat-label>Campaign ID</mat-label>
+				<input matInput formControlName="campaignId" placeholder="e.g. 00001" />
+			</mat-form-field>
+		</div>
+
+		<div class="grid grid--2">
+			<mat-form-field appearance="outline" matTooltip="Short marketing tagline">
+				<mat-label>Optional Tagline</mat-label>
+				<input matInput formControlName="tagline" placeholder="e.g. Win in online reputation" />
+			</mat-form-field>
+
+			<mat-form-field appearance="outline" matTooltip="Select the license manager">
+				<mat-label>License Manager</mat-label>
+				<mat-select formControlName="licenseManager">
+					@for (item of licenseManagerOptions; track item) {
+					<mat-option [value]="item">{{ item }}</mat-option>
+					}
+				</mat-select>
+			</mat-form-field>
+		</div>
+
+		<div class="grid grid--2">
+			<mat-form-field appearance="outline" matTooltip="Select the director">
+				<mat-label>Select Director</mat-label>
+				<mat-select formControlName="director">
+					@for (item of directorOptions; track item) {
+					<mat-option [value]="item">{{ item }}</mat-option>
+					}
+				</mat-select>
+			</mat-form-field>
+
+			<mat-form-field appearance="outline" matTooltip="Select the campaign lead">
+				<mat-label>Campaign Lead</mat-label>
+				<mat-select formControlName="campaignLead">
+					@for (item of campaignLeadOptions; track item) {
+					<mat-option [value]="item">{{ item }}</mat-option>
+					}
+				</mat-select>
+			</mat-form-field>
+		</div>
+
+		<div class="grid grid--2">
+			<mat-form-field appearance="outline" matTooltip="Select the data collator">
+				<mat-label>Select data collator</mat-label>
+				<mat-select formControlName="dataCollator">
+					@for (item of dataCollatorOptions; track item) {
+					<mat-option [value]="item">{{ item }}</mat-option>
+					}
+				</mat-select>
+			</mat-form-field>
+
+			<mat-form-field appearance="outline" matTooltip="Select the associate representative">
+				<mat-label>Associate Representative</mat-label>
+				<mat-select formControlName="associateRep">
+					@for (item of associateRepOptions; track item) {
+					<mat-option [value]="item">{{ item }}</mat-option>
+					}
+				</mat-select>
+			</mat-form-field>
+		</div>
+
+		<div class="grid grid--2 align-center">
+			<div class="radio-group" matTooltip="Choose whether this campaign is self licensed">
+				<label class="radio-group__label">Self Licensing</label>
+				<mat-radio-group formControlName="selfLicensing">
+					<mat-radio-button value="yes">Yes</mat-radio-button>
+					<mat-radio-button value="no">No</mat-radio-button>
+				</mat-radio-group>
+			</div>
+
+			<mat-form-field appearance="outline" matTooltip="Select the license type">
+				<mat-label>Select License</mat-label>
+				<mat-select formControlName="licenseType">
+					@for (item of licenseOptions; track item) {
+					<mat-option [value]="item">{{ item }}</mat-option>
+					}
+				</mat-select>
+			</mat-form-field>
+		</div>
+
+		<div class="grid grid--2">
+			<div class="file-column">
+				<div class="file-upload-wrapper" matTooltip="Select a campaign image to upload (JPG, PNG only)"
+					[matTooltipDisabled]="isImageClearHovered"
+					[class.has-value]="form.get('imageFile')?.value">
+					<span class="file-upload-label">Upload Image</span>
+					<input type="file" #imageInput class="file-input" accept="image/*"
+						(change)="onFileSelected($event, 'imageFile', ['.jpg', '.jpeg', '.png'])">
+					@if (form.get('imageFile')?.value) {
+					<span class="file-clear-icon" (click)="clearFile('imageFile', imageInput)"
+						(mouseenter)="isImageClearHovered = true" (mouseleave)="isImageClearHovered = false"
+						matTooltip="Remove image">
+						<mat-icon>close</mat-icon>
+					</span>
+					}
+				</div>
+				@if (form.get('imageFile')?.hasError('invalidFormat')) {
+				<span class="file-error">Please upload a JPG or PNG file</span>
+				}
+			</div>
+
+			<div class="file-column">
+				<div class="file-upload-wrapper" matTooltip="Select a campaign PDF to upload (PDF only)"
+					[matTooltipDisabled]="isPdfClearHovered"
+					[class.has-value]="form.get('pdfFile')?.value">
+					<span class="file-upload-label">Upload PDF</span>
+					<input type="file" #pdfInput class="file-input" accept=".pdf"
+						(change)="onFileSelected($event, 'pdfFile', ['.pdf'])">
+					@if (form.get('pdfFile')?.value) {
+					<span class="file-clear-icon" (click)="clearFile('pdfFile', pdfInput)"
+						(mouseenter)="isPdfClearHovered = true" (mouseleave)="isPdfClearHovered = false"
+						matTooltip="Remove PDF">
+						<mat-icon>close</mat-icon>
+					</span>
+					}
+				</div>
+				@if (form.get('pdfFile')?.hasError('invalidFormat')) {
+				<span class="file-error">Please upload a PDF file</span>
+				}
+			</div>
+		</div>
+
+		<div class="grid grid--2">
+			<mat-form-field appearance="outline" matTooltip="Paste a valid URL">
+				<mat-label>Campaign URL</mat-label>
+				<input matInput type="url" formControlName="urlLink" placeholder="https://example.com" />
+				@if (form.get('urlLink')?.hasError('pattern')) {
+				<mat-error>Please enter a valid URL</mat-error>
+				}
+			</mat-form-field>
+
+			<mat-form-field appearance="outline" matTooltip="Paste a valid video URL">
+				<mat-label>Campaign Video URL</mat-label>
+				<input matInput type="url" formControlName="videoLink" placeholder="https://example.com/video" />
+				@if (form.get('videoLink')?.hasError('pattern')) {
+				<mat-error>Please enter a valid URL</mat-error>
+				}
+			</mat-form-field>
+		</div>
+
+		<div class="grid grid--2">
+			<mat-form-field appearance="outline" matTooltip="Internal notes visible to staff">
+				<mat-label>Notes Internal</mat-label>
+				<textarea matInput rows="3" formControlName="notesInternal" placeholder="Add internal notes"></textarea>
+			</mat-form-field>
+
+			<mat-form-field appearance="outline" matTooltip="External notes visible to clients">
+				<mat-label>Notes External</mat-label>
+				<textarea matInput rows="3" formControlName="notesExternal" placeholder="Add external notes"></textarea>
+			</mat-form-field>
+		</div>
+
+		<div class="grid grid--2">
+			<mat-form-field appearance="outline" matTooltip="Total properties in this campaign">
+				<mat-label>Number of Properties</mat-label>
+				<input matInput formControlName="numberOfProperties" placeholder="e.g. 25" />
+			</mat-form-field>
+
+			<mat-form-field appearance="outline" matTooltip="Select price variance band">
+				<mat-label>Product Price Vary %</mat-label>
+				<mat-select formControlName="productPriceVary">
+					@for (item of priceVaryOptions; track item) {
+					<mat-option [value]="item">{{ item }}</mat-option>
+					}
+				</mat-select>
+			</mat-form-field>
+		</div>
+
+		<div class="grid grid--2">
+			<mat-form-field appearance="outline" matTooltip="Select agent success fee">
+				<mat-label>Agent Success Fee%</mat-label>
+				<mat-select formControlName="agentSuccessFee">
+					@for (item of successFeeOptions; track item) {
+					<mat-option [value]="item">{{ item }}</mat-option>
+					}
+				</mat-select>
+			</mat-form-field>
+
+			<mat-form-field appearance="outline" matTooltip="Choose the initiation date">
+				<mat-label>Date Initiated</mat-label>
+				<input matInput [matDatepicker]="datePicker" formControlName="dateInitiated" placeholder="DD / MM / YYYY" />
+				<mat-datepicker-toggle matIconSuffix [for]="datePicker"></mat-datepicker-toggle>
+				<mat-datepicker #datePicker></mat-datepicker>
+			</mat-form-field>
+		</div>
+	</form>
+</section>

@@ -16,7 +16,11 @@ export const routes: Routes = [
         children: [
           {
             path: 'all-campaigns',
-            loadComponent: () => import('@gbxm/items/campaigns/view-all-campaigns/all-campaigns/all-campaigns.component').then(m => m.AllCampaignsComponent)
+            loadComponent: () => import('@gbxm/layout/sidebar/items/campaigns/all-campaigns/all-campaigns.component').then(m => m.AllCampaignsComponent)
+          },
+          {
+            path: 'define-campaign',
+            loadComponent: () => import('@gbxm/layout/sidebar/items/campaigns/define-campaign/define-campaign.component').then(m => m.DefineCampaignComponent)
           }
         ]
       },
