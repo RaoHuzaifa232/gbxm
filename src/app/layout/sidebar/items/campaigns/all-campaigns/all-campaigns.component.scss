@@ -8,13 +8,13 @@
 
 
 .campaigns__table {
-	padding: 0 20px 8px 20px;
+	padding: 0 24px 56px 24px;
 }
 
 .campaigns__mat-table {
 	width: 100%;
 	border-collapse: collapse;
-    background-color: transparent;
+	background-color: transparent;
 
 	.mat-mdc-header-row,
 	.mat-mdc-row {
@@ -25,19 +25,22 @@
 	}
 
 	.mat-mdc-header-row {
-		padding: 10px 0;
-		font-size: 12px;
-		font-weight: 600;
+		font-size: 14px;
+		font-weight: 500 !important;
 		letter-spacing: 0.2px;
+		line-height: 24px;
 		color: $color-text-tertiary;
 		border-bottom: 1px solid $color-divider;
+		max-height: 56px;
 	}
 
 	.mat-mdc-row {
-		padding: 12px 0;
 		border-bottom: 1px solid $color-divider;
 		font-size: 14px;
+		font-weight: 400;
+		letter-spacing: 0.17px;
 		color: $color-text-primary;
+		max-height: 52px;
 	}
 
 	.mat-mdc-header-cell,
@@ -45,7 +48,7 @@
 		padding: 0 4px;
 		border-bottom: none;
 		white-space: nowrap;
-        color: $color-text-primary;
+		color: $color-text-primary;
 	}
 
 	.mat-mdc-cell {
@@ -93,6 +96,13 @@
 		--mdc-radio-selected-pressed-icon-color: #{$color-action-primary};
 		--mdc-radio-unselected-icon-color: #{$color-border-muted};
 		--mdc-radio-unselected-pressed-icon-color: #{$color-border-muted};
+
+		::ng-deep .mdc-label {
+			color: $color-text-primary;
+			font-size: 16px;
+			font-weight: 400;
+			letter-spacing: 0.15px;
+		}
 	}
 
 	&__checkbox {
@@ -100,6 +110,13 @@
 		--mdc-checkbox-selected-checkmark-color: #ffffff;
 		--mdc-checkbox-selected-icon-color: #{$color-action-primary};
 		--mdc-checkbox-unselected-icon-color: #{$color-border-muted};
+
+		::ng-deep .mdc-label {
+			color: $color-text-primary;
+			font-size: 16px;
+			font-weight: 400;
+			letter-spacing: 0.15px;
+		}
 	}
 }
 
@@ -143,6 +160,7 @@
 	}
 
 	.campaigns__mat-table {
+
 		.mat-mdc-header-row,
 		.mat-mdc-row {
 			grid-template-columns: 90px 1fr 1fr 1fr 60px 40px;
@@ -152,6 +170,7 @@
 
 @media (max-width: 720px) {
 	.campaigns__mat-table {
+
 		.mat-mdc-header-row,
 		.mat-mdc-row {
 			grid-template-columns: 80px 1fr 1fr 1fr;

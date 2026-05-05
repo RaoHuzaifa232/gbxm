@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, TemplateRef, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ToastService } from '@gbxm/core/services/toast.service';
+import { FormBuilder, FormControl, FormGroup, FormGroupDirective, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
@@ -29,8 +30,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 export class OperatorConsoleComponent {
   private fb = inject(FormBuilder);
   private dialog = inject(MatDialog);
+  private toast = inject(ToastService);
 
   @ViewChild('aboutMeDialog') aboutMeDialog!: TemplateRef<any>;
+  @ViewChild(FormGroupDirective) formDirective!: FormGroupDirective;
 
   tempAboutMe = new FormControl('');
 
@@ -85,7 +88,7 @@ export class OperatorConsoleComponent {
     operator: [{ value: 'Associate Representative', disabled: true }],
     userId: [{ value: '36574', disabled: true }],
     personalEmail: ['', [Validators.required, Validators.email]],
-    cellAndText: ['', Validators.required],
+    cellAndText: ['', [Validators.required, Validators.pattern('^\\+?[0-9\\s\\-\\(\\)]+$')]],
 
     // Section 2
     contactEmail: [{ value: 'licensingM01@gbxm.com', disabled: true }, [Validators.required, Validators.email]],
@@ -107,13 +110,20 @@ export class OperatorConsoleComponent {
 
   onSubmit() {
     if (this.profileForm.valid) {
-      console.log('Form Submitted', this.profileForm.value);
+      this.toast.success('Profile updated successfully!');
+      this.formDirective.resetForm();
     } else {
       this.profileForm.markAllAsTouched();
+      this.toast.error('Please fix the errors in the form.');
     }
   }
 
   onSave() {
-    console.log('Form Saved', this.profileForm.value);
+    if (this.profileForm.valid) {
+      this.toast.success('Changes saved successfully!');
+    } else {
+      this.profileForm.markAllAsTouched();
+      this.toast.error('Please fix the errors in the form before saving.');
+    }
   }
 }

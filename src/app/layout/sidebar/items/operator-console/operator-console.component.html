@@ -67,6 +67,9 @@
                 @if (profileForm.get('cellAndText')?.hasError('required')) {
                 <mat-error>Cell & Text is required</mat-error>
                 }
+                @if (profileForm.get('cellAndText')?.hasError('pattern')) {
+                <mat-error>Invalid phone number format</mat-error>
+                }
             </mat-form-field>
         </div>
 

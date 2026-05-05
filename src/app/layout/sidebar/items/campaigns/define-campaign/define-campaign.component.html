@@ -141,8 +141,7 @@
 		<div class="grid grid--2">
 			<div class="file-column">
 				<label class="file-upload-wrapper" matTooltip="Select a campaign image to upload (JPG, PNG only)"
-					[matTooltipDisabled]="isImageClearHovered"
-					[class.has-value]="form.get('imageFile')?.value">
+					[matTooltipDisabled]="isImageClearHovered" [class.has-value]="form.get('imageFile')?.value">
 					<span class="file-upload-label">Upload Image</span>
 					<input type="file" #imageInput class="file-input" accept="image/*"
 						aria-label="Upload campaign image"
@@ -162,11 +161,9 @@
 
 			<div class="file-column">
 				<label class="file-upload-wrapper" matTooltip="Select a campaign PDF to upload (PDF only)"
-					[matTooltipDisabled]="isPdfClearHovered"
-					[class.has-value]="form.get('pdfFile')?.value">
+					[matTooltipDisabled]="isPdfClearHovered" [class.has-value]="form.get('pdfFile')?.value">
 					<span class="file-upload-label">Upload PDF</span>
-					<input type="file" #pdfInput class="file-input" accept=".pdf"
-						aria-label="Upload campaign PDF"
+					<input type="file" #pdfInput class="file-input" accept=".pdf" aria-label="Upload campaign PDF"
 						(change)="onFileSelected($event, 'pdfFile', ['.pdf'])">
 					@if (form.get('pdfFile')?.value) {
 					<span class="file-clear-icon" (click)="clearFile('pdfFile', pdfInput); $event.preventDefault()"
@@ -187,19 +184,20 @@
 				<mat-label>Campaign URL</mat-label>
 				<input matInput type="url" formControlName="urlLink" placeholder="https://example.com" />
 				@if (form.get('urlLink')?.invalid && (form.get('urlLink')?.dirty || form.get('urlLink')?.touched)) {
-					@if (form.get('urlLink')?.hasError('pattern')) {
-					<mat-error>Please enter a valid URL</mat-error>
-					}
+				@if (form.get('urlLink')?.hasError('pattern')) {
+				<mat-error>Please enter a valid URL</mat-error>
+				}
 				}
 			</mat-form-field>
 
 			<mat-form-field appearance="outline" matTooltip="Paste a valid video URL">
 				<mat-label>Campaign Video URL</mat-label>
 				<input matInput type="url" formControlName="videoLink" placeholder="https://example.com/video" />
-				@if (form.get('videoLink')?.invalid && (form.get('videoLink')?.dirty || form.get('videoLink')?.touched)) {
-					@if (form.get('videoLink')?.hasError('pattern')) {
-					<mat-error>Please enter a valid URL</mat-error>
-					}
+				@if (form.get('videoLink')?.invalid && (form.get('videoLink')?.dirty || form.get('videoLink')?.touched))
+				{
+				@if (form.get('videoLink')?.hasError('pattern')) {
+				<mat-error>Please enter a valid URL</mat-error>
+				}
 				}
 			</mat-form-field>
 		</div>
@@ -235,7 +233,7 @@
 			</mat-form-field>
 		</div>
 
-		<div class="grid grid--2">
+		<div class="grid grid--2" style="margin-bottom: 0px;">
 			<mat-form-field appearance="outline" matTooltip="Select agent success fee">
 				<mat-label>Agent Success Fee%</mat-label>
 				<mat-select formControlName="agentSuccessFee">
@@ -247,7 +245,8 @@
 
 			<mat-form-field appearance="outline" matTooltip="Choose the initiation date">
 				<mat-label>Date Initiated</mat-label>
-				<input matInput [matDatepicker]="datePicker" formControlName="dateInitiated" placeholder="DD / MM / YYYY" />
+				<input matInput [matDatepicker]="datePicker" formControlName="dateInitiated"
+					placeholder="DD / MM / YYYY" />
 				<mat-datepicker-toggle matIconSuffix [for]="datePicker"></mat-datepicker-toggle>
 				<mat-datepicker #datePicker></mat-datepicker>
 			</mat-form-field>

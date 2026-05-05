@@ -11,6 +11,10 @@ export const routes: Routes = [
         loadComponent: () => import('@gbxm/pages/dashboard/dashboard.component').then(m => m.DashboardComponent)
       },
       {
+        path: 'coming-soon',
+        loadComponent: () => import('@gbxm/pages/coming-soon/coming-soon.component').then(m => m.ComingSoonComponent)
+      },
+      {
         path: 'operator-console/edit-my-profile',
         loadComponent: () => import('@gbxm/items/operator-console/operator-console.component').then(m => m.OperatorConsoleComponent)
       },
