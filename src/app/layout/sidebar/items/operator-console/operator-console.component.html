@@ -149,39 +149,26 @@
 
         <div class="form-grid grid-2">
             <div class="file-column">
-                <div class="file-upload-wrapper" [class.has-value]="profileForm.get('picture')?.value"
-                    [matTooltipDisabled]="isPictureClearHovered"
-                    matTooltip="Select a profile picture to upload (JPG, PNG only)">
-                    <span class="file-upload-label">Upload Picture (PNG, JPG)</span>
-                    <input type="file" #pictureInput class="file-input" accept=".jpg,.jpeg,.png"
-                        (change)="onFileSelected($event, 'picture', ['.jpg', '.jpeg', '.png'])">
-                    @if (profileForm.get('picture')?.value) {
-                    <span class="file-clear-icon" (click)="clearFile('picture', pictureInput)"
-                        (mouseenter)="isPictureClearHovered = true" (mouseleave)="isPictureClearHovered = false"
-                        matTooltip="Remove picture">
-                        <mat-icon>close</mat-icon>
-                    </span>
-                    }
-                </div>
+                <app-file-upload 
+                    formControlName="picture"
+                    label="Upload Picture (PNG, JPG)" 
+                    accept=".jpg,.jpeg,.png"
+                    [allowedExtensions]="['.jpg', '.jpeg', '.png']"
+                    tooltip="Select a profile picture to upload (JPG, PNG only)">
+                </app-file-upload>
                 @if (profileForm.get('picture')?.hasError('invalidFormat')) {
                 <span class="file-error">Please upload a JPG or PNG file</span>
                 }
             </div>
 
             <div class="file-column">
-                <div class="file-upload-wrapper" [class.has-value]="profileForm.get('cv')?.value"
-                    [matTooltipDisabled]="isCVClearHovered" matTooltip="Select your CV document to upload (PDF only)">
-                    <span class="file-upload-label">Upload CV (PDF)</span>
-                    <input type="file" #cvInput class="file-input" accept=".pdf"
-                        (change)="onFileSelected($event, 'cv', ['.pdf'])">
-                    @if (profileForm.get('cv')?.value) {
-                    <span class="file-clear-icon" (click)="clearFile('cv', cvInput)"
-                        (mouseenter)="isCVClearHovered = true" (mouseleave)="isCVClearHovered = false"
-                        matTooltip="Remove CV">
-                        <mat-icon>close</mat-icon>
-                    </span>
-                    }
-                </div>
+                <app-file-upload 
+                    formControlName="cv"
+                    label="Upload CV (PDF)" 
+                    accept=".pdf"
+                    [allowedExtensions]="['.pdf']"
+                    tooltip="Select your CV document to upload (PDF only)">
+                </app-file-upload>
                 @if (profileForm.get('cv')?.hasError('invalidFormat')) {
                 <span class="file-error">Please upload a PDF file</span>
                 }

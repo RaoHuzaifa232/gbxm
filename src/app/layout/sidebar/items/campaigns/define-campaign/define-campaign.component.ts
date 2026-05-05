@@ -5,12 +5,12 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ToastService } from '@gbxm/core/services/toast.service';
+import { FileUploadComponent } from '@gbxm/shared/components/file-upload/file-upload.component';
 
 @Component({
   selector: 'app-define-campaign',
@@ -23,9 +23,9 @@ import { ToastService } from '@gbxm/core/services/toast.service';
     MatButtonModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatIconModule,
     MatDividerModule,
-    MatTooltipModule
+    MatTooltipModule,
+    FileUploadComponent
   ],
   templateUrl: './define-campaign.component.html',
   styleUrl: './define-campaign.component.scss',
@@ -86,35 +86,6 @@ export class DefineCampaignComponent {
     dateInitiated: [null]
   });
 
-  isImageClearHovered = false;
-  isPdfClearHovered = false;
-
-  onFileSelected(event: Event, controlName: string, allowedExtensions: string[]) {
-    const input = event.target as HTMLInputElement;
-    const file = input.files?.[0] ?? null;
-
-    if (!file) {
-      return;
-    }
-
-    const fileName = file.name.toLowerCase();
-    const isValid = allowedExtensions.some(ext => fileName.endsWith(ext));
-
-    if (isValid) {
-      this.form.patchValue({ [controlName]: file });
-      this.form.get(controlName)?.setErrors(null);
-    } else {
-      this.form.patchValue({ [controlName]: null });
-      this.form.get(controlName)?.setErrors({ invalidFormat: true });
-      input.value = '';
-    }
-  }
-
-  clearFile(controlName: string, inputElement: HTMLInputElement) {
-    this.form.patchValue({ [controlName]: null });
-    this.form.get(controlName)?.setErrors(null);
-    inputElement.value = '';
-  }
 
   onSave() {
     if (this.form.invalid) {

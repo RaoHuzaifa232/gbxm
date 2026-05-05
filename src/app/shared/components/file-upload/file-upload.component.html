@@ -1,0 +1,23 @@
+<div class="file-upload-wrapper" 
+     [class.has-value]="value()" 
+     [class.disabled]="disabled()"
+     [matTooltipDisabled]="isClearHovered()"
+     [matTooltip]="tooltip()">
+  <span class="file-upload-label">{{ label() }}</span>
+  <input type="file" 
+         #fileInput 
+         class="file-input" 
+         [accept]="accept()" 
+         [disabled]="disabled()"
+         (change)="onFileSelected($event)">
+  
+  @if (value()) {
+    <span class="file-clear-icon" 
+          (click)="clearFile($event)"
+          (mouseenter)="isClearHovered.set(true)" 
+          (mouseleave)="isClearHovered.set(false)"
+          matTooltip="Remove file">
+      <mat-icon>close</mat-icon>
+    </span>
+  }
+</div>

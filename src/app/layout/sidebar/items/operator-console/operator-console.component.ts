@@ -9,6 +9,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { FileUploadComponent } from '@gbxm/shared/components/file-upload/file-upload.component';
 
 @Component({
   selector: 'app-operator-console',
@@ -21,7 +22,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatDividerModule,
     MatTooltipModule,
     MatDialogModule,
-    MatIconModule
+    MatIconModule,
+    FileUploadComponent
   ],
   templateUrl: './operator-console.component.html',
   styleUrl: './operator-console.component.scss',
@@ -53,32 +55,6 @@ export class OperatorConsoleComponent {
     this.dialog.closeAll();
   }
 
-  onFileSelected(event: any, controlName: string, allowedExtensions: string[]) {
-    const file = event.target.files[0];
-    if (file) {
-      const fileName = file.name.toLowerCase();
-      const isValid = allowedExtensions.some(ext => fileName.endsWith(ext.toLowerCase()));
-
-      if (isValid) {
-        this.profileForm.patchValue({ [controlName]: file });
-        this.profileForm.get(controlName)?.setErrors(null);
-      } else {
-        this.profileForm.patchValue({ [controlName]: null });
-        this.profileForm.get(controlName)?.setErrors({ invalidFormat: true });
-        // Reset the input value so the same invalid file can't be "selected" again without trigger
-        event.target.value = '';
-      }
-    }
-  }
-
-  isPictureClearHovered = false;
-  isCVClearHovered = false;
-
-  clearFile(controlName: string, inputElement: HTMLInputElement) {
-    this.profileForm.patchValue({ [controlName]: null });
-    this.profileForm.get(controlName)?.setErrors(null);
-    inputElement.value = '';
-  }
 
   profileForm: FormGroup = this.fb.group({
     // Section 1

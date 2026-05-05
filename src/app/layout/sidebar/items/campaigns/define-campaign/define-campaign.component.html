@@ -140,39 +140,17 @@
 
 		<div class="grid grid--2">
 			<div class="file-column">
-				<label class="file-upload-wrapper" matTooltip="Select a campaign image to upload (JPG, PNG only)"
-					[matTooltipDisabled]="isImageClearHovered" [class.has-value]="form.get('imageFile')?.value">
-					<span class="file-upload-label">Upload Image</span>
-					<input type="file" #imageInput class="file-input" accept="image/*"
-						aria-label="Upload campaign image"
-						(change)="onFileSelected($event, 'imageFile', ['.jpg', '.jpeg', '.png'])">
-					@if (form.get('imageFile')?.value) {
-					<span class="file-clear-icon" (click)="clearFile('imageFile', imageInput); $event.preventDefault()"
-						(mouseenter)="isImageClearHovered = true" (mouseleave)="isImageClearHovered = false"
-						matTooltip="Remove image" role="button" aria-label="Remove image" tabindex="0">
-						<mat-icon>close</mat-icon>
-					</span>
-					}
-				</label>
+				<app-file-upload formControlName="imageFile" label="Upload Image" accept=".jpg,.jpeg,.png"
+					[allowedExtensions]="['.jpg', '.jpeg', '.png']"
+					tooltip="Select a campaign image to upload (JPG, PNG only)" />
 				@if (form.get('imageFile')?.hasError('invalidFormat')) {
 				<span class="file-error">Please upload a JPG or PNG file</span>
 				}
 			</div>
 
 			<div class="file-column">
-				<label class="file-upload-wrapper" matTooltip="Select a campaign PDF to upload (PDF only)"
-					[matTooltipDisabled]="isPdfClearHovered" [class.has-value]="form.get('pdfFile')?.value">
-					<span class="file-upload-label">Upload PDF</span>
-					<input type="file" #pdfInput class="file-input" accept=".pdf" aria-label="Upload campaign PDF"
-						(change)="onFileSelected($event, 'pdfFile', ['.pdf'])">
-					@if (form.get('pdfFile')?.value) {
-					<span class="file-clear-icon" (click)="clearFile('pdfFile', pdfInput); $event.preventDefault()"
-						(mouseenter)="isPdfClearHovered = true" (mouseleave)="isPdfClearHovered = false"
-						matTooltip="Remove PDF" role="button" aria-label="Remove PDF" tabindex="0">
-						<mat-icon>close</mat-icon>
-					</span>
-					}
-				</label>
+				<app-file-upload formControlName="pdfFile" label="Upload PDF" accept=".pdf"
+					[allowedExtensions]="['.pdf']" tooltip="Select a campaign PDF to upload (PDF only)" />
 				@if (form.get('pdfFile')?.hasError('invalidFormat')) {
 				<span class="file-error">Please upload a PDF file</span>
 				}

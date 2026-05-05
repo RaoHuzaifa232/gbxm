@@ -32,6 +32,9 @@
       ],
       "@gbxm/core/*": [
         "./src/app/core/*"
+      ],
+      "@gbxm/shared/*": [
+        "./src/app/shared/*"
       ]
     }
   },
