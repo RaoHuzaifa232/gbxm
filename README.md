@@ -1,59 +1,72 @@
-# Gbxm
+# GBXM
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.25.
+## Overview
 
-## Development server
+GBXM is an Angular 19 application using standalone components, SSR, and a Material-based UI. The app is organized around a main layout shell with feature areas such as Operator Console and Campaigns.
 
-To start a local development server, run:
+## Tech Stack
 
-```bash
-ng serve
+- Angular 19 (standalone components, signals-ready)
+- Angular Material + CDK
+- SSR with @angular/ssr and Express
+- SCSS with shared variables
+
+## Project Structure
+
+- src/app/app.config.ts: app-level providers and routing
+- src/app/app.routes.ts: lazy feature routes
+- src/app/layout: layout shell (header, sidebar, main layout)
+- src/app/layout/items: feature screens (operator console, campaigns)
+- src/styles: global SCSS utilities and variables
+
+## Styling (SCSS Control and Variables)
+
+Centralized SCSS tokens live in src/styles/_variables.scss and are consumed via @use in component styles, for example:
+
+```scss
+@use '@gbxm/styles/_variables.scss' as *;
+
+.header {
+	color: $color-text-strong;
+}
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Global styles and Material theme imports are in src/styles.scss. Keep component styles scoped and use variables for colors, spacing, and typography so design changes remain centralized.
 
-## Code scaffolding
+## Signals and Change Detection
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+- Zoneless change detection is enabled via provideExperimentalZonelessChangeDetection().
+- Components use ChangeDetectionStrategy.OnPush for stable, predictable renders.
+- Signals are preferred for local state (signal(), computed()) and for component I/O (input(), output()).
 
-```bash
-ng generate component component-name
-```
+If you add new stateful components, use signals instead of RxJS where possible.
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Routing and Code Splitting
 
-```bash
-ng generate --help
-```
+Feature areas are lazy-loaded using loadComponent in src/app/app.routes.ts. Keep new feature screens lazy to reduce initial bundle size.
 
-## Building
+## SSR
 
-To build the project run:
+SSR is enabled with @angular/ssr and an Express server entry at src/server.ts. To run SSR locally:
 
 ```bash
-ng build
+npm run build
+npm run serve:ssr:gbxm
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Then open http://localhost:4000.
 
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+## Scripts
 
 ```bash
-ng test
+npm run start        # dev server (client only)
+npm run build        # production build
+npm run serve:ssr:gbxm  # SSR server
+npm run test         # unit tests
 ```
 
-## Running end-to-end tests
+## Development Notes
 
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- Keep Material imports per component (avoid a shared MaterialModule).
+- Use NgOptimizedImage for images and supply width/height for layout stability.
+- Prefer @for and @if control flow in templates.
