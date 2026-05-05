@@ -1,13 +1,15 @@
+@let mobile = isMobile();
+
 <app-header />
 
 <mat-sidenav-container class="layout">
-    <mat-sidenav #sidenav class="layout__sidenav" [mode]="isMobile() ? 'over' : 'side'" [opened]="!isMobile()">
-        <app-sidebar [isMobile]="isMobile()" (closeSidebar)="sidenav.close()" />
+    <mat-sidenav #sidenav class="layout__sidenav" [mode]="mobile ? 'over' : 'side'" [opened]="!mobile">
+        <app-sidebar [isMobile]="mobile" (closeSidebar)="sidenav.close()" />
     </mat-sidenav>
 
     <mat-sidenav-content class="layout__content">
-        @if (isMobile() && !sidenav.opened) {
-        <button class="layout__open-handle" (click)="sidenav.open()">
+        @if (mobile && !sidenav.opened) {
+        <button class="layout__open-handle" (click)="sidenav.open()" aria-label="Open Sidebar">
             <mat-icon>chevron_right</mat-icon>
         </button>
         }

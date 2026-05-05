@@ -1,8 +1,15 @@
 @use '@gbxm/styles/_variables.scss' as *;
 
+:host {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
 .layout {
-    height: calc(100vh - 72px);
+    flex: 1;
     box-sizing: border-box;
+    overflow: hidden;
 
     &__sidenav {
         width: 264px;
@@ -15,7 +22,7 @@
     }
 
     &__content {
-        background: #f6f7f9;
+        background: $color-bg-main;
         position: relative;
         height: 100%;
         overflow: auto; // Let the sidenav content handle the scroll
