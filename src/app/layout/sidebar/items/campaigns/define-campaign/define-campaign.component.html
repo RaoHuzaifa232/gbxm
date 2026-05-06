@@ -143,17 +143,11 @@
 				<app-file-upload formControlName="imageFile" label="Upload Image" accept=".jpg,.jpeg,.png"
 					[allowedExtensions]="['.jpg', '.jpeg', '.png']"
 					tooltip="Select a campaign image to upload (JPG, PNG only)" />
-				@if (form.get('imageFile')?.hasError('invalidFormat')) {
-				<span class="file-error">Please upload a JPG or PNG file</span>
-				}
 			</div>
 
 			<div class="file-column">
 				<app-file-upload formControlName="pdfFile" label="Upload PDF" accept=".pdf"
 					[allowedExtensions]="['.pdf']" tooltip="Select a campaign PDF to upload (PDF only)" />
-				@if (form.get('pdfFile')?.hasError('invalidFormat')) {
-				<span class="file-error">Please upload a PDF file</span>
-				}
 			</div>
 		</div>
 

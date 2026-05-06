@@ -11,6 +11,29 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FileUploadComponent } from '@gbxm/shared/components/file-upload/file-upload.component';
 
+interface ProfileForm {
+  firstName: FormControl<string | null>;
+  lastName: FormControl<string | null>;
+  preferred: FormControl<string | null>;
+  operator: FormControl<string | null>;
+  userId: FormControl<string | null>;
+  personalEmail: FormControl<string | null>;
+  cellAndText: FormControl<string | null>;
+  contactEmail: FormControl<string | null>;
+  companyEmail: FormControl<string | null>;
+  linkedIn: FormControl<string | null>;
+  teamsId: FormControl<string | null>;
+  aboutMe: FormControl<string | null>;
+  picture: FormControl<File | null>;
+  cv: FormControl<File | null>;
+  tradingEntity: FormControl<string | null>;
+  registrationNumber: FormControl<string | null>;
+  digitalPresence1: FormControl<string | null>;
+  digitalPresence2: FormControl<string | null>;
+  digitalPresence3: FormControl<string | null>;
+  digitalPresence4: FormControl<string | null>;
+}
+
 @Component({
   selector: 'app-operator-console',
   imports: [
@@ -51,37 +74,37 @@ export class OperatorConsoleComponent {
 
   saveAboutMe(): void {
     // Patch the value back to the main form and close the dialog
-    this.profileForm.get('aboutMe')?.setValue(this.tempAboutMe.value);
+    this.profileForm.controls.aboutMe.setValue(this.tempAboutMe.value);
     this.dialog.closeAll();
   }
 
 
-  profileForm: FormGroup = this.fb.group({
+  profileForm: FormGroup<ProfileForm> = this.fb.group({
     // Section 1
-    firstName: ['', Validators.required],
-    lastName: ['', Validators.required],
-    preferred: [''],
-    operator: [{ value: 'Associate Representative', disabled: true }],
-    userId: [{ value: '36574', disabled: true }],
-    personalEmail: ['', [Validators.required, Validators.email]],
-    cellAndText: ['', [Validators.required, Validators.pattern('^\\+?[0-9\\s\\-\\(\\)]+$')]],
+    firstName: this.fb.control<string | null>('', Validators.required),
+    lastName: this.fb.control<string | null>('', Validators.required),
+    preferred: this.fb.control<string | null>(''),
+    operator: this.fb.control<string | null>({ value: 'Associate Representative', disabled: true }),
+    userId: this.fb.control<string | null>({ value: '36574', disabled: true }),
+    personalEmail: this.fb.control<string | null>('', [Validators.required, Validators.email]),
+    cellAndText: this.fb.control<string | null>('', [Validators.required, Validators.pattern('^\\+?[0-9\\s\\-\\(\\)]+$')]),
 
     // Section 2
-    contactEmail: [{ value: 'licensingM01@gbxm.com', disabled: true }, [Validators.required, Validators.email]],
-    companyEmail: [{ value: 'company@gbxm.com', disabled: true }, [Validators.required, Validators.email]],
-    linkedIn: ['', Validators.pattern('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})([/\\w .-]*)*/?')],
-    teamsId: [''],
-    aboutMe: [''],
+    contactEmail: this.fb.control<string | null>({ value: 'licensingM01@gbxm.com', disabled: true }, [Validators.required, Validators.email]),
+    companyEmail: this.fb.control<string | null>({ value: 'company@gbxm.com', disabled: true }, [Validators.required, Validators.email]),
+    linkedIn: this.fb.control<string | null>('', Validators.pattern('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})([/\\w .-]*)*/?')),
+    teamsId: this.fb.control<string | null>(''),
+    aboutMe: this.fb.control<string | null>(''),
 
     // Section 3
-    picture: [null],
-    cv: [null],
-    tradingEntity: [''],
-    registrationNumber: [''],
-    digitalPresence1: ['', Validators.pattern('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})([/\\w .-]*)*/?')],
-    digitalPresence2: ['', Validators.pattern('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})([/\\w .-]*)*/?')],
-    digitalPresence3: ['', Validators.pattern('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})([/\\w .-]*)*/?')],
-    digitalPresence4: ['', Validators.pattern('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})([/\\w .-]*)*/?')]
+    picture: this.fb.control<File | null>(null),
+    cv: this.fb.control<File | null>(null),
+    tradingEntity: this.fb.control<string | null>(''),
+    registrationNumber: this.fb.control<string | null>(''),
+    digitalPresence1: this.fb.control<string | null>('', Validators.pattern('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})([/\\w .-]*)*/?')),
+    digitalPresence2: this.fb.control<string | null>('', Validators.pattern('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})([/\\w .-]*)*/?')),
+    digitalPresence3: this.fb.control<string | null>('', Validators.pattern('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})([/\\w .-]*)*/?')),
+    digitalPresence4: this.fb.control<string | null>('', Validators.pattern('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})([/\\w .-]*)*/?'))
   });
 
   onSubmit() {

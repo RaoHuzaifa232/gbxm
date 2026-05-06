@@ -1,24 +1,24 @@
-import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, ElementRef, forwardRef, input, signal, ViewChild } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, inject, input, Optional, Self, signal, ViewChild } from '@angular/core';
+import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-file-upload',
-  imports: [CommonModule, MatIconModule, MatTooltipModule],
+  imports: [MatIconModule, MatTooltipModule],
   templateUrl: './file-upload.component.html',
   styleUrl: './file-upload.component.scss',
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => FileUploadComponent),
-      multi: true
-    }
-  ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FileUploadComponent {
+export class FileUploadComponent implements ControlValueAccessor {
+  public ngControl = inject(NgControl, { optional: true, self: true });
+  private cdr = inject(ChangeDetectorRef);
+
+  constructor() {
+    if (this.ngControl) {
+      this.ngControl.valueAccessor = this;
+    }
+  }
   label = input.required<string>();
   accept = input<string>('');
   tooltip = input<string>('');
@@ -44,11 +44,13 @@ export class FileUploadComponent {
         this.updateValue(file);
       } else {
         this.updateValue(null);
+        // Explicitly set error on the control
+        this.ngControl?.control?.setErrors({ invalidFormat: true });
         event.target.value = '';
-        // We could emit an error here, but typically the parent form handles validation
       }
     }
     this.onTouched();
+    this.cdr.markForCheck();
   }
 
   clearFile(event: MouseEvent): void {
@@ -58,6 +60,7 @@ export class FileUploadComponent {
       this.fileInput.nativeElement.value = '';
     }
     this.onTouched();
+    this.cdr.markForCheck();
   }
 
   private updateValue(val: File | null): void {
@@ -83,5 +86,15 @@ export class FileUploadComponent {
 
   setDisabledState(isDisabled: boolean): void {
     this.disabled.set(isDisabled);
+  }
+
+  get errorMessage(): string | null {
+    const control = this.ngControl?.control;
+    if (control && control.touched && control.invalid) {
+      if (control.hasError('required')) return `${this.label()} is required`;
+      if (control.hasError('invalidFormat')) return 'Invalid file format';
+      return 'Invalid file';
+    }
+    return null;
   }
 }

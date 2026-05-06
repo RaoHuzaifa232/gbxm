@@ -156,9 +156,6 @@
                     [allowedExtensions]="['.jpg', '.jpeg', '.png']"
                     tooltip="Select a profile picture to upload (JPG, PNG only)">
                 </app-file-upload>
-                @if (profileForm.get('picture')?.hasError('invalidFormat')) {
-                <span class="file-error">Please upload a JPG or PNG file</span>
-                }
             </div>
 
             <div class="file-column">
@@ -169,9 +166,6 @@
                     [allowedExtensions]="['.pdf']"
                     tooltip="Select your CV document to upload (PDF only)">
                 </app-file-upload>
-                @if (profileForm.get('cv')?.hasError('invalidFormat')) {
-                <span class="file-error">Please upload a PDF file</span>
-                }
             </div>
         </div>
 

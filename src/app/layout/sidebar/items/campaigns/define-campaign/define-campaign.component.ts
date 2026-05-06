@@ -11,6 +11,32 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ToastService } from '@gbxm/core/services/toast.service';
 import { FileUploadComponent } from '@gbxm/shared/components/file-upload/file-upload.component';
+import { FormControl, FormGroup } from '@angular/forms';
+
+interface CampaignForm {
+  type: FormControl<string | null>;
+  name: FormControl<string | null>;
+  descriptor: FormControl<string | null>;
+  campaignId: FormControl<string | null>;
+  tagline: FormControl<string | null>;
+  licenseManager: FormControl<string | null>;
+  director: FormControl<string | null>;
+  campaignLead: FormControl<string | null>;
+  dataCollator: FormControl<string | null>;
+  associateRep: FormControl<string | null>;
+  selfLicensing: FormControl<string | null>;
+  licenseType: FormControl<string | null>;
+  imageFile: FormControl<File | null>;
+  pdfFile: FormControl<File | null>;
+  urlLink: FormControl<string | null>;
+  videoLink: FormControl<string | null>;
+  notesInternal: FormControl<string | null>;
+  notesExternal: FormControl<string | null>;
+  numberOfProperties: FormControl<string | null>;
+  productPriceVary: FormControl<string | null>;
+  agentSuccessFee: FormControl<string | null>;
+  dateInitiated: FormControl<Date | null>;
+}
 
 @Component({
   selector: 'app-define-campaign',
@@ -61,29 +87,29 @@ export class DefineCampaignComponent {
   ];
   successFeeOptions = ['3%', '5%', '10%', '15%', '20%', '25%'];
 
-  form = this.fb.group({
-    type: [null, Validators.required],
-    name: ['', Validators.required],
-    descriptor: [''],
-    campaignId: ['', Validators.required],
-    tagline: [''],
-    licenseManager: [null, Validators.required],
-    director: [null, Validators.required],
-    campaignLead: [null, Validators.required],
-    dataCollator: [null, Validators.required],
-    associateRep: [null, Validators.required],
-    selfLicensing: [null, Validators.required],
-    licenseType: [null, Validators.required],
-    imageFile: [null],
-    pdfFile: [null],
-    urlLink: ['', Validators.pattern('https?://.+')],
-    videoLink: ['', Validators.pattern('https?://.+')],
-    notesInternal: [''],
-    notesExternal: [''],
-    numberOfProperties: ['', [Validators.pattern('^[0-9]*$')]],
-    productPriceVary: [null],
-    agentSuccessFee: [null],
-    dateInitiated: [null]
+  form: FormGroup<CampaignForm> = this.fb.group({
+    type: this.fb.control<string | null>(null, Validators.required),
+    name: this.fb.control<string | null>('', Validators.required),
+    descriptor: this.fb.control<string | null>(''),
+    campaignId: this.fb.control<string | null>('', Validators.required),
+    tagline: this.fb.control<string | null>(''),
+    licenseManager: this.fb.control<string | null>(null, Validators.required),
+    director: this.fb.control<string | null>(null, Validators.required),
+    campaignLead: this.fb.control<string | null>(null, Validators.required),
+    dataCollator: this.fb.control<string | null>(null, Validators.required),
+    associateRep: this.fb.control<string | null>(null, Validators.required),
+    selfLicensing: this.fb.control<string | null>(null, Validators.required),
+    licenseType: this.fb.control<string | null>(null, Validators.required),
+    imageFile: this.fb.control<File | null>(null),
+    pdfFile: this.fb.control<File | null>(null),
+    urlLink: this.fb.control<string | null>('', Validators.pattern('https?://.+')),
+    videoLink: this.fb.control<string | null>('', Validators.pattern('https?://.+')),
+    notesInternal: this.fb.control<string | null>(''),
+    notesExternal: this.fb.control<string | null>(''),
+    numberOfProperties: this.fb.control<string | null>('', [Validators.pattern('^[0-9]*$')]),
+    productPriceVary: this.fb.control<string | null>(null),
+    agentSuccessFee: this.fb.control<string | null>(null),
+    dateInitiated: this.fb.control<Date | null>(null)
   });
 
 

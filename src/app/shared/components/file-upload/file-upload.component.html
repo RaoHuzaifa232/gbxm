@@ -1,6 +1,7 @@
 <div class="file-upload-wrapper" 
      [class.has-value]="value()" 
      [class.disabled]="disabled()"
+     [class.has-error]="errorMessage"
      [matTooltipDisabled]="isClearHovered()"
      [matTooltip]="tooltip()">
   <span class="file-upload-label">{{ label() }}</span>
@@ -21,3 +22,7 @@
     </span>
   }
 </div>
+
+@if (errorMessage) {
+  <span class="file-error">{{ errorMessage }}</span>
+}

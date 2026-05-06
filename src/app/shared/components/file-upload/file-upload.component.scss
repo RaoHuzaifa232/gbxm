@@ -9,8 +9,12 @@
     border: 1px solid $color-border-muted;
     border-radius: 4px;
     padding: 0 16px;
-    margin-bottom: 22px;
+    margin-bottom: 26px;
     background: $color-text-inverse;
+
+    &.has-error {
+        border-color: $color-error;
+    }
 
     &.has-value {
         border-color: $color-field-border-filled;
@@ -74,4 +78,14 @@
             color: $color-error;
         }
     }
+}
+
+.file-error {
+    color: $color-error;
+    font-size: 11px;
+    margin-top: -22px;
+    margin-bottom: 12px;
+    margin-left: 10px;
+    display: block;
+    line-height: 1;
 }
