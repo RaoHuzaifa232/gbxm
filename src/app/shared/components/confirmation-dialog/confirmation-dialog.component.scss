@@ -1,0 +1,50 @@
+@use '@gbxm/styles/_variables.scss' as *;
+
+.confirmation-dialog {
+	padding: 8px;
+}
+
+.confirmation-dialog__title {
+	margin: 0 !important;
+	font-size: 20px;
+	font-weight: 600;
+	color: $color-text-primary;
+	letter-spacing: -0.01em;
+}
+
+.confirmation-dialog__content {
+	padding-top: 16px !important;
+	padding-bottom: 24px !important;
+}
+
+.confirmation-dialog__message {
+	margin: 0;
+	font-size: 15px;
+	line-height: 1.5;
+	color: $color-text-muted;
+}
+
+.confirmation-dialog__actions {
+	padding: 16px 8px 8px 8px !important;
+	gap: 12px;
+
+	button {
+		min-width: 100px;
+	}
+}
+
+.dialog-cancel-btn {
+	color: $color-action-primary !important;
+	font-weight: 500 !important;
+	border-radius: 6px !important;
+}
+
+.dialog-confirm-btn {
+	--mdc-filled-button-container-color: #{$color-action-primary};
+	--mdc-filled-button-label-text-color: white;
+	background-color: $color-action-primary !important;
+	color: white !important;
+	font-weight: 500 !important;
+	border-radius: 6px !important;
+	padding: 0 24px !important;
+}

@@ -2,33 +2,38 @@
 	<h2>All Campaigns</h2>
 </header>
 
-<form class="campaigns__filters" aria-label="Campaign filters">
-	<div class="filters__row">
-		<mat-form-field class="filters__field" appearance="outline">
-			<mat-label>Select Operator</mat-label>
-			<mat-select>
-				<mat-option value="all">All</mat-option>
-				<mat-option value="operator-1">Operator 1</mat-option>
-				<mat-option value="operator-2">Operator 2</mat-option>
-			</mat-select>
-		</mat-form-field>
-	</div>
+<form class="campaigns__filters" aria-label="Campaign filters" [formGroup]="filtersForm">
+	<div class="filters__layout">
+		<div class="filters__group filters__group--operator">
+			<span class="filters__label">Select Operator</span>
+			<mat-form-field class="filters__field" appearance="outline" subscriptSizing="dynamic">
+				<mat-select formControlName="operatorId">
+					<mat-option value="all">All Operators</mat-option>
+					<mat-option value="operator-1">Operator 1</mat-option>
+					<mat-option value="operator-2">Operator 2</mat-option>
+				</mat-select>
+			</mat-form-field>
+		</div>
 
-	<div class="filters__row filters__row--options">
-		<mat-radio-group class="filters__radio-group" aria-label="Campaign type" value="all">
-			<mat-radio-button value="all">All</mat-radio-button>
-			<mat-radio-button value="agent">Agent</mat-radio-button>
-			<mat-radio-button value="brand">Brand/syndicate</mat-radio-button>
-			<mat-radio-button value="geo">Geographic</mat-radio-button>
-			<mat-radio-button value="thematic">Thematic</mat-radio-button>
-		</mat-radio-group>
+		<div class="filters__group filters__group--type">
+			<span class="filters__label">Campaign Type</span>
+			<mat-radio-group class="radio-pills" aria-label="Campaign type" formControlName="typeKey">
+				<mat-radio-button value="all">All</mat-radio-button>
+				<mat-radio-button value="agent">Agent</mat-radio-button>
+				<mat-radio-button value="brand">Brand/syndicate</mat-radio-button>
+				<mat-radio-button value="geo">Geographic</mat-radio-button>
+				<mat-radio-button value="thematic">Thematic</mat-radio-button>
+			</mat-radio-group>
+		</div>
 
-		<mat-checkbox class="filters__checkbox" checked>View No Pick Lists</mat-checkbox>
+		<div class="filters__group filters__group--view">
+			<mat-checkbox formControlName="viewNoPickLists">View No Pick Lists</mat-checkbox>
+		</div>
 	</div>
 </form>
 
 <div class="campaigns__table" aria-label="Campaign list">
-	<table mat-table [dataSource]="campaigns" class="campaigns__mat-table">
+	<table mat-table [dataSource]="filteredCampaigns()" class="campaigns__mat-table">
 		<ng-container matColumnDef="id">
 			<th mat-header-cell *matHeaderCellDef>ID</th>
 			<td mat-cell *matCellDef="let campaign">{{ campaign.id }}</td>
@@ -41,7 +46,7 @@
 
 		<ng-container matColumnDef="type">
 			<th mat-header-cell *matHeaderCellDef>Type</th>
-			<td mat-cell *matCellDef="let campaign">{{ campaign.type }}</td>
+			<td mat-cell *matCellDef="let campaign">{{ campaign.typeLabel }}</td>
 		</ng-container>
 
 		<ng-container matColumnDef="pickListDate">
@@ -55,9 +60,9 @@
 		</ng-container>
 
 		<ng-container matColumnDef="action">
-			<th mat-header-cell *matHeaderCellDef></th>
+			<th mat-header-cell *matHeaderCellDef>Details</th>
 			<td mat-cell *matCellDef="let campaign">
-				<button mat-icon-button class="cell cell--action" type="button"
+				<button mat-icon-button class="cell cell--action" type="button" (click)="openDetails(campaign)"
 					[attr.aria-label]="'View campaign ' + campaign.id">
 					<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
 						<path
@@ -71,4 +76,42 @@
 		<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
 		<tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 	</table>
+</div>
+
+<div class="campaigns__cards" aria-label="Campaign cards">
+	@for (campaign of filteredCampaigns(); track campaign.id) {
+	<div class="campaign-card">
+		<div class="campaign-card__top">
+			<span class="campaign-card__id">{{ campaign.id }}</span>
+			<button type="button" class="campaign-card__icon" (click)="openDetails(campaign)"
+				[attr.aria-label]="'View campaign ' + campaign.id">
+				<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+					<path
+						d="M12 5c-5.25 0-9.5 4.02-11 7 1.5 2.98 5.75 7 11 7s9.5-4.02 11-7c-1.5-2.98-5.75-7-11-7zm0 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm0-2.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z">
+					</path>
+				</svg>
+			</button>
+		</div>
+
+		<div class="campaign-card__rows">
+			<div class="campaign-card__row">
+				<span class="campaign-card__label">Name</span>
+				<span class="campaign-card__value">{{ campaign.name }}</span>
+			</div>
+			<div class="campaign-card__row">
+				<span class="campaign-card__label">Type</span>
+				<span class="campaign-card__value">{{ campaign.typeLabel }}</span>
+			</div>
+			<div class="campaign-card__row">
+				<span class="campaign-card__label">Pick List Date</span>
+				<span class="campaign-card__value">{{ campaign.pickListDate || 'No pick list' }}</span>
+			</div>
+			<div class="campaign-card__row">
+				<span class="campaign-card__label">No</span>
+				<span class="campaign-card__value">{{ campaign.count || '0' }}</span>
+			</div>
+		</div>
+
+	</div>
+	}
 </div>

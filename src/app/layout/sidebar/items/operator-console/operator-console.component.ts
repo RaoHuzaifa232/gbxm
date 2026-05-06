@@ -10,6 +10,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FileUploadComponent } from '@gbxm/shared/components/file-upload/file-upload.component';
+import { DIALOG_SIZES } from '@gbxm/core/models/dialog.model';
+import { ConfirmationDialogComponent } from '@gbxm/shared/components/confirmation-dialog/confirmation-dialog.component';
 
 interface ProfileForm {
   firstName: FormControl<string | null>;
@@ -67,7 +69,7 @@ export class OperatorConsoleComponent {
     this.tempAboutMe.setValue(this.profileForm.get('aboutMe')?.value || '');
 
     this.dialog.open(this.aboutMeDialog, {
-      width: '600px',
+      ...DIALOG_SIZES.medium,
       autoFocus: false
     });
   }
@@ -109,8 +111,22 @@ export class OperatorConsoleComponent {
 
   onSubmit() {
     if (this.profileForm.valid) {
-      this.toast.success('Profile updated successfully!');
-      this.formDirective.resetForm();
+      const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+        ...DIALOG_SIZES.small,
+        data: {
+          title: 'Submit Profile',
+          message: 'You are about to submit your profile. Do you want to proceed?',
+          confirmText: 'Submit',
+          cancelText: 'Cancel'
+        }
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.toast.success('Profile updated successfully!');
+          this.formDirective.resetForm();
+        }
+      });
     } else {
       this.profileForm.markAllAsTouched();
       this.toast.error('Please fix the errors in the form.');
@@ -119,7 +135,21 @@ export class OperatorConsoleComponent {
 
   onSave() {
     if (this.profileForm.valid) {
-      this.toast.success('Changes saved successfully!');
+      const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+        ...DIALOG_SIZES.small,
+        data: {
+          title: 'Save Changes',
+          message: 'You are about to save your profile changes. Do you want to proceed?',
+          confirmText: 'Save',
+          cancelText: 'Cancel'
+        }
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.toast.success('Changes saved successfully!');
+        }
+      });
     } else {
       this.profileForm.markAllAsTouched();
       this.toast.error('Please fix the errors in the form before saving.');

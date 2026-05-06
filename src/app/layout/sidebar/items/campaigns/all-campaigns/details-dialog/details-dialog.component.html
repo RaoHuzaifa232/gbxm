@@ -1,0 +1,20 @@
+<div class="details-dialog">
+	<div mat-dialog-title class="details-dialog__header">
+		<h2 class="details-dialog__title">Campaign Details</h2>
+	</div>
+
+	<mat-dialog-content class="details-dialog__content">
+		<div class="details-dialog__grid">
+			@for (field of fields; track field.label) {
+			<div class="details-dialog__row">
+				<span class="details-dialog__label">{{ field.label }}</span>
+				<span class="details-dialog__value">{{ getValue(field.value) }}</span>
+			</div>
+			}
+		</div>
+	</mat-dialog-content>
+
+	<mat-dialog-actions align="end" class="details-dialog__actions">
+		<button mat-button mat-dialog-close type="button" class="dialog-close-btn">Close</button>
+	</mat-dialog-actions>
+</div>
