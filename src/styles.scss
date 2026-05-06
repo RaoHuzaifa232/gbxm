@@ -17,6 +17,8 @@ body {
     overflow-y: auto;
     overflow-x: hidden;
     scrollbar-gutter: stable;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
 }
 
 .mat-drawer-inner-container::-webkit-scrollbar {
