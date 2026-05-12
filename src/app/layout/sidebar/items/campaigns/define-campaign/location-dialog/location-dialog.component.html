@@ -1,0 +1,70 @@
+<div class="location-dialog" [class.location-dialog--drag]="isDragOver()">
+	<div mat-dialog-title class="location-dialog__header">
+		<h2 class="location-dialog__title">Choose country &amp; locale</h2>
+		<button mat-flat-button type="button" class="location-dialog__load" (click)="openPicker()"
+			matTooltip="Upload a geographic data file">
+			<mat-icon>cloud_upload</mat-icon>
+			<span>Load Geographic</span>
+		</button>
+		<input #fileInput type="file" class="location-dialog__file-input" [accept]="acceptList"
+			(change)="onFileInputChange($event)" />
+	</div>
+
+	<mat-dialog-content class="location-dialog__content">
+		<form class="location-dialog__form" [formGroup]="form">
+			<mat-form-field appearance="outline">
+				<mat-label>Select Country</mat-label>
+				<mat-select formControlName="country">
+					@for (country of countries; track $index) {
+					<mat-option [value]="country">{{ country }}</mat-option>
+					}
+				</mat-select>
+			</mat-form-field>
+
+			<mat-form-field appearance="outline">
+				<mat-label>Select State</mat-label>
+				<mat-select formControlName="state">
+					@for (state of states(); track $index) {
+					<mat-option [value]="state">{{ state }}</mat-option>
+					}
+				</mat-select>
+			</mat-form-field>
+
+			<mat-form-field appearance="outline">
+				<mat-label>Select Locale</mat-label>
+				<mat-select formControlName="locale">
+					@for (locale of locales(); track $index) {
+					<mat-option [value]="locale">{{ locale }}</mat-option>
+					}
+				</mat-select>
+			</mat-form-field>
+		</form>
+
+		@if (uploadedFile()) {
+		<div class="location-dialog__file-chip">
+			<mat-icon>description</mat-icon>
+			<span class="location-dialog__file-name" [title]="uploadedFile()?.name">{{ uploadedFile()?.name }}</span>
+			<button mat-icon-button type="button" class="location-dialog__file-remove" (click)="removeFile($event)"
+				matTooltip="Remove file" aria-label="Remove uploaded file">
+				<mat-icon>close</mat-icon>
+			</button>
+		</div>
+		}
+
+		@if (uploadError()) {
+		<p class="location-dialog__error">{{ uploadError() }}</p>
+		}
+
+		@if (isDragOver()) {
+		<div class="location-dialog__overlay" aria-hidden="true">
+			<mat-icon>cloud_upload</mat-icon>
+			<span>Drop file to load geographic data</span>
+		</div>
+		}
+	</mat-dialog-content>
+
+	<mat-dialog-actions align="end" class="location-dialog__actions">
+		<button mat-button type="button" class="dialog-close-btn" (click)="onBack()">Back</button>
+		<button mat-flat-button type="button" class="dialog-save-btn" (click)="onSave()">Save</button>
+	</mat-dialog-actions>
+</div>

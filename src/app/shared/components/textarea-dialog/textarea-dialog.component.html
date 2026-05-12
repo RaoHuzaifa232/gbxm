@@ -1,0 +1,11 @@
+<h2 mat-dialog-title>{{ data.title }}</h2>
+<mat-dialog-content class="textarea-dialog__content">
+	<mat-form-field appearance="outline" class="textarea-dialog__field">
+		<mat-label>{{ label }}</mat-label>
+		<textarea matInput [formControl]="control" [rows]="rows" [placeholder]="placeholder"></textarea>
+	</mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions align="end" class="textarea-dialog__actions">
+	<button mat-button mat-dialog-close type="button" class="dialog-close-btn">{{ cancelText }}</button>
+	<button mat-flat-button type="button" class="dialog-save-btn" (click)="onSave()">{{ confirmText }}</button>
+</mat-dialog-actions>

@@ -1,0 +1,165 @@
+@use '@gbxm/styles/_variables.scss' as *;
+
+.location-dialog {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	max-height: 90vh;
+
+	&__header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 16px;
+		padding: 18px 24px;
+		margin: 0 !important;
+		border-bottom: none;
+	}
+
+	&__title {
+		margin: 0;
+		font-size: 24px;
+		font-weight: 500;
+		color: $color-text-primary;
+		letter-spacing: -0.01em;
+	}
+
+	&__load {
+		--mdc-filled-button-container-color: #{$color-action-primary};
+		--mdc-filled-button-label-text-color: #{$color-text-inverse};
+		background-color: $color-action-primary !important;
+		color: $color-text-inverse !important;
+		font-weight: 500 !important;
+		border-radius: 6px !important;
+		min-width: unset !important;
+		height: 36px;
+		padding: 0 14px !important;
+		display: inline-flex !important;
+		align-items: center;
+		gap: 6px;
+
+		mat-icon {
+			font-size: 18px;
+			width: 18px;
+			height: 18px;
+		}
+	}
+
+	&__file-input {
+		display: none;
+	}
+
+	&__content {
+		padding: 8px 24px 4px !important;
+		margin: 0 !important;
+	}
+
+	&__form {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+
+		mat-form-field {
+			width: 100%;
+		}
+	}
+
+	&__file-chip {
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+		margin-top: 6px;
+		padding: 6px 8px 6px 12px;
+		border: 1px solid $color-field-border-filled;
+		border-radius: 999px;
+		background: $color-bg-preview;
+		max-width: 100%;
+
+		mat-icon {
+			font-size: 18px;
+			width: 18px;
+			height: 18px;
+			color: $color-action-primary;
+		}
+	}
+
+	&__file-name {
+		font-size: 13px;
+		font-weight: 500;
+		color: $color-text-primary;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		max-width: 260px;
+	}
+
+	&__file-remove {
+		width: 24px !important;
+		height: 24px !important;
+		line-height: 24px !important;
+
+		mat-icon {
+			font-size: 16px !important;
+			width: 16px !important;
+			height: 16px !important;
+			color: $color-text-tertiary !important;
+		}
+
+		&:hover mat-icon {
+			color: $color-error !important;
+		}
+	}
+
+	&__error {
+		margin: 8px 0 0;
+		color: $color-error;
+		font-size: 12px;
+	}
+
+	&__overlay {
+		position: absolute;
+		inset: 0;
+		background: rgba($color-action-primary, 0.08);
+		border: 2px dashed $color-action-primary;
+		border-radius: 6px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 8px;
+		color: $color-action-primary;
+		font-weight: 600;
+		pointer-events: none;
+		z-index: 5;
+
+		mat-icon {
+			font-size: 40px;
+			width: 40px;
+			height: 40px;
+		}
+	}
+
+	&__actions {
+		padding: 8px 24px 24px !important;
+		margin: 0 !important;
+		gap: 8px;
+		border-top: none;
+	}
+}
+
+:host ::ng-deep .mat-mdc-dialog-surface,
+:host ::ng-deep .mat-mdc-dialog-container .mdc-dialog__surface {
+	border-radius: 12px !important;
+}
+
+@media (max-width: 600px) {
+	.location-dialog__header {
+		flex-wrap: wrap;
+		gap: 12px;
+	}
+
+	.location-dialog__load {
+		width: 100%;
+		justify-content: center;
+	}
+}

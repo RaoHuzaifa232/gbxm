@@ -1,10 +1,13 @@
 <section class="define-campaign">
 	<header class="card__header">
-		<h2>Define Campaigns</h2>
+		<h2>{{ isPreviewing() ? 'Review Campaign' : 'Define Campaigns' }}</h2>
+		@if (!isPreviewing()) {
 		<button mat-flat-button class="define-campaign__save" type="submit" form="campaignForm">Save</button>
+		}
 	</header>
 
-	<form id="campaignForm" class="define-campaign__form" [formGroup]="form" (ngSubmit)="onSave()">
+	@if (!isPreviewing()) {
+	<form id="campaignForm" class="define-campaign__form" [formGroup]="form" (ngSubmit)="onPreview()">
 		<div class="grid grid--2">
 			<mat-form-field appearance="outline" matTooltip="Choose the campaign type">
 				<mat-label>Select Type</mat-label>
@@ -18,14 +21,34 @@
 				}
 			</mat-form-field>
 
-			<mat-form-field appearance="outline" matTooltip="Enter the campaign name">
-				<mat-label>Name of Campaign</mat-label>
-				<input matInput formControlName="name" placeholder="e.g. Southeast Asia Resorts" required />
-				@if (form.get('name')?.hasError('required')) {
-				<mat-error>Campaign name is required</mat-error>
-				}
-			</mat-form-field>
+			<div class="define-campaign__name">
+				<mat-form-field appearance="outline" [matTooltip]="isGeographic() ? 'Selected geographic location' : 'Enter the campaign name'">
+					<mat-label>{{ nameFieldLabel }}</mat-label>
+					<input matInput formControlName="name"
+						[placeholder]="isGeographic() ? 'e.g. San Diego, California, United States' : 'e.g. Southeast Asia Resorts'"
+						[readonly]="isGeographic()" required />
+					@if (isGeographic()) {
+					<button mat-icon-button matSuffix type="button" (click)="openLocationDialog()"
+						matTooltip="Edit location" aria-label="Edit location">
+						<mat-icon>edit</mat-icon>
+					</button>
+					}
+					@if (form.get('name')?.hasError('required')) {
+					<mat-error>{{ isGeographic() ? 'Location is required' : 'Campaign name is required' }}</mat-error>
+					}
+				</mat-form-field>
+			</div>
 		</div>
+
+		<!-- @if (isGeographic()) {
+		<div class="define-campaign__geo-upload">
+			<app-drag-drop-upload formControlName="geoFile" label="Load Geographic Data"
+				hint="Drag and drop a geographic file here, or click to browse"
+				accept=".csv,.xlsx,.xls,.json,.geojson"
+				[allowedExtensions]="['.csv', '.xlsx', '.xls', '.json', '.geojson']"
+				tooltip="Upload geographic data (CSV, XLSX, JSON, GeoJSON)" />
+		</div>
+		} -->
 
 		<div class="grid grid--2">
 			<mat-form-field appearance="outline" matTooltip="Short internal descriptor">
@@ -175,15 +198,37 @@
 		</div>
 
 		<div class="grid grid--2">
-			<mat-form-field appearance="outline" matTooltip="Internal notes visible to staff">
-				<mat-label>Notes Internal</mat-label>
-				<textarea matInput rows="3" formControlName="notesInternal" placeholder="Add internal notes"></textarea>
-			</mat-form-field>
+			<div class="notes-field">
+				<div class="notes-field__header">
+					<span class="notes-field__label">Notes Internal</span>
+					<button mat-stroked-button color="primary" type="button" (click)="openNotesDialog('notesInternal')"
+						matTooltip="Edit internal notes in a dialog">
+						<mat-icon>{{ notesInternalValue() ? 'edit' : 'add' }}</mat-icon>
+						<span>{{ notesInternalValue() ? 'Edit' : 'Add' }}</span>
+					</button>
+				</div>
+				@if (notesInternalValue()) {
+				<div class="notes-field__preview">{{ notesInternalValue() }}</div>
+				} @else {
+				<div class="notes-field__empty">No internal notes added yet.</div>
+				}
+			</div>
 
-			<mat-form-field appearance="outline" matTooltip="External notes visible to clients">
-				<mat-label>Notes External</mat-label>
-				<textarea matInput rows="3" formControlName="notesExternal" placeholder="Add external notes"></textarea>
-			</mat-form-field>
+			<div class="notes-field">
+				<div class="notes-field__header">
+					<span class="notes-field__label">Notes External</span>
+					<button mat-stroked-button color="primary" type="button" (click)="openNotesDialog('notesExternal')"
+						matTooltip="Edit external notes in a dialog">
+						<mat-icon>{{ notesExternalValue() ? 'edit' : 'add' }}</mat-icon>
+						<span>{{ notesExternalValue() ? 'Edit' : 'Add' }}</span>
+					</button>
+				</div>
+				@if (notesExternalValue()) {
+				<div class="notes-field__preview">{{ notesExternalValue() }}</div>
+				} @else {
+				<div class="notes-field__empty">No external notes added yet.</div>
+				}
+			</div>
 		</div>
 
 		<div class="grid grid--2">
@@ -224,4 +269,35 @@
 			</mat-form-field>
 		</div>
 	</form>
+	} @else {
+	<div class="define-campaign__preview" aria-label="Campaign preview">
+		<p class="define-campaign__preview-hint">
+			Review the details below. If everything looks good, confirm to save. Otherwise, go back to make changes.
+		</p>
+
+		@for (section of previewSections(); track section.title) {
+		<h3 class="define-campaign__preview-title">{{ section.title }}</h3>
+		<div class="define-campaign__preview-grid">
+			@for (field of section.fields; track field.label) {
+			<div class="define-campaign__preview-row">
+				<span class="define-campaign__preview-label">{{ field.label }}</span>
+				<span class="define-campaign__preview-value">{{ field.value }}</span>
+			</div>
+			}
+		</div>
+		@if (!$last) {
+		<mat-divider class="define-campaign__preview-divider" />
+		}
+		}
+
+		<div class="define-campaign__preview-actions">
+			<button mat-stroked-button type="button" class="define-campaign__back-btn" (click)="onEditAgain()">
+				Back to Edit
+			</button>
+			<button mat-flat-button type="button" class="define-campaign__save" (click)="onConfirmSubmit()">
+				Confirm &amp; Save
+			</button>
+		</div>
+	</div>
+	}
 </section>

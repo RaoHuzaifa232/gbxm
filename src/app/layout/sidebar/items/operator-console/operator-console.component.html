@@ -1,9 +1,11 @@
 <h1 class="page-main-title">Operator Console</h1>
 <div class="profile-container">
     <header class="card__header">
-        <h2>Edit My Profile</h2>
+        <h2>{{ isPreviewing() ? 'Review Your Profile' : 'Edit My Profile' }}</h2>
     </header>
-    <form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="profile-form">
+
+    @if (!isPreviewing()) {
+    <form [formGroup]="profileForm" (ngSubmit)="onPreview()" class="profile-form">
         <!-- Section 1 -->
         <h2 class="section-title">1. Personal info</h2>
 
@@ -149,22 +151,15 @@
 
         <div class="form-grid grid-2">
             <div class="file-column">
-                <app-file-upload 
-                    formControlName="picture"
-                    label="Upload Picture (PNG, JPG)" 
-                    accept=".jpg,.jpeg,.png"
+                <app-file-upload formControlName="picture" label="Upload Picture (PNG, JPG)" accept=".jpg,.jpeg,.png"
                     [allowedExtensions]="['.jpg', '.jpeg', '.png']"
                     tooltip="Select a profile picture to upload (JPG, PNG only)">
                 </app-file-upload>
             </div>
 
             <div class="file-column">
-                <app-file-upload 
-                    formControlName="cv"
-                    label="Upload CV (PDF)" 
-                    accept=".pdf"
-                    [allowedExtensions]="['.pdf']"
-                    tooltip="Select your CV document to upload (PDF only)">
+                <app-file-upload formControlName="cv" label="Upload CV (PDF)" accept=".pdf"
+                    [allowedExtensions]="['.pdf']" tooltip="Select your CV document to upload (PDF only)">
                 </app-file-upload>
             </div>
         </div>
@@ -227,22 +222,38 @@
             <button mat-flat-button color="primary" type="button" (click)="onSave()"
                 matTooltip="Save your current progress">Save</button>
             <button mat-flat-button color="primary" type="submit"
-                matTooltip="Submit your profile updates">Submit</button>
+                matTooltip="Preview your profile updates before submitting">Submit</button>
         </div>
     </form>
-</div>
+    } @else {
+    <div class="profile-preview" aria-label="Profile preview">
+        <p class="profile-preview__hint">
+            Review the details below. If everything looks good, confirm to submit. Otherwise, go back to make changes.
+        </p>
 
-<ng-template #aboutMeDialog>
-    <h2 mat-dialog-title>A Little About Me ...</h2>
-    <mat-dialog-content>
-        <mat-form-field appearance="outline" class="w-full" style="width: 100%; margin-top: 12px;">
-            <mat-label>Biography</mat-label>
-            <textarea matInput [formControl]="tempAboutMe" rows="8"
-                placeholder="Write a short biography or summary about yourself..."></textarea>
-        </mat-form-field>
-    </mat-dialog-content>
-    <mat-dialog-actions align="end" style="padding-bottom: 24px; padding-right: 24px;">
-        <button mat-button mat-dialog-close class="dialog-close-btn">Close</button>
-        <button mat-flat-button class="dialog-save-btn" (click)="saveAboutMe()">Save</button>
-    </mat-dialog-actions>
-</ng-template>
+        @for (section of previewSections(); track section.title) {
+        <h2 class="section-title">{{ section.title }}</h2>
+        <div class="profile-preview__grid">
+            @for (field of section.fields; track field.label) {
+            <div class="profile-preview__row">
+                <span class="profile-preview__label">{{ field.label }}</span>
+                <span class="profile-preview__value">{{ field.value }}</span>
+            </div>
+            }
+        </div>
+        @if (!$last) {
+        <mat-divider class="section-divider" />
+        }
+        }
+
+        <div class="form-actions">
+            <button mat-stroked-button type="button" class="preview-back-btn" (click)="onEditAgain()">
+                Back to Edit
+            </button>
+            <button mat-flat-button color="primary" type="button" (click)="onConfirmSubmit()">
+                Confirm & Submit
+            </button>
+        </div>
+    </div>
+    }
+</div>

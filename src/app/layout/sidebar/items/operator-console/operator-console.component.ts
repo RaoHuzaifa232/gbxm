@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, TemplateRef, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { ToastService } from '@gbxm/core/services/toast.service';
-import { FormBuilder, FormControl, FormGroup, FormGroupDirective, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
@@ -12,6 +12,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { FileUploadComponent } from '@gbxm/shared/components/file-upload/file-upload.component';
 import { DIALOG_SIZES } from '@gbxm/core/models/dialog.model';
 import { ConfirmationDialogComponent } from '@gbxm/shared/components/confirmation-dialog/confirmation-dialog.component';
+import { TextareaDialogComponent, TextareaDialogData } from '@gbxm/shared/components/textarea-dialog/textarea-dialog.component';
 
 interface ProfileForm {
   firstName: FormControl<string | null>;
@@ -36,6 +37,16 @@ interface ProfileForm {
   digitalPresence4: FormControl<string | null>;
 }
 
+interface PreviewField {
+  label: string;
+  value: string;
+}
+
+interface PreviewSection {
+  title: string;
+  fields: PreviewField[];
+}
+
 @Component({
   selector: 'app-operator-console',
   imports: [
@@ -55,29 +66,36 @@ interface ProfileForm {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class OperatorConsoleComponent {
+  private static readonly STORAGE_KEY = 'operator-console:profile-form';
+
   private fb = inject(FormBuilder);
   private dialog = inject(MatDialog);
   private toast = inject(ToastService);
 
-  @ViewChild('aboutMeDialog') aboutMeDialog!: TemplateRef<any>;
-  @ViewChild(FormGroupDirective) formDirective!: FormGroupDirective;
-
-  tempAboutMe = new FormControl('');
+  isPreviewing = signal(false);
+  previewSections = signal<PreviewSection[]>([]);
 
   openAboutMeDialog(): void {
-    // Set the initial value of the temporary control
-    this.tempAboutMe.setValue(this.profileForm.get('aboutMe')?.value || '');
+    const dialogRef = this.dialog.open<TextareaDialogComponent, TextareaDialogData, string | null>(
+      TextareaDialogComponent,
+      {
+        ...DIALOG_SIZES.medium,
+        autoFocus: false,
+        data: {
+          title: 'A Little About Me ...',
+          label: 'Biography',
+          placeholder: 'Write a short biography or summary about yourself...',
+          initialValue: this.profileForm.get('aboutMe')?.value ?? '',
+          rows: 8
+        }
+      }
+    );
 
-    this.dialog.open(this.aboutMeDialog, {
-      ...DIALOG_SIZES.medium,
-      autoFocus: false
+    dialogRef.afterClosed().subscribe(value => {
+      if (value !== undefined && value !== null) {
+        this.profileForm.controls.aboutMe.setValue(value);
+      }
     });
-  }
-
-  saveAboutMe(): void {
-    // Patch the value back to the main form and close the dialog
-    this.profileForm.controls.aboutMe.setValue(this.tempAboutMe.value);
-    this.dialog.closeAll();
   }
 
 
@@ -109,28 +127,49 @@ export class OperatorConsoleComponent {
     digitalPresence4: this.fb.control<string | null>('', Validators.pattern('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})([/\\w .-]*)*/?'))
   });
 
-  onSubmit() {
-    if (this.profileForm.valid) {
-      const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-        ...DIALOG_SIZES.small,
-        data: {
-          title: 'Submit Profile',
-          message: 'You are about to submit your profile. Do you want to proceed?',
-          confirmText: 'Submit',
-          cancelText: 'Cancel'
-        }
-      });
+  constructor() {
+    this.restoreFromStorage();
+  }
 
-      dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-          this.toast.success('Profile updated successfully!');
-          this.formDirective.resetForm();
-        }
-      });
-    } else {
+  onPreview() {
+    if (!this.profileForm.valid) {
       this.profileForm.markAllAsTouched();
       this.toast.error('Please fix the errors in the form.');
+      return;
     }
+
+    this.previewSections.set(this.buildPreviewSections());
+    this.isPreviewing.set(true);
+    try {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch {
+      // no-op for SSR
+    }
+  }
+
+  onEditAgain() {
+    this.isPreviewing.set(false);
+  }
+
+  onConfirmSubmit() {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      ...DIALOG_SIZES.small,
+      data: {
+        title: 'Submit Profile',
+        message: 'You are about to submit your profile. Do you want to proceed?',
+        confirmText: 'Submit',
+        cancelText: 'Cancel'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.clearStorage();
+        this.profileForm.reset();
+        this.isPreviewing.set(false);
+        this.toast.success('Profile updated successfully!');
+      }
+    });
   }
 
   onSave() {
@@ -147,6 +186,7 @@ export class OperatorConsoleComponent {
 
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
+          this.persistToStorage();
           this.toast.success('Changes saved successfully!');
         }
       });
@@ -154,5 +194,94 @@ export class OperatorConsoleComponent {
       this.profileForm.markAllAsTouched();
       this.toast.error('Please fix the errors in the form before saving.');
     }
+  }
+
+  private persistToStorage(): void {
+    const { picture, cv, ...serializable } = this.profileForm.getRawValue();
+    try {
+      localStorage.setItem(OperatorConsoleComponent.STORAGE_KEY, JSON.stringify(serializable));
+    } catch {
+      // ignore storage errors (quota, disabled storage, SSR)
+    }
+  }
+
+  private restoreFromStorage(): void {
+    try {
+      const raw = localStorage.getItem(OperatorConsoleComponent.STORAGE_KEY);
+      if (!raw) {
+        return;
+      }
+      const parsed = JSON.parse(raw);
+      if (parsed && typeof parsed === 'object') {
+        this.profileForm.patchValue(parsed);
+      }
+    } catch {
+      // ignore corrupt or unavailable storage
+    }
+  }
+
+  private clearStorage(): void {
+    try {
+      localStorage.removeItem(OperatorConsoleComponent.STORAGE_KEY);
+    } catch {
+      // ignore
+    }
+  }
+
+  private buildPreviewSections(): PreviewSection[] {
+    const raw = this.profileForm.getRawValue();
+
+    return [
+      {
+        title: '1. Personal info',
+        fields: [
+          { label: 'First Name', value: this.displayValue(raw.firstName) },
+          { label: 'Last Name', value: this.displayValue(raw.lastName) },
+          { label: 'Preferred', value: this.displayValue(raw.preferred) },
+          { label: 'Operator', value: this.displayValue(raw.operator) },
+          { label: 'User ID', value: this.displayValue(raw.userId) },
+          { label: 'Personal Email', value: this.displayValue(raw.personalEmail) },
+          { label: 'Cell & Text', value: this.displayValue(raw.cellAndText) }
+        ]
+      },
+      {
+        title: '2. Contact info',
+        fields: [
+          { label: 'Contact Email', value: this.displayValue(raw.contactEmail) },
+          { label: 'Company Email', value: this.displayValue(raw.companyEmail) },
+          { label: 'LinkedIN', value: this.displayValue(raw.linkedIn) },
+          { label: 'Teams ID', value: this.displayValue(raw.teamsId) },
+          { label: 'A Little About Me', value: this.displayValue(raw.aboutMe) }
+        ]
+      },
+      {
+        title: '3. Personal info',
+        fields: [
+          { label: 'Picture', value: this.fileName(raw.picture) },
+          { label: 'CV', value: this.fileName(raw.cv) },
+          { label: 'Trading Entity', value: this.displayValue(raw.tradingEntity) },
+          { label: 'Registration Number', value: this.displayValue(raw.registrationNumber) },
+          { label: 'Digital Presence #1', value: this.displayValue(raw.digitalPresence1) },
+          { label: 'Digital Presence #2', value: this.displayValue(raw.digitalPresence2) },
+          { label: 'Digital Presence #3', value: this.displayValue(raw.digitalPresence3) },
+          { label: 'Digital Presence #4', value: this.displayValue(raw.digitalPresence4) }
+        ]
+      }
+    ];
+  }
+
+  private displayValue(value: string | null | undefined): string {
+    if (value === null || value === undefined) {
+      return 'N/A';
+    }
+    const trimmed = String(value).trim();
+    return trimmed.length === 0 ? 'N/A' : trimmed;
+  }
+
+  private fileName(value: File | null | undefined): string {
+    if (!value) {
+      return 'N/A';
+    }
+    return value.name;
   }
 }

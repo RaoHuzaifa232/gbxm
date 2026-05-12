@@ -1,0 +1,34 @@
+<div class="dropzone" [class.dropzone--drag]="isDragOver()" [class.dropzone--filled]="hasValue"
+	[class.dropzone--compact]="compact()" [class.dropzone--error]="errorMessage()" [class.dropzone--disabled]="disabled()"
+	(click)="openPicker()" [matTooltip]="tooltip()" [matTooltipDisabled]="!tooltip()">
+
+	<input #fileInput type="file" class="dropzone__input" [accept]="accept()" [multiple]="multiple()"
+		[disabled]="disabled()" (change)="onFileInputChange($event)" />
+
+	@if (!hasValue) {
+	<div class="dropzone__icon" aria-hidden="true">
+		<mat-icon>cloud_upload</mat-icon>
+	</div>
+	<div class="dropzone__label">{{ label() }}</div>
+	<div class="dropzone__hint">{{ hint() }}</div>
+	<button mat-stroked-button type="button" class="dropzone__button" (click)="$event.stopPropagation(); openPicker()">
+		Browse Files
+	</button>
+	} @else {
+	<div class="dropzone__filled">
+		<mat-icon class="dropzone__file-icon">description</mat-icon>
+		<div class="dropzone__file-info">
+			<span class="dropzone__file-name" [title]="displayValue">{{ displayValue }}</span>
+			<span class="dropzone__file-action">Click to replace, or drag a new file</span>
+		</div>
+		<button mat-icon-button type="button" class="dropzone__clear" (click)="clear($event)"
+			matTooltip="Remove file" aria-label="Remove file">
+			<mat-icon>close</mat-icon>
+		</button>
+	</div>
+	}
+</div>
+
+@if (errorMessage()) {
+<span class="dropzone__error">{{ errorMessage() }}</span>
+}

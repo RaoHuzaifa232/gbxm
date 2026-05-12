@@ -98,6 +98,10 @@ body {
     }
 }
 
+.mat-mdc-form-field.mat-mdc-form-field.mat-mdc-form-field.mat-mdc-form-field.mat-mdc-form-field.mat-mdc-form-field .mdc-notched-outline__notch {
+    border-left: none !important;
+}
+
 /* Global Styles for all rectangular Material Buttons */
 .mat-mdc-button,
 .mat-mdc-raised-button,
@@ -108,9 +112,35 @@ body {
     min-width: 80px !important;
 }
 
+/* Global Dialog Action Buttons */
+.dialog-save-btn {
+    --mdc-filled-button-container-color: #{variables.$color-action-primary};
+    --mdc-filled-button-label-text-color: #{variables.$color-text-inverse};
+    background-color: variables.$color-action-primary !important;
+    color: variables.$color-text-inverse !important;
+    border-radius: 6px !important;
+}
+
+.dialog-close-btn {
+    --mdc-text-button-label-text-color: #{variables.$color-action-primary};
+    color: variables.$color-action-primary !important;
+    border-radius: 6px !important;
+}
+
 /* Global Border Radius for Dialogs */
 .mat-mdc-dialog-container .mdc-dialog__surface {
     border-radius: 6px !important;
+}
+
+.mat-mdc-dialog-title {
+    padding: 24px !important;
+    padding-bottom: 0px !important;
+}
+
+
+.mat-mdc-dialog-title::before,
+.mat-mdc-dialog-surface::before {
+    content: none !important;
 }
 
 /* Toast Styles */
@@ -151,6 +181,7 @@ body {
         .mdc-list-item__primary-text {
             color: #{variables.$color-action-primary} !important;
         }
+
         background-color: rgba(variables.$color-action-primary, 0.08) !important;
     }
 

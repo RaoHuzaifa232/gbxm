@@ -1,10 +1,12 @@
-import { ChangeDetectionStrategy, Component, inject, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroupDirective, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
@@ -15,11 +17,34 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { CampaignService, CampaignTypeKey } from '@gbxm/core/services/campaign.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '@gbxm/shared/components/confirmation-dialog/confirmation-dialog.component';
+import {
+  TextareaDialogComponent,
+  TextareaDialogData
+} from '@gbxm/shared/components/textarea-dialog/textarea-dialog.component';
 import { DIALOG_SIZES } from '@gbxm/core/models/dialog.model';
+import {
+  LocationDialogComponent,
+  LocationDialogData,
+  LocationDialogResult
+} from './location-dialog/location-dialog.component';
+
+interface PreviewField {
+  label: string;
+  value: string;
+}
+
+interface PreviewSection {
+  title: string;
+  fields: PreviewField[];
+}
 
 interface CampaignForm {
   type: FormControl<string | null>;
   name: FormControl<string | null>;
+  country: FormControl<string | null>;
+  state: FormControl<string | null>;
+  locale: FormControl<string | null>;
+  geoFile: FormControl<File | null>;
   descriptor: FormControl<string | null>;
   campaignId: FormControl<string | null>;
   tagline: FormControl<string | null>;
@@ -54,6 +79,7 @@ interface CampaignForm {
     MatDatepickerModule,
     MatNativeDateModule,
     MatDividerModule,
+    MatIconModule,
     MatTooltipModule,
     FileUploadComponent
   ],
@@ -66,8 +92,6 @@ export class DefineCampaignComponent {
   private dialog = inject(MatDialog);
   private toast = inject(ToastService);
   private campaignsService = inject(CampaignService);
-
-  @ViewChild(FormGroupDirective) formDirective!: FormGroupDirective;
 
   typeOptions = ['Agent Specific', 'Geographic', 'Brand/Syndicate', 'Thematic'];
   directorOptions = ['Kim Powley', 'Ava Brooks', 'Jordan Lee'];
@@ -96,6 +120,10 @@ export class DefineCampaignComponent {
   form: FormGroup<CampaignForm> = this.fb.group({
     type: this.fb.control<string | null>(null, Validators.required),
     name: this.fb.control<string | null>('', Validators.required),
+    country: this.fb.control<string | null>(null),
+    state: this.fb.control<string | null>(null),
+    locale: this.fb.control<string | null>(null),
+    geoFile: this.fb.control<File | null>(null),
     descriptor: this.fb.control<string | null>(''),
     campaignId: this.fb.control<string | null>('', Validators.required),
     tagline: this.fb.control<string | null>(''),
@@ -118,14 +146,110 @@ export class DefineCampaignComponent {
     dateInitiated: this.fb.control<Date | null>(null)
   });
 
+  private typeSignal = toSignal(this.form.controls.type.valueChanges, {
+    initialValue: this.form.controls.type.value
+  });
 
-  onSave() {
+  isGeographic = computed(() => this.typeSignal() === 'Geographic');
+
+  notesInternalValue = toSignal(this.form.controls.notesInternal.valueChanges, {
+    initialValue: this.form.controls.notesInternal.value
+  });
+
+  notesExternalValue = toSignal(this.form.controls.notesExternal.valueChanges, {
+    initialValue: this.form.controls.notesExternal.value
+  });
+
+  locationLabel = signal<string>('');
+  isPreviewing = signal(false);
+  previewSections = signal<PreviewSection[]>([]);
+
+  get nameFieldLabel(): string {
+    return this.isGeographic() ? 'Location' : 'Name of Campaign';
+  }
+
+  openLocationDialog(): void {
+    const { country, state, locale } = this.form.getRawValue();
+    const dialogRef = this.dialog.open<LocationDialogComponent, LocationDialogData, LocationDialogResult | null>(
+      LocationDialogComponent,
+      {
+        width: '560px',
+        maxWidth: '92vw',
+        autoFocus: false,
+        data: {
+          country: country ?? null,
+          state: state ?? null,
+          locale: locale ?? null
+        }
+      }
+    );
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (!result) {
+        return;
+      }
+      this.form.patchValue({
+        country: result.country,
+        state: result.state,
+        locale: result.locale
+      });
+      if (result.uploadedFile) {
+        this.form.controls.geoFile.setValue(result.uploadedFile);
+      }
+      const label = [result.locale, result.state, result.country].filter(Boolean).join(', ');
+      if (label.length > 0) {
+        this.form.controls.name.setValue(label);
+      }
+      this.locationLabel.set(label);
+    });
+  }
+
+  openNotesDialog(controlName: 'notesInternal' | 'notesExternal'): void {
+    const isInternal = controlName === 'notesInternal';
+    const dialogRef = this.dialog.open<TextareaDialogComponent, TextareaDialogData, string | null>(
+      TextareaDialogComponent,
+      {
+        ...DIALOG_SIZES.medium,
+        autoFocus: false,
+        data: {
+          title: isInternal ? 'Internal Notes' : 'External Notes',
+          label: isInternal ? 'Notes visible to internal staff' : 'Notes visible to clients',
+          placeholder: isInternal ? 'Add internal notes' : 'Add external notes',
+          initialValue: this.form.controls[controlName].value ?? '',
+          rows: 8
+        }
+      }
+    );
+
+    dialogRef.afterClosed().subscribe(value => {
+      if (value !== undefined && value !== null) {
+        this.form.controls[controlName].setValue(value);
+      }
+    });
+  }
+
+
+  onPreview() {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       this.toast.error('Please fix the errors in the form.');
       return;
     }
 
+    this.previewSections.set(this.buildPreviewSections());
+    this.isPreviewing.set(true);
+    try {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch {
+      // no-op for SSR
+    }
+  }
+
+  onEditAgain() {
+    this.isPreviewing.set(false);
+  }
+
+  onConfirmSubmit() {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       ...DIALOG_SIZES.small,
       data: {
@@ -141,6 +265,85 @@ export class DefineCampaignComponent {
         this.performSave();
       }
     });
+  }
+
+  private buildPreviewSections(): PreviewSection[] {
+    const raw = this.form.getRawValue();
+    const geographic = this.isGeographic();
+
+    const detailsFields: PreviewField[] = [
+      { label: 'Type', value: this.displayValue(raw.type) },
+      { label: geographic ? 'Location' : 'Name of Campaign', value: this.displayValue(raw.name) }
+    ];
+
+    if (geographic) {
+      detailsFields.push(
+        { label: 'Country', value: this.displayValue(raw.country) },
+        { label: 'State', value: this.displayValue(raw.state) },
+        { label: 'Locale', value: this.displayValue(raw.locale) },
+        { label: 'Geographic File', value: this.fileName(raw.geoFile) }
+      );
+    }
+
+    detailsFields.push(
+      { label: 'Descriptor', value: this.displayValue(raw.descriptor) },
+      { label: 'Campaign ID', value: this.displayValue(raw.campaignId) },
+      { label: 'Tagline', value: this.displayValue(raw.tagline) }
+    );
+
+    return [
+      {
+        title: '1. Campaign details',
+        fields: detailsFields
+      },
+      {
+        title: '2. Team & licensing',
+        fields: [
+          { label: 'License Manager', value: this.displayValue(raw.licenseManager) },
+          { label: 'Director', value: this.displayValue(raw.director) },
+          { label: 'Campaign Lead', value: this.displayValue(raw.campaignLead) },
+          { label: 'Data Collator', value: this.displayValue(raw.dataCollator) },
+          { label: 'Associate Representative', value: this.displayValue(raw.associateRep) },
+          { label: 'Self Licensing', value: this.displayValue(raw.selfLicensing) },
+          { label: 'License Type', value: this.displayValue(raw.licenseType) }
+        ]
+      },
+      {
+        title: '3. Assets & links',
+        fields: [
+          { label: 'Image', value: this.fileName(raw.imageFile) },
+          { label: 'PDF', value: this.fileName(raw.pdfFile) },
+          { label: 'Campaign URL', value: this.displayValue(raw.urlLink) },
+          { label: 'Campaign Video URL', value: this.displayValue(raw.videoLink) },
+          { label: 'Internal Notes', value: this.displayValue(raw.notesInternal) },
+          { label: 'External Notes', value: this.displayValue(raw.notesExternal) }
+        ]
+      },
+      {
+        title: '4. Details & timeline',
+        fields: [
+          { label: 'Number of Properties', value: this.displayValue(raw.numberOfProperties) },
+          { label: 'Product Price Vary', value: this.displayValue(raw.productPriceVary) },
+          { label: 'Agent Success Fee', value: this.displayValue(raw.agentSuccessFee) },
+          { label: 'Date Initiated', value: this.formatDate(raw.dateInitiated) || 'N/A' }
+        ]
+      }
+    ];
+  }
+
+  private displayValue(value: string | null | undefined): string {
+    if (value === null || value === undefined) {
+      return 'N/A';
+    }
+    const trimmed = String(value).trim();
+    return trimmed.length === 0 ? 'N/A' : trimmed;
+  }
+
+  private fileName(value: File | null | undefined): string {
+    if (!value) {
+      return 'N/A';
+    }
+    return value.name;
   }
 
   private performSave() {
@@ -175,10 +378,10 @@ export class DefineCampaignComponent {
       dateInitiated: pickListDate
     });
 
+    this.form.reset();
+    this.locationLabel.set('');
+    this.isPreviewing.set(false);
     this.toast.success('Campaign saved successfully!');
-
-    // resetForm() clears values AND the "submitted" state, which prevents error messages from showing
-    this.formDirective.resetForm();
   }
 
   private toTypeKey(value: string | null | undefined): CampaignTypeKey {
@@ -219,5 +422,4 @@ export class DefineCampaignComponent {
       year: 'numeric'
     });
   }
-
 }

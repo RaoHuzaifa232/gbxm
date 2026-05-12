@@ -6,8 +6,8 @@ export const DIALOG_SIZES = {
     maxWidth: '92vw'
   },
   medium: {
-    width: '600px',
-    maxWidth: '92vw'
+    width: '560px',
+    maxWidth: '92vw',
   },
   large: {
     width: '720px',

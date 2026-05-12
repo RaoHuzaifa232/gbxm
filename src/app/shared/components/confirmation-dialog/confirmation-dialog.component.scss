@@ -32,19 +32,3 @@
 		min-width: 100px;
 	}
 }
-
-.dialog-cancel-btn {
-	color: $color-action-primary !important;
-	font-weight: 500 !important;
-	border-radius: 6px !important;
-}
-
-.dialog-confirm-btn {
-	--mdc-filled-button-container-color: #{$color-action-primary};
-	--mdc-filled-button-label-text-color: white;
-	background-color: $color-action-primary !important;
-	color: white !important;
-	font-weight: 500 !important;
-	border-radius: 6px !important;
-	padding: 0 24px !important;
-}
