@@ -69,7 +69,6 @@
             },
             "static": {
               "ssr": false,
-              "prerender": false,
               "outputMode": "static"
             }
           },

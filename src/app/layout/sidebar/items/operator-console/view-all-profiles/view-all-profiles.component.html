@@ -1,0 +1,100 @@
+@if (viewingProfile()) {
+
+  <!-- ── Inline profile view ── -->
+  <div class="profile-view">
+
+    <!-- Back bar -->
+    <div class="profile-view__topbar">
+      <button mat-stroked-button color="primary" class="profile-view__back-btn" (click)="backToTable()" type="button">
+        <mat-icon>arrow_back</mat-icon>
+        Back to List
+      </button>
+
+      <div class="profile-view__identity">
+        <span class="profile-view__name">
+          {{ viewingProfile()!.firstName }} {{ viewingProfile()!.lastName }}
+        </span>
+        <span class="status-badge" [ngClass]="getStatusClass(viewingProfile()!.status)">
+          {{ getStatusLabel(viewingProfile()!.status) }}
+        </span>
+        <span class="profile-view__uid">ID: {{ viewingProfile()!.userId }}</span>
+      </div>
+
+      <!-- Status change actions -->
+      <div class="profile-view__status-actions">
+        @if (viewingProfile()!.status !== 'verified') {
+          <button mat-stroked-button color="primary" type="button"
+            (click)="changeStatus('verified')"
+            matTooltip="Mark as Verified">
+            <mat-icon>check_circle</mat-icon>
+            Verify
+          </button>
+        }
+        @if (viewingProfile()!.status !== 'rejected') {
+          <button mat-stroked-button color="warn" type="button"
+            (click)="changeStatus('rejected')"
+            matTooltip="Reject this operator">
+            <mat-icon>cancel</mat-icon>
+            Reject
+          </button>
+        }
+        @if (viewingProfile()!.status === 'rejected' || viewingProfile()!.status === 'verified') {
+          <button mat-stroked-button type="button"
+            (click)="changeStatus('pending')"
+            matTooltip="Reset to Pending">
+            <mat-icon>refresh</mat-icon>
+            Reset to Pending
+          </button>
+        }
+      </div>
+    </div>
+
+    <!-- Status history timeline -->
+    @if (viewingProfile()!.statusHistory.length > 0) {
+      <div class="profile-view__history">
+        <span class="profile-view__history-label">Status History</span>
+        <div class="profile-view__history-events">
+          @for (event of viewingProfile()!.statusHistory; track $index; let last = $last) {
+            <div class="history-event" [class.history-event--latest]="last">
+              <span class="status-badge" [ngClass]="getStatusClass(event.status)">
+                {{ getStatusLabel(event.status) }}
+              </span>
+              <span class="history-event__date">{{ formatEventDate(event.timestamp) }}</span>
+            </div>
+          }
+        </div>
+      </div>
+    }
+
+    <mat-divider class="profile-view__divider" />
+
+    <!-- Reusable profile form in view mode -->
+    <div class="profile-view__form">
+      <app-profile-form
+        mode="view"
+        [profileData]="viewingProfile()!"
+        (formSaved)="onFormSaved()"
+        (formSubmitted)="onFormSubmitted()"
+        (emailLinkClicked)="onEmailLink()"/>
+    </div>
+  </div>
+
+} @else {
+
+  <!-- ── Table view ── -->
+  <header class="card__header">
+    <h2>View All Profiles</h2>
+  </header>
+
+  <div class="view-all-profiles-body">
+    <app-generic-table
+      [columns]="columns"
+      [data]="tableData()"
+      [actions]="actions"
+      [pageSizeOptions]="[5, 10, 25]"
+      [defaultPageSize]="10"
+      [mobileBreakpoint]="720"
+      />
+  </div>
+
+}

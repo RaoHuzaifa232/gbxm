@@ -1,0 +1,14 @@
+@use '@gbxm/styles/_variables.scss' as *;
+@use '@gbxm/styles/_header-card.scss' as *;
+
+.card__header {
+  margin-bottom: 0;
+}
+
+.edit-profile-body {
+  padding: 24px;
+
+  @media (max-width: 767px) {
+    padding: 16px;
+  }
+}

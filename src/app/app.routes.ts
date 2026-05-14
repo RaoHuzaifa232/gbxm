@@ -20,8 +20,27 @@ export const routes: Routes = [
         pathMatch: 'full'
       },
       {
-        path: 'operator-console/edit-my-profile',
-        loadComponent: () => import('@gbxm/items/operator-console/operator-console.component').then(m => m.OperatorConsoleComponent)
+        path: 'operator-console',
+        loadComponent: () => import('@gbxm/items/operator-console/operator-console.component').then(m => m.OperatorConsoleComponent),
+        children: [
+          {
+            path: 'edit-my-profile',
+            loadComponent: () => import('@gbxm/items/operator-console/edit-profile/edit-profile.component').then(m => m.EditProfileComponent)
+          },
+          {
+            path: 'view-all-profiles',
+            loadComponent: () => import('@gbxm/items/operator-console/view-all-profiles/view-all-profiles.component').then(m => m.ViewAllProfilesComponent)
+          },
+          {
+            path: 'verify-operator',
+            loadComponent: () => import('@gbxm/items/operator-console/verify-operator/verify-operator.component').then(m => m.VerifyOperatorComponent)
+          },
+          {
+            path: '',
+            redirectTo: 'edit-my-profile',
+            pathMatch: 'full'
+          }
+        ]
       },
       {
         path: 'campaigns',

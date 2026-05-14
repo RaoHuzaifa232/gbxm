@@ -1,0 +1,264 @@
+@if (!isPreviewing()) {
+<form [formGroup]="profileForm" (ngSubmit)="onPreview()" class="profile-form">
+
+  <!-- Section 1 -->
+  <h2 class="section-title">1. Personal info</h2>
+
+  <div class="form-grid grid-2">
+    <mat-form-field appearance="outline">
+      <mat-label>First Name</mat-label>
+      <input matInput formControlName="firstName" placeholder="Enter first name" matTooltip="Enter your first name">
+      @if (profileForm.get('firstName')?.hasError('required') && profileForm.get('firstName')?.touched) {
+        <mat-error>First Name is required</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Last Name</mat-label>
+      <input matInput formControlName="lastName" placeholder="Enter last name" matTooltip="Enter your last name">
+      @if (profileForm.get('lastName')?.hasError('required') && profileForm.get('lastName')?.touched) {
+        <mat-error>Last Name is required</mat-error>
+      }
+    </mat-form-field>
+  </div>
+
+  <div class="form-grid grid-preferred-operator-user">
+    <mat-form-field appearance="outline">
+      <mat-label>Preferred</mat-label>
+      <input matInput formControlName="preferred" placeholder="Preferred name or nickname" matTooltip="Your preferred name or nickname to display">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Operator</mat-label>
+      <input matInput formControlName="operator" matTooltip="Your operator role">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>User ID</mat-label>
+      <input matInput formControlName="userId" matTooltip="Your unique user identification number">
+    </mat-form-field>
+  </div>
+
+  <div class="form-grid grid-2">
+    <mat-form-field appearance="outline">
+      <mat-label>Personal Email</mat-label>
+      <input matInput formControlName="personalEmail" type="email" placeholder="e.g. personal@email.com" matTooltip="Your personal email address for account recovery">
+      @if (profileForm.get('personalEmail')?.hasError('required') && profileForm.get('personalEmail')?.touched) {
+        <mat-error>Personal Email is required</mat-error>
+      }
+      @if (profileForm.get('personalEmail')?.hasError('email') && profileForm.get('personalEmail')?.touched) {
+        <mat-error>Invalid email format</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Cell & Text</mat-label>
+      <input matInput formControlName="cellAndText" placeholder="e.g. +1 234 567 8900" matTooltip="Your mobile number for calls and text communications">
+      @if (profileForm.get('cellAndText')?.hasError('required') && profileForm.get('cellAndText')?.touched) {
+        <mat-error>Cell & Text is required</mat-error>
+      }
+      @if (profileForm.get('cellAndText')?.hasError('pattern') && profileForm.get('cellAndText')?.touched) {
+        <mat-error>Invalid phone number format</mat-error>
+      }
+    </mat-form-field>
+  </div>
+
+  <mat-divider class="section-divider" />
+
+  <!-- Section 2 -->
+  <h2 class="section-title">2. Contact info</h2>
+
+  <div class="form-grid grid-2">
+    <mat-form-field appearance="outline">
+      <mat-label>Contact Email</mat-label>
+      <input matInput formControlName="contactEmail" type="email" placeholder="e.g. contact@gbxm.com" matTooltip="Primary contact email for business correspondence">
+      @if (profileForm.get('contactEmail')?.hasError('required') && profileForm.get('contactEmail')?.touched) {
+        <mat-error>Contact Email is required</mat-error>
+      }
+      @if (profileForm.get('contactEmail')?.hasError('email') && profileForm.get('contactEmail')?.touched) {
+        <mat-error>Invalid email format</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Company Email</mat-label>
+      <input matInput formControlName="companyEmail" type="email" placeholder="e.g. work@gbxm.com" matTooltip="Your official company email address">
+      @if (profileForm.get('companyEmail')?.hasError('required') && profileForm.get('companyEmail')?.touched) {
+        <mat-error>Company Email is required</mat-error>
+      }
+      @if (profileForm.get('companyEmail')?.hasError('email') && profileForm.get('companyEmail')?.touched) {
+        <mat-error>Invalid email format</mat-error>
+      }
+    </mat-form-field>
+  </div>
+
+  <div class="form-grid grid-2">
+    <mat-form-field appearance="outline">
+      <mat-label>LinkedIN</mat-label>
+      <input matInput formControlName="linkedIn" placeholder="e.g. linkedin.com/in/username" matTooltip="Your LinkedIn profile URL">
+      @if (profileForm.get('linkedIn')?.hasError('pattern') && profileForm.get('linkedIn')?.touched) {
+        <mat-error>Please enter a valid URL</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Teams ID</mat-label>
+      <input matInput formControlName="teamsId" placeholder="e.g. username" matTooltip="Your Microsoft Teams username or ID">
+    </mat-form-field>
+  </div>
+
+  <div class="about-me-wrapper">
+    <div class="about-me-header">
+      <span>A Little About Me ...</span>
+      <button mat-stroked-button color="primary" type="button" (click)="openAboutMeDialog()" matTooltip="Add a short biography about yourself">
+        <mat-icon>{{ profileForm.get('aboutMe')?.value ? 'edit' : 'add' }}</mat-icon>
+        {{ profileForm.get('aboutMe')?.value ? 'Edit Notes' : 'Add Note' }}
+      </button>
+    </div>
+    @if (profileForm.get('aboutMe')?.value) {
+      <div class="about-me-preview">{{ profileForm.get('aboutMe')?.value }}</div>
+    } @else {
+      <div class="about-me-empty">
+        No biography added yet. Click 'Add Notes' to add a short summary about yourself.
+      </div>
+    }
+  </div>
+
+  <mat-divider class="section-divider" />
+
+  <!-- Section 3 -->
+  <h2 class="section-title">3. Business info</h2>
+
+  <div class="form-grid grid-2">
+    <div class="file-column">
+      <app-file-upload formControlName="picture" label="Upload Picture (PNG, JPG)" accept=".jpg,.jpeg,.png"
+        [allowedExtensions]="['.jpg', '.jpeg', '.png']"
+        tooltip="Select a profile picture to upload (JPG, PNG only)">
+      </app-file-upload>
+    </div>
+    <div class="file-column">
+      <app-file-upload formControlName="cv" label="Upload CV (PDF)" accept=".pdf"
+        [allowedExtensions]="['.pdf']"
+        tooltip="Select your CV document to upload (PDF only)">
+      </app-file-upload>
+    </div>
+  </div>
+
+  <div class="form-grid grid-2">
+    <mat-form-field appearance="outline">
+      <mat-label>Trading Entity</mat-label>
+      <input matInput formControlName="tradingEntity" placeholder="Enter trading entity name" matTooltip="The legal name of your trading entity or company">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Registration Number</mat-label>
+      <input matInput formControlName="registrationNumber" placeholder="Enter registration number" matTooltip="Your company or business registration number">
+    </mat-form-field>
+  </div>
+
+  <div class="form-grid grid-2">
+    <mat-form-field appearance="outline">
+      <mat-label>Digital Presence #1</mat-label>
+      <input matInput formControlName="digitalPresence1" placeholder="e.g. www.website.com" matTooltip="URL of your primary website or online presence">
+      @if (profileForm.get('digitalPresence1')?.hasError('pattern') && profileForm.get('digitalPresence1')?.touched) {
+        <mat-error>Please enter a valid URL</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Digital Presence #2</mat-label>
+      <input matInput formControlName="digitalPresence2" placeholder="e.g. www.portfolio.com" matTooltip="URL of your portfolio or secondary online presence">
+      @if (profileForm.get('digitalPresence2')?.hasError('pattern') && profileForm.get('digitalPresence2')?.touched) {
+        <mat-error>Please enter a valid URL</mat-error>
+      }
+    </mat-form-field>
+  </div>
+
+  <div class="form-grid grid-2">
+    <mat-form-field appearance="outline">
+      <mat-label>Digital Presence #3</mat-label>
+      <input matInput formControlName="digitalPresence3" placeholder="e.g. github.com/username" matTooltip="URL of your GitHub or code repository">
+      @if (profileForm.get('digitalPresence3')?.hasError('pattern') && profileForm.get('digitalPresence3')?.touched) {
+        <mat-error>Please enter a valid URL</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Digital Presence #4</mat-label>
+      <input matInput formControlName="digitalPresence4" placeholder="e.g. behance.net/username" matTooltip="URL of any additional online presence or social profile">
+      @if (profileForm.get('digitalPresence4')?.hasError('pattern') && profileForm.get('digitalPresence4')?.touched) {
+        <mat-error>Please enter a valid URL</mat-error>
+      }
+    </mat-form-field>
+  </div>
+
+  <!-- Action Buttons -->
+  <div class="form-actions">
+    <button mat-flat-button color="primary" type="button" (click)="onSave()" matTooltip="Save your current progress">
+      Save
+    </button>
+
+    @if (mode === 'self') {
+      <button mat-flat-button color="primary" type="submit" matTooltip="Preview your profile before submitting">
+        Preview & Submit
+      </button>
+    }
+
+    @if (mode === 'view') {
+      <button mat-flat-button color="primary" type="button" (click)="onDirectSubmit()" matTooltip="Submit this profile for review">
+        Submit
+      </button>
+      <button mat-stroked-button color="primary" type="button" (click)="onEmailLink()" matTooltip="Send email link to operator">
+        <mat-icon>email</mat-icon>
+        Email Link
+      </button>
+    }
+
+    @if (mode === 'verify') {
+      <button mat-flat-button color="primary" type="button" (click)="onDirectSubmit()" matTooltip="Submit this profile for review">
+        Submit
+      </button>
+      <button mat-flat-button color="primary" type="button" (click)="onVerify()" matTooltip="Approve this operator">
+        <mat-icon>check_circle</mat-icon>
+        Verify / Approve
+      </button>
+      <button mat-stroked-button color="warn" type="button" (click)="onReject()" matTooltip="Reject this operator">
+        <mat-icon>cancel</mat-icon>
+        Reject
+      </button>
+    }
+  </div>
+
+</form>
+} @else {
+<!-- Preview Mode (self only) -->
+<div class="profile-preview" aria-label="Profile preview">
+  <p class="profile-preview__hint">
+    Review the details below. If everything looks good, confirm to submit. Otherwise, go back to make changes.
+  </p>
+
+  @for (section of previewSections(); track section.title) {
+    <h2 class="section-title">{{ section.title }}</h2>
+    <div class="profile-preview__grid">
+      @for (field of section.fields; track field.label) {
+        <div class="profile-preview__row">
+          <span class="profile-preview__label">{{ field.label }}</span>
+          <span class="profile-preview__value">{{ field.value }}</span>
+        </div>
+      }
+    </div>
+    @if (!$last) {
+      <mat-divider class="section-divider" />
+    }
+  }
+
+  <div class="form-actions">
+    <button mat-stroked-button type="button" class="preview-back-btn" (click)="onEditAgain()" matTooltip="Go back to editing your profile">
+      Back to Edit
+    </button>
+    <button mat-flat-button color="primary" type="button" (click)="onConfirmSubmit()" matTooltip="Confirm and submit your profile">
+      Confirm & Submit
+    </button>
+  </div>
+</div>
+}

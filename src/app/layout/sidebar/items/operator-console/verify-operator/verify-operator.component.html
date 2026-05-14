@@ -1,0 +1,62 @@
+<header class="card__header">
+  <h2>Verify Operator</h2>
+</header>
+
+<div class="verify-operator-body">
+
+  <!-- Operator Selection -->
+  <div class="operator-selector">
+    <h3 class="selector-title">Select Operator</h3>
+    <form [formGroup]="operatorForm" class="selector-form">
+      <mat-form-field appearance="outline" class="selector-field">
+        <mat-label>Choose Operator</mat-label>
+        <mat-select formControlName="selectedUserId"
+          (selectionChange)="onOperatorChange($event.value)">
+          <mat-option [value]="null">— Select an operator —</mat-option>
+          @for (p of profiles(); track p.userId) {
+            <mat-option [value]="p.userId">
+              {{ p.firstName }} {{ p.lastName }}
+              <span class="operator-status-hint">({{ getStatusLabel(p.status) }})</span>
+            </mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </form>
+  </div>
+
+  @if (selectedProfile()) {
+    <mat-divider class="section-divider" />
+
+    <!-- Selected operator info bar -->
+    <div class="operator-info-bar">
+      <div class="operator-info-bar__name">
+        <span class="operator-info-bar__label">Reviewing profile for:</span>
+        <strong>{{ selectedProfile()!.firstName }} {{ selectedProfile()!.lastName }}</strong>
+        <span class="operator-info-bar__id">ID: {{ selectedProfile()!.userId }}</span>
+      </div>
+      <span class="status-badge"
+        [class.badge-draft]="selectedProfile()!.status === 'draft'"
+        [class.badge-pending]="selectedProfile()!.status === 'pending'"
+        [class.badge-verified]="selectedProfile()!.status === 'verified'"
+        [class.badge-rejected]="selectedProfile()!.status === 'rejected'">
+        {{ getStatusLabel(selectedProfile()!.status) }}
+      </span>
+    </div>
+
+    <!-- Profile Form -->
+    <div class="profile-form-wrapper">
+      <app-profile-form
+        mode="verify"
+        [profileData]="selectedProfile()!"
+        (profileVerified)="onProfileVerified()"
+        (profileRejected)="onProfileRejected()"/>
+    </div>
+
+  } @else {
+    <div class="empty-state">
+      <span class="empty-state__icon material-icons">person_search</span>
+      <p class="empty-state__text">Select an operator above to review and verify their profile.</p>
+    </div>
+  }
+
+</div>

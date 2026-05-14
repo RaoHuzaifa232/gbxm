@@ -1,28 +1,5 @@
 <header class="card__header">
 	<h2>All Campaigns</h2>
-	<div class="campaigns__toolbar">
-		@if (selectedCount() > 0) {
-		<span class="campaigns__selection">
-			{{ selectedCount() }} selected
-		</span>
-		}
-		<button mat-stroked-button class="campaigns__export" type="button" [matMenuTriggerFor]="exportMenu"
-			matTooltip="Export campaigns to Excel">
-			<mat-icon>file_download</mat-icon>
-			<span>Export</span>
-			<mat-icon class="campaigns__export-caret">arrow_drop_down</mat-icon>
-		</button>
-		<mat-menu #exportMenu="matMenu">
-			<button mat-menu-item type="button" (click)="exportAll()">
-				<mat-icon>table_view</mat-icon>
-				<span>Export all rows</span>
-			</button>
-			<button mat-menu-item type="button" (click)="exportSelected()" [disabled]="selectedCount() === 0">
-				<mat-icon>checklist</mat-icon>
-				<span>Export selected ({{ selectedCount() }})</span>
-			</button>
-		</mat-menu>
-	</div>
 </header>
 
 <form class="campaigns__filters" aria-label="Campaign filters" [formGroup]="filtersForm">
@@ -55,109 +32,15 @@
 	</div>
 </form>
 
-<div class="campaigns__table" aria-label="Campaign list">
-	<table mat-table [dataSource]="dataSource" matSort (matSortChange)="onSortChange($event)"
-		class="campaigns__mat-table">
-		<ng-container matColumnDef="select">
-			<th mat-header-cell *matHeaderCellDef>
-				<mat-checkbox (change)="masterToggle()" [checked]="isAllVisibleSelected()"
-					[indeterminate]="isSomeVisibleSelected()" aria-label="Select all campaigns on this page">
-				</mat-checkbox>
-			</th>
-			<td mat-cell *matCellDef="let campaign">
-				<mat-checkbox (click)="$event.stopPropagation()" (change)="toggleSelection(campaign)"
-					[checked]="selection.isSelected(campaign)"
-					[attr.aria-label]="'Select campaign ' + campaign.id"></mat-checkbox>
-			</td>
-		</ng-container>
-
-		<ng-container matColumnDef="id">
-			<th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
-			<td mat-cell *matCellDef="let campaign">{{ campaign.id }}</td>
-		</ng-container>
-
-		<ng-container matColumnDef="name">
-			<th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
-			<td mat-cell *matCellDef="let campaign">{{ campaign.name }}</td>
-		</ng-container>
-
-		<ng-container matColumnDef="type">
-			<th mat-header-cell *matHeaderCellDef mat-sort-header="typeLabel">Type</th>
-			<td mat-cell *matCellDef="let campaign">{{ campaign.typeLabel }}</td>
-		</ng-container>
-
-		<ng-container matColumnDef="pickListDate">
-			<th mat-header-cell *matHeaderCellDef mat-sort-header>Pick List Date</th>
-			<td mat-cell *matCellDef="let campaign">{{ campaign.pickListDate }}</td>
-		</ng-container>
-
-		<ng-container matColumnDef="count">
-			<th mat-header-cell *matHeaderCellDef mat-sort-header>No</th>
-			<td mat-cell *matCellDef="let campaign">{{ campaign.count }}</td>
-		</ng-container>
-
-		<ng-container matColumnDef="action">
-			<th mat-header-cell *matHeaderCellDef>Hotels</th>
-			<td mat-cell *matCellDef="let campaign">
-				<button mat-icon-button class="cell cell--action" type="button" (click)="openHotels(campaign)"
-					[attr.aria-label]="'View hotels for campaign ' + campaign.id"
-					matTooltip="View hotels associated with this campaign">
-					<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-						<path
-							d="M12 5c-5.25 0-9.5 4.02-11 7 1.5 2.98 5.75 7 11 7s9.5-4.02 11-7c-1.5-2.98-5.75-7-11-7zm0 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm0-2.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z">
-						</path>
-					</svg>
-				</button>
-			</td>
-		</ng-container>
-
-		<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-		<tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-	</table>
-
-	<mat-paginator class="campaigns__paginator" [pageSize]="10" [pageSizeOptions]="pageSizeOptions"
-		showFirstLastButtons aria-label="Select page of campaigns"></mat-paginator>
-</div>
-
-<div class="campaigns__cards" aria-label="Campaign cards">
-	@for (campaign of filteredCampaigns(); track campaign.id) {
-	<div class="campaign-card">
-		<div class="campaign-card__top">
-			<div class="campaign-card__top-left">
-				<mat-checkbox (change)="toggleSelection(campaign)" [checked]="selection.isSelected(campaign)"
-					[attr.aria-label]="'Select campaign ' + campaign.id">
-				</mat-checkbox>
-				<span class="campaign-card__id">{{ campaign.id }}</span>
-			</div>
-			<button type="button" class="campaign-card__icon" (click)="openHotels(campaign)"
-				[attr.aria-label]="'View hotels for campaign ' + campaign.id">
-				<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-					<path
-						d="M12 5c-5.25 0-9.5 4.02-11 7 1.5 2.98 5.75 7 11 7s9.5-4.02 11-7c-1.5-2.98-5.75-7-11-7zm0 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm0-2.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z">
-					</path>
-				</svg>
-			</button>
-		</div>
-
-		<div class="campaign-card__rows">
-			<div class="campaign-card__row">
-				<span class="campaign-card__label">Name</span>
-				<span class="campaign-card__value">{{ campaign.name }}</span>
-			</div>
-			<div class="campaign-card__row">
-				<span class="campaign-card__label">Type</span>
-				<span class="campaign-card__value">{{ campaign.typeLabel }}</span>
-			</div>
-			<div class="campaign-card__row">
-				<span class="campaign-card__label">Pick List Date</span>
-				<span class="campaign-card__value">{{ campaign.pickListDate || 'No pick list' }}</span>
-			</div>
-			<div class="campaign-card__row">
-				<span class="campaign-card__label">No</span>
-				<span class="campaign-card__value">{{ campaign.count || '0' }}</span>
-			</div>
-		</div>
-
-	</div>
-	}
-</div>
+<app-generic-table
+	[columns]="columns"
+	[data]="tableData()"
+	[actions]="campaignActions"
+	[selectable]="true"
+	[exportable]="true"
+	[exportFileName]="'campaigns'"
+	[pageSizeOptions]="pageSizeOptions"
+	[defaultPageSize]="10"
+	[mobileBreakpoint]="720"
+	[searchable]="true"
+	class="campaigns__gt"/>

@@ -11,8 +11,8 @@ export const NAVIGATION_DATA: NavItem[] = [
     label: 'Operator Console',
     children: [
       { label: 'Edit My Profile', link: '/operator-console/edit-my-profile', icon: 'person_edit.svg' },
-      { label: 'View All Profiles', link: '/coming-soon/view-all-profiles', icon: 'headset_mic.svg' },
-      { label: 'Approve Operators', link: '/coming-soon/approve-operators', icon: 'Group.svg' }
+      { label: 'View All Profiles', link: '/operator-console/view-all-profiles', icon: 'headset_mic.svg' },
+      { label: 'Verify Operator', link: '/operator-console/verify-operator', icon: 'Group.svg' }
     ]
   },
   {

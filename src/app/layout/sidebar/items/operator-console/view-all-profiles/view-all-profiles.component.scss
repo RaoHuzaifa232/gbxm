@@ -1,0 +1,190 @@
+@use '@gbxm/styles/_variables.scss' as *;
+@use '@gbxm/styles/_header-card.scss' as *;
+
+// ─── Table view ───────────────────────────────────────────────────────────────
+
+.card__header {
+  margin-bottom: 0;
+}
+
+.view-all-profiles-body {
+  padding: 16px 0 0 0;
+}
+
+// ─── Inline profile view ─────────────────────────────────────────────────────
+
+.profile-view {
+  &__topbar {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 16px 24px;
+    border-bottom: 1px solid $color-divider;
+
+    @media (max-width: 767px) {
+      padding: 12px 16px;
+      gap: 10px;
+    }
+  }
+
+  &__back-btn {
+    flex-shrink: 0;
+    color: $color-action-primary !important;
+    border-color: $color-action-primary !important;
+    height: 36px;
+
+    mat-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+      margin-right: 4px;
+    }
+  }
+
+  &__identity {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__name {
+    font-size: 16px;
+    font-weight: 600;
+    color: $color-text-primary;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__uid {
+    font-size: 12px;
+    color: $color-text-tertiary;
+    background: $color-bg-main;
+    border: 1px solid $color-border-light;
+    padding: 2px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  &__status-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+
+    button {
+      height: 36px;
+      font-size: 13px;
+
+      mat-icon {
+        font-size: 16px;
+        width: 16px;
+        height: 16px;
+        margin-right: 4px;
+      }
+    }
+  }
+
+  &__history {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 24px;
+    background: $color-bg-main;
+    flex-wrap: wrap;
+
+    @media (max-width: 767px) {
+      padding: 10px 16px;
+      flex-direction: column;
+      gap: 8px;
+    }
+  }
+
+  &__history-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: $color-text-tertiary;
+    white-space: nowrap;
+    padding-top: 3px;
+  }
+
+  &__history-events {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+  }
+
+  &__divider {
+    border-top-color: $color-divider !important;
+  }
+
+  &__form {
+    padding: 24px;
+
+    @media (max-width: 767px) {
+      padding: 16px;
+    }
+  }
+}
+
+// ─── History event ───────────────────────────────────────────────────────────
+
+.history-event {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: $color-text-inverse;
+  border: 1px solid $color-border-light;
+  border-radius: 8px;
+  padding: 4px 10px 4px 6px;
+
+  &--latest {
+    border-color: $color-action-primary;
+    background: rgba($color-action-primary, 0.04);
+  }
+
+  &__date {
+    font-size: 12px;
+    color: $color-text-tertiary;
+    white-space: nowrap;
+  }
+}
+
+// ─── Status badges ────────────────────────────────────────────────────────────
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+
+  &.badge-draft {
+    background-color: #f5f5f5;
+    color: #616161;
+  }
+
+  &.badge-pending {
+    background-color: #fff3e0;
+    color: #e65100;
+  }
+
+  &.badge-verified {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+  }
+
+  &.badge-rejected {
+    background-color: #ffebee;
+    color: $color-error;
+  }
+}

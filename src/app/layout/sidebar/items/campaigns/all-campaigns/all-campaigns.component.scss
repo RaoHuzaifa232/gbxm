@@ -1,230 +1,11 @@
 @use '@gbxm/styles/_variables.scss' as *;
 @use '@gbxm/styles/_header-card.scss' as *;
 
+// ─── Filters ─────────────────────────────────────────────────────────────────
+
 .campaigns__filters {
 	padding: 16px 20px 8px 20px;
 	border-bottom: 1px solid $color-divider;
-}
-
-.campaigns__toolbar {
-	display: flex;
-	align-items: center;
-	gap: 12px;
-}
-
-.campaigns__selection {
-	font-size: 12px;
-	font-weight: 600;
-	color: $color-action-primary;
-	background: rgba($color-action-primary, 0.08);
-	padding: 4px 10px;
-	border-radius: 999px;
-	white-space: nowrap;
-}
-
-.campaigns__export {
-	color: $color-action-primary !important;
-	border-color: $color-action-primary !important;
-	font-weight: 500 !important;
-	border-radius: 6px !important;
-	display: inline-flex !important;
-	align-items: center !important;
-	gap: 4px;
-
-	mat-icon {
-		font-size: 18px;
-		width: 18px;
-		height: 18px;
-	}
-
-	&-caret {
-		margin-left: -4px;
-	}
-}
-
-.campaigns__paginator {
-	background: transparent;
-	border-top: 1px solid $color-divider;
-}
-
-
-.campaigns__table {
-	padding: 0 24px 56px 24px;
-}
-
-.campaigns__cards {
-	display: none;
-	padding: 16px 24px 32px 24px;
-	gap: 16px;
-}
-
-.campaign-card {
-	border: 1px solid $color-divider;
-	border-radius: 10px;
-	background: $color-text-inverse;
-	padding: 12px 12px 10px 12px;
-	box-shadow: 0 10px 20px rgba(18, 22, 26, 0.08);
-
-	&__top {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: 8px;
-		padding: 2px 4px 12px 4px;
-		border-bottom: 1px solid $color-divider;
-	}
-
-	&__top-left {
-		display: flex;
-		align-items: center;
-		gap: 8px;
-	}
-
-	&__id {
-		font-size: 15px;
-		font-weight: 600;
-		letter-spacing: 0.2px;
-		color: $color-text-primary;
-	}
-
-	&__icon {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		width: 32px;
-		height: 32px;
-		border: 1px solid $color-divider;
-		border-radius: 50%;
-		background: $color-text-inverse;
-		color: $color-text-tertiary;
-		padding: 0;
-		cursor: pointer;
-
-		svg {
-			width: 18px;
-			height: 18px;
-			fill: currentColor;
-		}
-
-		&:hover {
-			color: $color-action-primary;
-			border-color: rgba(28, 108, 228, 0.2);
-			background: rgba(28, 108, 228, 0.08);
-		}
-	}
-
-	&__rows {
-		display: flex;
-		flex-direction: column;
-		padding: 8px 4px 0 4px;
-	}
-
-	&__row {
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: 2px;
-		padding: 10px 0;
-		border-bottom: 1px solid $color-divider;
-	}
-
-	&__row:last-child {
-		border-bottom: none;
-	}
-
-	&__label {
-		font-size: 11px;
-		font-weight: 500;
-		color: $color-text-tertiary;
-		letter-spacing: 0.3px;
-		text-transform: uppercase;
-	}
-
-	&__value {
-		font-size: 14px;
-		font-weight: 500;
-		color: $color-text-primary;
-		word-break: break-word;
-	}
-
-	&__link {
-		width: 100%;
-		margin-top: 8px;
-		border: none;
-		background: transparent;
-		color: $color-action-primary;
-		font-size: 13px;
-		font-weight: 600;
-		padding: 8px 0 2px;
-		cursor: pointer;
-		text-align: center;
-	}
-}
-
-
-.campaigns__mat-table {
-	width: 100%;
-	border-collapse: collapse;
-	background-color: transparent;
-
-	.mat-mdc-header-row,
-	.mat-mdc-row {
-		display: grid;
-		grid-template-columns: 48px 110px 1.4fr 1fr 1fr 80px 58px;
-		align-items: center;
-		column-gap: 16px;
-	}
-
-	.mat-mdc-header-row {
-		font-size: 14px;
-		font-weight: 500 !important;
-		letter-spacing: 0.2px;
-		line-height: 24px;
-		color: $color-text-tertiary;
-		border-bottom: 1px solid $color-divider;
-		max-height: 56px;
-	}
-
-	.mat-mdc-row {
-		border-bottom: 1px solid $color-divider;
-		font-size: 14px;
-		font-weight: 400;
-		letter-spacing: 0.17px;
-		color: $color-text-primary;
-		max-height: 52px;
-	}
-
-	.mat-mdc-header-cell,
-	.mat-mdc-cell {
-		padding: 0 4px;
-		border-bottom: none;
-		white-space: nowrap;
-		color: $color-text-primary;
-	}
-
-	.mat-mdc-cell {
-		font-weight: 400;
-		color: $color-text-primary;
-	}
-
-	.mat-mdc-cell.mat-column-name,
-	.mat-mdc-cell.mat-column-type {
-		color: $color-text-primary;
-	}
-
-	.mat-mdc-cell.mat-column-action {
-		display: flex;
-		justify-content: center;
-	}
-
-	.mat-mdc-cell.mat-column-select,
-	.mat-mdc-header-cell.mat-column-select {
-		justify-content: center;
-		display: flex;
-	}
-
-	.mat-sort-header-content {
-		color: $color-text-tertiary;
-	}
 }
 
 .filters {
@@ -261,78 +42,19 @@
 	}
 }
 
-.cell {
-	&--action {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		width: 32px;
-		height: 32px;
-		border: 1px solid transparent;
-		border-radius: 50%;
-		background: transparent;
-		color: $color-text-tertiary;
-		cursor: pointer;
-		padding: 0;
-		justify-self: end;
-
-		svg {
-			width: 18px;
-			height: 18px;
-			fill: currentColor;
-		}
-
-		&:hover {
-			color: $color-action-primary;
-			border-color: rgba(28, 108, 228, 0.2);
-			background: rgba(28, 108, 228, 0.08);
-		}
-	}
-}
+// ─── Responsive ──────────────────────────────────────────────────────────────
 
 @media (max-width: 960px) {
-	.campaigns__table {
-		padding: 0 16px 8px 16px;
-	}
-
 	.campaigns__filters {
 		padding-left: 16px;
 		padding-right: 16px;
 	}
-
-	.campaigns__mat-table {
-
-		.mat-mdc-header-row,
-		.mat-mdc-row {
-			grid-template-columns: 44px 90px 1fr 1fr 1fr 60px 58px;
-		}
-	}
 }
 
 @media (max-width: 720px) {
-	.campaigns__table {
-		display: none;
-	}
-
-	.campaigns__cards {
-		display: grid;
-		padding: 12px 12px 20px 12px;
-		gap: 14px;
-	}
-
-	.campaigns__mat-table {
-
-		.mat-mdc-header-row,
-		.mat-mdc-row {
-			grid-template-columns: 40px 80px 1fr 1fr;
-			row-gap: 8px;
-		}
-
-		.mat-column-pickListDate,
-		.mat-column-count,
-		.mat-column-action {
-			display: none;
-		}
+	.campaigns__filters {
+		padding-left: 16px;
+		padding-right: 16px;
 	}
 
 	.filters {
@@ -343,26 +65,6 @@
 		&__group {
 			width: 100% !important;
 			gap: 10px;
-
-			&--checkbox {
-				padding-bottom: 0;
-			}
-		}
-
-		&__radio-group {
-			display: grid;
-			grid-template-columns: repeat(2, 1fr);
-			width: 100%;
-			gap: 4px;
-
-			::ng-deep .mat-mdc-radio-button .mdc-label {
-				text-align: center;
-				width: 100%;
-			}
-		}
-
-		&__checkbox {
-			margin-top: 4px;
 		}
 	}
 }
