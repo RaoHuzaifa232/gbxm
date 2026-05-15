@@ -8,7 +8,7 @@
         }
     </div>
 
-    <mat-accordion class="sidebar__nav" multi aria-label="Sidebar navigation">
+    <mat-accordion class="sidebar__nav" aria-label="Sidebar navigation">
         @for (group of navData; track group.label) {
         <mat-expansion-panel class="sidebar__group" routerLinkActive #rlaGroup="routerLinkActive"
             [expanded]="rlaGroup.isActive">
