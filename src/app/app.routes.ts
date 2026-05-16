@@ -53,6 +53,14 @@ export const routes: Routes = [
           {
             path: 'define-campaign',
             loadComponent: () => import('@gbxm/layout/sidebar/items/campaigns/define-campaign/define-campaign.component').then(m => m.DefineCampaignComponent)
+          },
+          {
+            path: 'add-pick-lists',
+            loadComponent: () => import('@gbxm/layout/sidebar/items/campaigns/add-pick-lists/add-pick-lists.component').then(m => m.AddPickListsComponent)
+          },
+          {
+            path: 'my-campaigns',
+            loadComponent: () => import('@gbxm/layout/sidebar/items/campaigns/my-campaigns/my-campaigns.component').then(m => m.MyCampaignsComponent)
           }
         ]
       },

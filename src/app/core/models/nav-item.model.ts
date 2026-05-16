@@ -20,8 +20,8 @@ export const NAVIGATION_DATA: NavItem[] = [
     children: [
       { label: 'All Campaigns', link: '/campaigns/all-campaigns', icon: 'holiday_village.svg' },
       { label: 'Define Campaigns', link: '/campaigns/define-campaign', icon: 'quick_reference_all.svg' },
-      { label: 'Add Pick Lists', link: '/coming-soon/add-pick-lists', icon: 'note_add.svg' },
-      { label: 'My Campaigns', link: '/coming-soon/my-campaigns', icon: 'source_environment.svg' },
+      { label: 'Add Pick Lists', link: '/campaigns/add-pick-lists', icon: 'note_add.svg' },
+      { label: 'My Campaigns', link: '/campaigns/my-campaigns', icon: 'source_environment.svg' },
       { label: 'Access Property View', link: '/coming-soon/access-property-view', icon: 'real-estate-property.svg' }
     ]
   },

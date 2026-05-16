@@ -1,0 +1,95 @@
+@if (viewState() === 'table') {
+
+<header class="card__header">
+	<h2>Add Pick Lists</h2>
+	<button mat-raised-button color="primary" type="button" (click)="onBrowseFile()" [disabled]="!selectedCampaign()">
+		Browse File
+	</button>
+</header>
+
+<form class="pick-lists__filters" [formGroup]="filtersForm" aria-label="Pick list filters">
+	<div class="filters__row filters__row--campaigns">
+		<mat-form-field appearance="outline" subscriptSizing="dynamic" class="filters__campaign-field">
+			<mat-label>Select Campaign Name</mat-label>
+			<mat-select [value]="selectedCampaignId()" (selectionChange)="onCampaignChange($event.value)">
+				@for (c of campaigns(); track c.id) {
+				<mat-option [value]="c.id">{{ c.name }}</mat-option>
+				}
+			</mat-select>
+		</mat-form-field>
+
+		<mat-form-field appearance="outline" subscriptSizing="dynamic" class="filters__campaign-field">
+			<mat-label>Select Campaign Number</mat-label>
+			<mat-select [value]="selectedCampaignId()" (selectionChange)="onCampaignChange($event.value)">
+				@for (c of campaigns(); track c.id) {
+				<mat-option [value]="c.id">{{ c.id }}</mat-option>
+				}
+			</mat-select>
+		</mat-form-field>
+	</div>
+
+	<div class="filters__row filters__row--type">
+		<mat-form-field appearance="outline" subscriptSizing="dynamic" class="filters__operator-field">
+			<mat-label>Select Operator</mat-label>
+			<mat-select formControlName="operatorId">
+				<mat-option value="all">All</mat-option>
+				<mat-option value="operator-1">Operator 1</mat-option>
+				<mat-option value="operator-2">Operator 2</mat-option>
+				<mat-option value="operator-3">Operator 3</mat-option>
+			</mat-select>
+		</mat-form-field>
+		<mat-radio-group class="radio-pills" aria-label="Pick list type" formControlName="typeKey">
+			<mat-radio-button value="all">All</mat-radio-button>
+			<mat-radio-button value="agent">Agent</mat-radio-button>
+			<mat-radio-button value="brand">Brand/syndicate</mat-radio-button>
+			<mat-radio-button value="geo">Geographic</mat-radio-button>
+			<mat-radio-button value="thematic">Thematic</mat-radio-button>
+		</mat-radio-group>
+		<mat-checkbox formControlName="viewNoPickLists">View No Pick Lists</mat-checkbox>
+	</div>
+</form>
+
+<mat-divider />
+
+<app-generic-table [columns]="columns" [data]="tableData()" [actions]="tableActions" [pageSizeOptions]="pageSizeOptions"
+	[defaultPageSize]="10" [mobileBreakpoint]="720" class="pick-lists__gt" />
+
+}
+
+@if (viewState() === 'property-view') {
+
+<div class="detail-view__header">
+	<button mat-button class="back-btn" type="button" (click)="backToTable()">
+		<mat-icon>arrow_back</mat-icon>
+		Back
+	</button>
+	<h2 class="detail-view__title">Property View</h2>
+	<button mat-raised-button color="primary" type="button">Add</button>
+</div>
+
+<mat-divider />
+
+<div class="property-view__filters">
+	<mat-form-field appearance="outline" subscriptSizing="dynamic" class="property-view__filter-field">
+		<mat-label>Select Campaign Name</mat-label>
+		<mat-select [value]="propertyViewCampaignId()" (selectionChange)="onPropertyViewCampaignChange($event.value)">
+			@for (c of campaigns(); track c.id) {
+			<mat-option [value]="c.id">{{ c.name }}</mat-option>
+			}
+		</mat-select>
+	</mat-form-field>
+
+	<mat-form-field appearance="outline" subscriptSizing="dynamic" class="property-view__filter-field">
+		<mat-label>Select Campaign Number</mat-label>
+		<mat-select [value]="propertyViewCampaignId()" (selectionChange)="onPropertyViewCampaignChange($event.value)">
+			@for (c of campaigns(); track c.id) {
+			<mat-option [value]="c.id">{{ c.id }}</mat-option>
+			}
+		</mat-select>
+	</mat-form-field>
+</div>
+
+<app-generic-table [columns]="propertyViewColumns" [data]="propertyViewData()" [actions]="propertyViewActions"
+	[pageSizeOptions]="pageSizeOptions" [defaultPageSize]="10" [mobileBreakpoint]="720" />
+
+}

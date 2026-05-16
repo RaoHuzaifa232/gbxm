@@ -3,12 +3,14 @@ import { Injectable, effect, signal } from '@angular/core';
 export type CampaignTypeKey = 'agent' | 'geo' | 'brand' | 'thematic';
 
 export interface CampaignHotel {
-  id: string;
   name: string;
   location: string;
-  rating: number;
-  rooms: number;
   status: string;
+  gm?: string;
+  email?: string;
+  phone?: string;
+  logOn?: string;
+  excom?: string;
 }
 
 export interface Campaign {
@@ -41,85 +43,85 @@ export interface Campaign {
 
 const SAMPLE_HOTELS_BY_CAMPAIGN: Record<string, CampaignHotel[]> = {
   '00001': [
-    { id: 'H-1001', name: 'Ubud Tropical Resort', location: 'Ubud, Bali', rating: 4.7, rooms: 120, status: 'Active' },
-    { id: 'H-1002', name: 'Seminyak Beach Villas', location: 'Seminyak, Bali', rating: 4.5, rooms: 80, status: 'Active' },
-    { id: 'H-1003', name: 'Nusa Dua Pearl', location: 'Nusa Dua, Bali', rating: 4.6, rooms: 210, status: 'Pending' }
+    { name: 'Ubud Tropical Resort', location: 'Ubud, Bali', status: 'Active', gm: 'Indra Sulimani Ibid', email: 'indrasulimni@UbudResort.id', phone: '+6230981673' },
+    { name: 'Seminyak Beach Villas', location: 'Seminyak, Bali', status: 'Active', gm: 'Patrick Geddes', email: 'PatrickG@SeminyakVillas.com', phone: '+6230981673' },
+    { name: 'Nusa Dua Pearl', location: 'Nusa Dua, Bali', status: 'Pending', gm: 'Ayu Pratiwi', email: 'apratiwi@NusaDuaPearl.id', phone: '+6230981674' }
   ],
 
   '00002': [
-    { id: 'H-2001', name: 'Pacific Crest Hotel', location: 'San Diego, CA', rating: 4.3, rooms: 156, status: 'Active' },
-    { id: 'H-2002', name: 'Gaslamp Boutique', location: 'San Diego, CA', rating: 4.4, rooms: 92, status: 'Active' }
+    { name: 'Pacific Crest Hotel', location: 'San Diego, CA', status: 'Active', gm: 'James Morrison', email: 'jmorrison@pacificcrest.com', phone: '+16195551234' },
+    { name: 'Gaslamp Boutique', location: 'San Diego, CA', status: 'Active', gm: 'Linda Park', email: 'lpark@gaslampboutique.com', phone: '+16195555678' }
   ],
 
   '00003': [
-    { id: 'H-3001', name: 'Spring Garden Inn', location: 'Lisbon, PT', rating: 4.2, rooms: 64, status: 'Active' },
-    { id: 'H-3002', name: 'Lotus Bloom Resort', location: 'Porto, PT', rating: 4.6, rooms: 110, status: 'Active' },
-    { id: 'H-3003', name: 'Cherry Blossom Hotel', location: 'Madrid, ES', rating: 4.5, rooms: 88, status: 'Pending' }
+    { name: 'Spring Garden Inn', location: 'Lisbon, PT', status: 'Active' },
+    { name: 'Lotus Bloom Resort', location: 'Porto, PT', status: 'Active' },
+    { name: 'Cherry Blossom Hotel', location: 'Madrid, ES', status: 'Pending' }
   ],
 
   '00004': [
-    { id: 'H-4001', name: 'Coastline Grand', location: 'Brighton, UK', rating: 4.4, rooms: 140, status: 'Active' },
-    { id: 'H-4002', name: 'Seabreeze Suites', location: 'Cornwall, UK', rating: 4.3, rooms: 75, status: 'Active' }
+    { name: 'Coastline Grand', location: 'Brighton, UK', status: 'Active' },
+    { name: 'Seabreeze Suites', location: 'Cornwall, UK', status: 'Active' }
   ],
 
   '00005': [
-    { id: 'H-5001', name: 'Desert Crown Palace', location: 'Dubai Marina, UAE', rating: 4.8, rooms: 320, status: 'Active' },
-    { id: 'H-5002', name: 'Palm Oasis Resort', location: 'Palm Jumeirah, UAE', rating: 4.7, rooms: 210, status: 'Active' },
-    { id: 'H-5003', name: 'Golden Dunes Hotel', location: 'Downtown Dubai, UAE', rating: 4.5, rooms: 180, status: 'Pending' }
+    { name: 'Desert Crown Palace', location: 'Dubai Marina, UAE', status: 'Active' },
+    { name: 'Palm Oasis Resort', location: 'Palm Jumeirah, UAE', status: 'Active' },
+    { name: 'Golden Dunes Hotel', location: 'Downtown Dubai, UAE', status: 'Pending' }
   ],
 
   '00006': [
-    { id: 'H-6001', name: 'Snow Peak Lodge', location: 'Aspen, USA', rating: 4.6, rooms: 95, status: 'Active' },
-    { id: 'H-6002', name: 'Frost Valley Resort', location: 'Whistler, Canada', rating: 4.7, rooms: 150, status: 'Active' }
+    { name: 'Snow Peak Lodge', location: 'Aspen, USA', status: 'Active' },
+    { name: 'Frost Valley Resort', location: 'Whistler, Canada', status: 'Active' }
   ],
 
   '00007': [
-    { id: 'H-7001', name: 'Royal Vienna Suites', location: 'Vienna, AT', rating: 4.4, rooms: 130, status: 'Active' },
-    { id: 'H-7002', name: 'Paris Elite Stay', location: 'Paris, FR', rating: 4.8, rooms: 170, status: 'Active' },
-    { id: 'H-7003', name: 'Rome Imperial Hotel', location: 'Rome, IT', rating: 4.5, rooms: 145, status: 'Pending' }
+    { name: 'Royal Vienna Suites', location: 'Vienna, AT', status: 'Active' },
+    { name: 'Paris Elite Stay', location: 'Paris, FR', status: 'Active' },
+    { name: 'Rome Imperial Hotel', location: 'Rome, IT', status: 'Pending' }
   ],
 
   '00008': [
-    { id: 'H-8001', name: 'Phuket Paradise Resort', location: 'Phuket, Thailand', rating: 4.6, rooms: 220, status: 'Active' },
-    { id: 'H-8002', name: 'Krabi Sunset Villas', location: 'Krabi, Thailand', rating: 4.5, rooms: 90, status: 'Active' }
+    { name: 'Phuket Paradise Resort', location: 'Phuket, Thailand', status: 'Active' },
+    { name: 'Krabi Sunset Villas', location: 'Krabi, Thailand', status: 'Active' }
   ],
 
   '00009': [
-    { id: 'H-9001', name: 'Tokyo Sky Hotel', location: 'Tokyo, Japan', rating: 4.7, rooms: 250, status: 'Active' },
-    { id: 'H-9002', name: 'Shibuya Central Inn', location: 'Shibuya, Tokyo', rating: 4.4, rooms: 110, status: 'Active' },
-    { id: 'H-9003', name: 'Sakura Palace', location: 'Shinjuku, Tokyo', rating: 4.6, rooms: 175, status: 'Pending' }
+    { name: 'Tokyo Sky Hotel', location: 'Tokyo, Japan', status: 'Active' },
+    { name: 'Shibuya Central Inn', location: 'Shibuya, Tokyo', status: 'Active' },
+    { name: 'Sakura Palace', location: 'Shinjuku, Tokyo', status: 'Pending' }
   ],
 
   '00010': [
-    { id: 'H-10001', name: 'Sunrise Budget Suites', location: 'Miami, USA', rating: 4.1, rooms: 140, status: 'Active' },
-    { id: 'H-10002', name: 'Holiday Saver Inn', location: 'Orlando, USA', rating: 4.0, rooms: 105, status: 'Active' }
+    { name: 'Sunrise Budget Suites', location: 'Miami, USA', status: 'Active' },
+    { name: 'Holiday Saver Inn', location: 'Orlando, USA', status: 'Active' }
   ],
 
   '00011': [
-    { id: 'H-11001', name: 'Maldives Water Villas', location: 'Male, Maldives', rating: 4.9, rooms: 75, status: 'Active' },
-    { id: 'H-11002', name: 'Ocean Breeze Retreat', location: 'Vaavu Atoll, Maldives', rating: 4.8, rooms: 60, status: 'Active' }
+    { name: 'Maldives Water Villas', location: 'Male, Maldives', status: 'Active' },
+    { name: 'Ocean Breeze Retreat', location: 'Vaavu Atoll, Maldives', status: 'Active' }
   ],
 
   '00012': [
-    { id: 'H-12001', name: 'Evergreen Mountain Lodge', location: 'Swiss Alps, CH', rating: 4.7, rooms: 98, status: 'Active' },
-    { id: 'H-12002', name: 'Nature Bliss Retreat', location: 'Banff, Canada', rating: 4.5, rooms: 82, status: 'Pending' }
+    { name: 'Evergreen Mountain Lodge', location: 'Swiss Alps, CH', status: 'Active' },
+    { name: 'Nature Bliss Retreat', location: 'Banff, Canada', status: 'Pending' }
   ],
 
   '00013': [
-    { id: 'H-13001', name: 'Manhattan Luxury Stay', location: 'New York, USA', rating: 4.6, rooms: 310, status: 'Active' },
-    { id: 'H-13002', name: 'Central Park Suites', location: 'New York, USA', rating: 4.5, rooms: 180, status: 'Active' },
-    { id: 'H-13003', name: 'Times Square Grand', location: 'New York, USA', rating: 4.4, rooms: 260, status: 'Pending' }
+    { name: 'Manhattan Luxury Stay', location: 'New York, USA', status: 'Active' },
+    { name: 'Central Park Suites', location: 'New York, USA', status: 'Active' },
+    { name: 'Times Square Grand', location: 'New York, USA', status: 'Pending' }
   ],
 
   '00014': [
-    { id: 'H-14001', name: 'Savannah Wild Resort', location: 'Nairobi, Kenya', rating: 4.8, rooms: 120, status: 'Active' },
-    { id: 'H-14002', name: 'Safari Explorer Camp', location: 'Serengeti, Tanzania', rating: 4.7, rooms: 70, status: 'Active' }
+    { name: 'Savannah Wild Resort', location: 'Nairobi, Kenya', status: 'Active' },
+    { name: 'Safari Explorer Camp', location: 'Serengeti, Tanzania', status: 'Active' }
   ],
 
   '00015': [
-    { id: 'H-15001', name: 'Eiffel View Palace', location: 'Paris, FR', rating: 4.9, rooms: 190, status: 'Active' },
-    { id: 'H-15002', name: 'Louvre Boutique Hotel', location: 'Paris, FR', rating: 4.6, rooms: 105, status: 'Active' },
-    { id: 'H-15003', name: 'Seine Riverside Suites', location: 'Paris, FR', rating: 4.5, rooms: 140, status: 'Pending' }
+    { name: 'Eiffel View Palace', location: 'Paris, FR', status: 'Active' },
+    { name: 'Louvre Boutique Hotel', location: 'Paris, FR', status: 'Active' },
+    { name: 'Seine Riverside Suites', location: 'Paris, FR', status: 'Pending' }
   ]
 };
 

@@ -210,13 +210,6 @@ body {
     border: 1px solid #{variables.$color-divider};
     width: fit-content;
 
-    @media (max-width: 720px) {
-        width: 100%;
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 6px;
-    }
-
     .mat-mdc-radio-button {
         .mdc-radio {
             display: none;
