@@ -32,7 +32,6 @@
       <div class="operator-info-bar__name">
         <span class="operator-info-bar__label">Reviewing profile for:</span>
         <strong>{{ selectedProfile()!.firstName }} {{ selectedProfile()!.lastName }}</strong>
-        <span class="operator-info-bar__id">ID: {{ selectedProfile()!.userId }}</span>
       </div>
       <span class="status-badge"
         [class.badge-draft]="selectedProfile()!.status === 'draft'"

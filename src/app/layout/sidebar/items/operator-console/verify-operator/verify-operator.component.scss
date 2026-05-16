@@ -5,26 +5,37 @@
   margin-bottom: 0;
 }
 
+// ─── Body layout ─────────────────────────────────────────────────────────────
+// Horizontal padding lives on child sections so the info bar bleeds edge-to-edge.
+
 .verify-operator-body {
-  padding: 24px;
+  padding: $spacing-6 0;
 
   @media (max-width: 767px) {
-    padding: 16px;
+    padding: $spacing-4 0;
   }
 }
 
+// ─── Operator selector ────────────────────────────────────────────────────────
+
 .operator-selector {
+  padding: 0 $spacing-6;
+
+  @media (max-width: 767px) {
+    padding: 0 $spacing-4;
+  }
+
   .selector-title {
-    font-size: 15px;
-    font-weight: 500;
+    font-size: $font-size-md;
+    font-weight: $font-weight-medium;
     color: $color-text-primary;
-    margin: 0 0 12px 0;
+    margin: 0 0 $spacing-3 0;
   }
 
   .selector-form {
     display: flex;
     align-items: flex-start;
-    gap: 12px;
+    gap: $spacing-3;
   }
 
   .selector-field {
@@ -34,91 +45,111 @@
 }
 
 .operator-status-hint {
-  font-size: 12px;
+  font-size: $font-size-sm;
   color: $color-text-muted;
   margin-left: 6px;
 }
 
 .section-divider {
-  margin: 24px 0;
   border-top-color: $color-divider !important;
 }
+
+// ─── Operator info bar — visually matches profile-view__history ───────────────
 
 .operator-info-bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 16px;
-  background-color: rgba($color-action-primary, 0.04);
-  border: 1px solid rgba($color-action-primary, 0.15);
-  border-radius: 6px;
-  margin-bottom: 24px;
-  gap: 12px;
+  flex-wrap: wrap;
+  gap: $spacing-3;
+  padding: 10px $spacing-6;
+  background: $color-bg-main;
+
+  @media (max-width: 767px) {
+    padding: 10px $spacing-4;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $spacing-2;
+  }
 
   &__name {
     display: flex;
     align-items: center;
-    gap: 10px;
     flex-wrap: wrap;
+    gap: 10px;
 
     strong {
-      font-weight: 600;
+      font-weight: $font-weight-semibold;
       color: $color-text-primary;
     }
   }
 
   &__label {
-    font-size: 13px;
-    color: $color-text-muted;
-  }
-
-  &__id {
-    font-size: 12px;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-semibold;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
     color: $color-text-tertiary;
-    background: $color-bg-main;
-    border: 1px solid $color-border-light;
-    padding: 2px 8px;
-    border-radius: 4px;
+    white-space: nowrap;
   }
 }
+
+// ─── Status badges ────────────────────────────────────────────────────────────
 
 .status-badge {
   display: inline-flex;
   align-items: center;
   padding: 3px 10px;
-  border-radius: 12px;
-  font-size: 12px;
-  font-weight: 500;
+  border-radius: $radius-pill;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
   white-space: nowrap;
 
-  &.badge-pending {
-    background-color: #fff3e0;
-    color: #e65100;
+  &.badge-draft {
+    background-color: $color-badge-draft-bg;
+    color: $color-badge-draft-text;
   }
 
-  &.badge-approved {
-    background-color: #e8f5e9;
-    color: #2e7d32;
+  &.badge-pending {
+    background-color: $color-badge-pending-bg;
+    color: $color-badge-pending-text;
+  }
+
+  &.badge-verified {
+    background-color: $color-badge-verified-bg;
+    color: $color-badge-verified-text;
   }
 
   &.badge-rejected {
-    background-color: #ffebee;
+    background-color: $color-badge-rejected-bg;
     color: $color-error;
   }
 }
 
+// ─── Profile form wrapper ─────────────────────────────────────────────────────
+
 .profile-form-wrapper {
-  margin-top: 0;
+  padding: $spacing-6;
+
+  @media (max-width: 767px) {
+    padding: $spacing-4;
+  }
 }
+
+// ─── Empty state ─────────────────────────────────────────────────────────────
 
 .empty-state {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 64px 24px;
-  gap: 16px;
+  padding: $spacing-16 $spacing-6;
+  gap: $spacing-4;
   color: $color-text-muted;
+
+  @media (max-width: 767px) {
+    padding: $spacing-12 $spacing-4;
+  }
 
   &__icon {
     font-size: 48px;
@@ -128,7 +159,7 @@
   }
 
   &__text {
-    font-size: 15px;
+    font-size: $font-size-md;
     margin: 0;
     text-align: center;
   }

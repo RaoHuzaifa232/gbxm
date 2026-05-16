@@ -1,7 +1,13 @@
 <header class="card__header">
+  @if (isPreviewing()) {
+    <button mat-button class="back-btn" type="button" (click)="profileForm.onEditAgain()">
+      <mat-icon>arrow_back</mat-icon>
+      Back to Edit
+    </button>
+  }
   <h2>Edit My Profile</h2>
 </header>
 
 <div class="edit-profile-body">
-  <app-profile-form mode="self"/>
+  <app-profile-form #profileForm mode="self" (previewChange)="isPreviewing.set($event)" />
 </div>

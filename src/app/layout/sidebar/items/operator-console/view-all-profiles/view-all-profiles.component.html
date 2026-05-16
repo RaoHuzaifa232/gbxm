@@ -5,7 +5,7 @@
 
     <!-- Back bar -->
     <div class="profile-view__topbar">
-      <button mat-stroked-button color="primary" class="profile-view__back-btn" (click)="backToTable()" type="button">
+      <button mat-button class="profile-view__back-btn" (click)="backToTable()" type="button">
         <mat-icon>arrow_back</mat-icon>
         Back to List
       </button>
@@ -17,7 +17,6 @@
         <span class="status-badge" [ngClass]="getStatusClass(viewingProfile()!.status)">
           {{ getStatusLabel(viewingProfile()!.status) }}
         </span>
-        <span class="profile-view__uid">ID: {{ viewingProfile()!.userId }}</span>
       </div>
 
       <!-- Status change actions -->
