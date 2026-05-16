@@ -2,51 +2,51 @@
 
 .profile-form {
   .section-title {
-    font-size: 16px;
-    font-weight: 400;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-normal;
     color: $color-text-primary;
     margin-bottom: 17px;
   }
 
   .section-divider {
-    margin: 24px 0;
+    margin: $spacing-6 0;
     border-top-color: $color-divider !important;
   }
 
   .about-me-wrapper {
-    margin-bottom: 24px;
+    margin-bottom: $spacing-6;
 
     .about-me-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 12px;
+      margin-bottom: $spacing-3;
 
       span {
-        font-weight: 500;
+        font-weight: $font-weight-medium;
         color: $color-text-primary;
-        font-size: 16px;
+        font-size: $font-size-lg;
       }
 
       button {
         border-color: $color-action-primary;
         color: $color-action-primary;
         min-width: unset;
-        padding: 0 12px;
+        padding: 0 $spacing-3;
 
         mat-icon {
-          margin-right: 4px;
-          font-size: 18px;
-          width: 18px;
-          height: 18px;
+          margin-right: $spacing-1;
+          font-size: $font-size-xl;
+          width: $font-size-xl;
+          height: $font-size-xl;
         }
       }
     }
 
     .about-me-preview {
-      padding: 16px;
+      padding: $spacing-4;
       border: 1px solid $color-border-muted;
-      border-radius: 4px;
+      border-radius: $radius-sm;
       min-height: 32px;
       color: $color-text-primary;
       background-color: $color-bg-preview;
@@ -54,9 +54,9 @@
     }
 
     .about-me-empty {
-      padding: 24px;
+      padding: $spacing-6;
       border: 1px dashed $color-text-secondary;
-      border-radius: 4px;
+      border-radius: $radius-sm;
       color: $color-text-muted;
       text-align: center;
       background-color: $color-bg-empty;
@@ -65,7 +65,7 @@
 
   .form-grid {
     display: grid;
-    gap: 26px 16px;
+    gap: 26px $spacing-4;
     margin-bottom: 26px;
     grid-template-columns: 1fr;
 
@@ -89,25 +89,27 @@
   }
 }
 
+// ─── Form action buttons — right-aligned, consistent across all form contexts ──
+
 .form-actions {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 32px;
+  gap: $spacing-3;
+  margin-top: $spacing-8;
   width: 100%;
-  justify-content: flex-start;
+  justify-content: flex-end;
 
   @media (min-width: 600px) {
-    margin-top: 24px;
+    margin-top: $spacing-6;
     flex-wrap: nowrap;
   }
 
   button {
     height: 40px;
-    font-weight: 500;
+    font-weight: $font-weight-medium;
     letter-spacing: 0.5px;
-    border-radius: 6px;
+    border-radius: $radius-md;
     flex: 1;
 
     @media (min-width: 600px) {
@@ -117,7 +119,7 @@
 
     &[mat-flat-button] {
       background-color: $color-action-primary;
-      color: white;
+      color: $color-text-inverse;
 
       &[color='warn'] {
         background-color: $color-error;
@@ -137,76 +139,67 @@
     }
 
     mat-icon {
-      margin-right: 4px;
-      font-size: 18px;
-      width: 18px;
-      height: 18px;
+      margin-right: $spacing-1;
+      font-size: $font-size-xl;
+      width: $font-size-xl;
+      height: $font-size-xl;
     }
   }
 
   .preview-back-btn {
-    color: $color-action-primary;
-    border-color: $color-action-primary;
+    // overridden by profile-preview__topbar styles
   }
 }
 
+// ─── Preview mode ─────────────────────────────────────────────────────────────
+
 .profile-preview {
-  padding-top: 8px;
+  padding-top: 0;
 
   .section-title {
-    font-size: 16px;
-    font-weight: 400;
+    font-size: $font-size-base;
+    font-weight: $font-weight-medium;
     color: $color-text-primary;
-    margin-bottom: 17px;
-  }
-
-  .section-divider {
-    margin: 24px 0;
-    border-top-color: $color-divider !important;
+    margin: 0 0 $spacing-3 0;
   }
 
   &__hint {
-    margin: 0 0 18px 0;
-    padding: 12px 16px;
+    margin: 0 0 $spacing-4 0;
+    padding: $spacing-3 $spacing-4;
     background-color: rgba($color-action-primary, 0.06);
     border-left: 3px solid $color-action-primary;
-    border-radius: 4px;
+    border-radius: $radius-sm;
     color: $color-text-primary;
     font-size: 13px;
-    line-height: 1.5;
+    line-height: $line-height-normal;
   }
 
   &__grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 0;
-    margin-bottom: 8px;
-
-    @media (min-width: 768px) {
-      grid-template-columns: 1fr 1fr;
-      column-gap: 28px;
-    }
+    display: flex;
+    flex-direction: column;
+    margin-bottom: $spacing-2;
   }
 
   &__row {
     display: flex;
-    flex-direction: column;
-    gap: 4px;
-    padding: 12px 0;
+    flex-direction: row;
+    align-items: baseline;
+    gap: $spacing-4;
+    padding: $spacing-2 0;
     border-bottom: 1px solid $color-divider;
   }
 
   &__label {
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: $color-text-tertiary;
+    flex: 0 0 180px;
+    font-size: $font-size-base;
+    font-weight: $font-weight-medium;
+    color: $color-text-primary;
   }
 
   &__value {
-    font-size: 14px;
-    font-weight: 500;
+    flex: 1;
+    font-size: $font-size-base;
+    font-weight: $font-weight-normal;
     color: $color-text-primary;
     word-break: break-word;
     white-space: pre-wrap;

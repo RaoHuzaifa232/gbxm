@@ -1,28 +1,83 @@
-$color-text-primary: #404c54;
-$color-text-secondary: #aeb4be;
-$color-text-muted: #747a84;
-$color-text-subtle: #c5cad3;
-$color-text-tertiary: #9da3ad;
-$color-text-inverse: #ffffff;
-$color-text-on-muted: #d9d9d9;
+// ─── Text colors ─────────────────────────────────────────────────────────────
+$color-text-primary:          #404c54;
+$color-text-secondary:        #aeb4be;
+$color-text-muted:            #747a84;
+$color-text-subtle:           #c5cad3;
+$color-text-tertiary:         #9da3ad;
+$color-text-inverse:          #ffffff;
+$color-text-on-muted:         #d9d9d9;
 $color-text-on-inverse-muted: #ffffff66;
-$color-text-panel-title: #abacaf;
+$color-text-panel-title:      #abacaf;
+$color-text-strong:           #1d222b;
+
+// ─── Icon colors ─────────────────────────────────────────────────────────────
 $color-icon-primary: $color-text-primary;
-$color-icon-muted: #8d93a0;
-$color-border-muted: #66727a;
-$color-text-strong: #1d222b;
+$color-icon-muted:   #8d93a0;
+
+// ─── Brand / action colors ────────────────────────────────────────────────────
+$color-accent:          #275190;
+$color-action-primary:  #1c6ce4;
+$color-error:           #93000A;
+
+// ─── Surface / background colors ─────────────────────────────────────────────
 $color-surface-inverse: #262a31;
-$color-surface-muted: #33373d;
-$color-accent: #275190;
-$color-action-primary: #1c6ce4;
-$color-error: #93000A;
-$color-divider: #E4E6E8;
-$color-bg-preview: #fafafa;
-$color-bg-empty: #fcfcfc;
+$color-surface-muted:   #33373d;
+$color-bg-main:         #f6f7f9;
+$color-bg-preview:      #fafafa;
+$color-bg-empty:        #fcfcfc;
+
+// ─── Border colors ────────────────────────────────────────────────────────────
+$color-border-muted:       #66727a;
+$color-border-light:       #e0e0e0;
 $color-field-border-filled: #D0D4D7;
-$color-bg-main: #f6f7f9;
-$color-border-light: #e0e0e0;
-// Toast Colors
+$color-divider:            #E4E6E8;
+
+// ─── Interactive / hover ─────────────────────────────────────────────────────
+$color-hover-bg:   rgba($color-action-primary, 0.04);
+$color-focus-ring: rgba($color-action-primary, 0.15);
+
+// ─── Status badge colors ──────────────────────────────────────────────────────
+$color-badge-draft-bg:      #f5f5f5;
+$color-badge-draft-text:    #616161;
+$color-badge-pending-bg:    #fff3e0;
+$color-badge-pending-text:  #e65100;
+$color-badge-verified-bg:   #e8f5e9;
+$color-badge-verified-text: #2e7d32;
+$color-badge-rejected-bg:   #ffebee;
+
+// ─── Toast colors ─────────────────────────────────────────────────────────────
 $color-toast-success: #4caf50;
-$color-toast-error: $color-error;
-$color-toast-info: $color-action-primary;
+$color-toast-error:   $color-error;
+$color-toast-info:    $color-action-primary;
+
+// ─── Typography ──────────────────────────────────────────────────────────────
+$font-size-xs:   11px;
+$font-size-sm:   12px;
+$font-size-base: 14px;
+$font-size-md:   15px;
+$font-size-lg:   16px;
+$font-size-xl:   18px;
+
+$font-weight-normal:   400;
+$font-weight-medium:   500;
+$font-weight-semibold: 600;
+
+$line-height-tight:  1.3;
+$line-height-normal: 1.5;
+
+// ─── Spacing ─────────────────────────────────────────────────────────────────
+$spacing-1:  4px;
+$spacing-2:  8px;
+$spacing-3:  12px;
+$spacing-4:  16px;
+$spacing-5:  20px;
+$spacing-6:  24px;
+$spacing-8:  32px;
+$spacing-12: 48px;
+$spacing-16: 64px;
+
+// ─── Border radius ────────────────────────────────────────────────────────────
+$radius-sm:   4px;
+$radius-md:   6px;
+$radius-lg:   8px;
+$radius-pill: 12px;

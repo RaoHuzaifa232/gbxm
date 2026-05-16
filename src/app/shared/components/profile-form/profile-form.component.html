@@ -233,10 +233,6 @@
 } @else {
 <!-- Preview Mode (self only) -->
 <div class="profile-preview" aria-label="Profile preview">
-  <p class="profile-preview__hint">
-    Review the details below. If everything looks good, confirm to submit. Otherwise, go back to make changes.
-  </p>
-
   @for (section of previewSections(); track section.title) {
     <h2 class="section-title">{{ section.title }}</h2>
     <div class="profile-preview__grid">
@@ -253,11 +249,8 @@
   }
 
   <div class="form-actions">
-    <button mat-stroked-button type="button" class="preview-back-btn" (click)="onEditAgain()" matTooltip="Go back to editing your profile">
-      Back to Edit
-    </button>
     <button mat-flat-button color="primary" type="button" (click)="onConfirmSubmit()" matTooltip="Confirm and submit your profile">
-      Confirm & Submit
+      Submit
     </button>
   </div>
 </div>

@@ -90,6 +90,7 @@ export class ProfileFormComponent implements OnInit, OnChanges {
   @Output() emailLinkClicked = new EventEmitter<void>();
   @Output() profileVerified = new EventEmitter<void>();
   @Output() profileRejected = new EventEmitter<void>();
+  @Output() previewChange = new EventEmitter<boolean>();
 
   private fb = inject(FormBuilder);
   private dialog = inject(MatDialog);
@@ -168,11 +169,13 @@ export class ProfileFormComponent implements OnInit, OnChanges {
     }
     this.previewSections.set(this.buildPreviewSections());
     this.isPreviewing.set(true);
+    this.previewChange.emit(true);
     try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch { }
   }
 
   onEditAgain(): void {
     this.isPreviewing.set(false);
+    this.previewChange.emit(false);
   }
 
   onSave(): void {
@@ -221,6 +224,7 @@ export class ProfileFormComponent implements OnInit, OnChanges {
           this.profileForm.reset();
         }
         this.isPreviewing.set(false);
+        this.previewChange.emit(false);
         this.toast.success('Profile submitted successfully!');
         this.formSubmitted.emit();
       }
@@ -348,7 +352,7 @@ export class ProfileFormComponent implements OnInit, OnChanges {
     const raw = this.profileForm.getRawValue();
     return [
       {
-        title: '1. Personal info',
+        title: 'Submitted operator',
         fields: [
           { label: 'First Name', value: this.display(raw.firstName) },
           { label: 'Last Name', value: this.display(raw.lastName) },
@@ -356,30 +360,14 @@ export class ProfileFormComponent implements OnInit, OnChanges {
           { label: 'Operator', value: this.display(raw.operator) },
           { label: 'User ID', value: this.display(raw.userId) },
           { label: 'Personal Email', value: this.display(raw.personalEmail) },
-          { label: 'Cell & Text', value: this.display(raw.cellAndText) }
-        ]
-      },
-      {
-        title: '2. Contact info',
-        fields: [
+          { label: 'Cell & Text', value: this.display(raw.cellAndText) },
           { label: 'Contact Email', value: this.display(raw.contactEmail) },
           { label: 'Company Email', value: this.display(raw.companyEmail) },
-          { label: 'LinkedIN', value: this.display(raw.linkedIn) },
+          { label: 'LinkedIn', value: this.display(raw.linkedIn) },
           { label: 'Teams ID', value: this.display(raw.teamsId) },
-          { label: 'A Little About Me', value: this.display(raw.aboutMe) }
-        ]
-      },
-      {
-        title: '3. Business info',
-        fields: [
-          { label: 'Picture', value: this.fileName(raw.picture) },
-          { label: 'CV', value: this.fileName(raw.cv) },
+          { label: 'A Little About Me', value: this.display(raw.aboutMe) },
           { label: 'Trading Entity', value: this.display(raw.tradingEntity) },
-          { label: 'Registration Number', value: this.display(raw.registrationNumber) },
-          { label: 'Digital Presence #1', value: this.display(raw.digitalPresence1) },
-          { label: 'Digital Presence #2', value: this.display(raw.digitalPresence2) },
-          { label: 'Digital Presence #3', value: this.display(raw.digitalPresence3) },
-          { label: 'Digital Presence #4', value: this.display(raw.digitalPresence4) }
+          { label: 'Registration Number', value: this.display(raw.registrationNumber) }
         ]
       }
     ];
@@ -387,10 +375,10 @@ export class ProfileFormComponent implements OnInit, OnChanges {
 
   private display(value: string | null | undefined): string {
     const trimmed = String(value ?? '').trim();
-    return trimmed.length === 0 ? 'N/A' : trimmed;
+    return trimmed.length === 0 ? '—' : trimmed;
   }
 
   private fileName(value: File | null | undefined): string {
-    return value ? value.name : 'N/A';
+    return value ? value.name : '—';
   }
 }
