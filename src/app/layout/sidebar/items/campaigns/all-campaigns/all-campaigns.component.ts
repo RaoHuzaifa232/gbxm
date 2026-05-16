@@ -1,20 +1,18 @@
-import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { Campaign, CampaignService, CampaignTypeKey } from '@gbxm/core/services/campaign.service';
-import { DIALOG_SIZES } from '@gbxm/core/models/dialog.model';
-import { HotelsDialogComponent } from './hotels-dialog/hotels-dialog.component';
+import { Campaign, CampaignHotel, CampaignService, CampaignTypeKey } from '@gbxm/core/services/campaign.service';
 import { GenericTableComponent, TableAction, TableColumn } from '@gbxm/shared/components/generic-table/generic-table.component';
 
-const HOTELS_SVG = 'M12 5c-5.25 0-9.5 4.02-11 7 1.5 2.98 5.75 7 11 7s9.5-4.02 11-7c-1.5-2.98-5.75-7-11-7zm0 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm0-2.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z';
+type ViewState = 'table' | 'campaign-details' | 'property-view';
 
 @Component({
   selector: 'app-all-campaigns',
@@ -24,7 +22,7 @@ const HOTELS_SVG = 'M12 5c-5.25 0-9.5 4.02-11 7 1.5 2.98 5.75 7 11 7s9.5-4.02 11
     ReactiveFormsModule,
     MatButtonModule,
     MatCheckboxModule,
-    MatDialogModule,
+    MatDividerModule,
     MatFormFieldModule,
     MatIconModule,
     MatRadioModule,
@@ -37,10 +35,15 @@ const HOTELS_SVG = 'M12 5c-5.25 0-9.5 4.02-11 7 1.5 2.98 5.75 7 11 7s9.5-4.02 11
 })
 export class AllCampaignsComponent {
   private fb = inject(FormBuilder);
-  private dialog = inject(MatDialog);
   private campaignsService = inject(CampaignService);
 
+  viewState = signal<ViewState>('table');
+  selectedCampaign = signal<Campaign | null>(null);
+  propertyViewCampaignId = signal<string>('');
+
   pageSizeOptions = [5, 10, 25, 50];
+
+  // ── Filters (table view only) ────────────────────────────────────────────────
 
   filtersForm = this.fb.group({
     operatorId: this.fb.control('all'),
@@ -76,20 +79,93 @@ export class AllCampaignsComponent {
 
   campaignActions: TableAction[] = [
     {
-      label: 'Hotels',
-      icon: '',
-      svgPath: HOTELS_SVG,
-      tooltip: 'View hotels associated with this campaign',
-      buttonClass: 'cell--action',
-      handler: (row) => this.openHotels(row as unknown as Campaign)
+      label: 'View Details',
+      icon: 'visibility',
+      tooltip: 'View campaign properties',
+      handler: (row) => this.openCampaignDetails(row as unknown as Campaign)
     }
   ];
 
-  openHotels(campaign: Campaign): void {
-    const hotels = this.campaignsService.getHotelsForCampaign(campaign.id);
-    this.dialog.open(HotelsDialogComponent, {
-      data: { campaign, hotels },
-      ...DIALOG_SIZES.large
-    });
+  // ── Campaign details ─────────────────────────────────────────────────────────
+
+  campaignDetailColumns: TableColumn[] = [
+    { key: 'name', header: 'Property' },
+    { key: 'gm', header: 'GM' },
+    { key: 'email', header: 'Email' },
+    { key: 'phone', header: 'Phone' },
+    { key: 'logOn', header: 'Log On' },
+    { key: 'excom', header: 'Excom' },
+  ];
+
+  campaignDetailActions: TableAction[] = [
+    // {
+    //   label: 'View Property',
+    //   icon: 'visibility',
+    //   tooltip: 'View Property',
+    //   handler: (row) => this.openPropertyView(row as unknown as CampaignHotel)
+    // }
+  ];
+
+  campaignDetailData = computed(() => {
+    const campaign = this.selectedCampaign();
+    if (!campaign) return [];
+    return this.campaignsService.getHotelsForCampaign(campaign.id) as unknown as Record<string, unknown>[];
+  });
+
+  // ── Property view ────────────────────────────────────────────────────────────
+
+  allCampaigns = computed(() => this.campaignsService.campaigns());
+
+  propertyViewCampaign = computed(() =>
+    this.campaignsService.campaigns().find(c => c.id === this.propertyViewCampaignId()) ?? null
+  );
+
+  propertyViewColumns: TableColumn[] = [
+    { key: 'name', header: 'Property' },
+    { key: 'gm', header: 'GM' },
+    { key: 'email', header: 'Email' },
+    { key: 'phone', header: 'Phone' },
+    { key: 'logOn', header: 'Log On' },
+    { key: 'excom', header: 'Excom' },
+  ];
+
+  propertyViewActions: TableAction[] = [
+    {
+      label: 'View',
+      icon: 'visibility',
+      tooltip: 'View',
+      handler: () => {}
+    }
+  ];
+
+  propertyViewData = computed(() => {
+    const id = this.propertyViewCampaignId();
+    if (!id) return [];
+    return this.campaignsService.getHotelsForCampaign(id) as unknown as Record<string, unknown>[];
+  });
+
+  // ── Navigation ───────────────────────────────────────────────────────────────
+
+  openCampaignDetails(campaign: Campaign): void {
+    this.selectedCampaign.set(campaign);
+    this.viewState.set('campaign-details');
+  }
+
+  openPropertyView(hotel: CampaignHotel): void {
+    this.propertyViewCampaignId.set(this.selectedCampaign()?.id ?? '');
+    this.viewState.set('property-view');
+  }
+
+  backToTable(): void {
+    this.selectedCampaign.set(null);
+    this.viewState.set('table');
+  }
+
+  backToCampaignDetails(): void {
+    this.viewState.set('campaign-details');
+  }
+
+  onCampaignChange(campaignId: string): void {
+    this.propertyViewCampaignId.set(campaignId);
   }
 }

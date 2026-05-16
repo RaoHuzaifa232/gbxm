@@ -4,7 +4,7 @@
 // ─── Filters ─────────────────────────────────────────────────────────────────
 
 .campaigns__filters {
-	padding: 16px 20px 8px 20px;
+	padding: $spacing-4 $spacing-5 $spacing-2 $spacing-5;
 	border-bottom: 1px solid $color-divider;
 }
 
@@ -13,14 +13,14 @@
 		display: flex;
 		flex-direction: row;
 		align-items: center;
-		gap: 32px;
+		gap: $spacing-8;
 		flex-wrap: wrap;
 	}
 
 	&__group {
 		display: flex;
 		flex-direction: column;
-		gap: 8px;
+		gap: $spacing-2;
 
 		&--operator {
 			width: 240px;
@@ -28,8 +28,8 @@
 	}
 
 	&__label {
-		font-size: 12px;
-		font-weight: 500;
+		font-size: $font-size-sm;
+		font-weight: $font-weight-medium;
 		letter-spacing: 0.05em;
 		text-transform: uppercase;
 		color: $color-text-tertiary;
@@ -42,24 +42,85 @@
 	}
 }
 
+// ─── Detail view (campaign-details & property-view) ──────────────────────────
+
+.detail-view {
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: $spacing-3;
+    padding: $spacing-5 $spacing-6;
+
+    @media (max-width: 767px) {
+      padding: $spacing-4;
+    }
+  }
+
+  &__title {
+    flex: 1;
+    font-size: $font-size-xl;
+    font-weight: $font-weight-medium;
+    color: $color-text-strong;
+    margin: 0;
+  }
+
+}
+
+// ─── Back button — minimal text button ───────────────────────────────────────
+
+.back-btn {
+  color: $color-text-muted;
+  --mdc-text-button-label-text-color: #{$color-text-muted};
+//   height: 40px;
+  padding: 0 $spacing-2;
+
+  mat-icon {
+    font-size: $font-size-lg;
+    width: $font-size-lg;
+    height: $font-size-lg;
+    margin-right: 2px;
+  }
+}
+
+// ─── Property view filters ────────────────────────────────────────────────────
+
+.property-view {
+  &__filters {
+    display: flex;
+    gap: $spacing-4;
+    padding: $spacing-5 $spacing-6 $spacing-1;
+    flex-wrap: wrap;
+
+    @media (max-width: 767px) {
+      padding: $spacing-4 $spacing-4 $spacing-1;
+      flex-direction: column;
+    }
+  }
+
+  &__filter-field {
+    flex: 1;
+    min-width: 200px;
+  }
+}
+
 // ─── Responsive ──────────────────────────────────────────────────────────────
 
 @media (max-width: 960px) {
 	.campaigns__filters {
-		padding-left: 16px;
-		padding-right: 16px;
+		padding-left: $spacing-4;
+		padding-right: $spacing-4;
 	}
 }
 
 @media (max-width: 720px) {
 	.campaigns__filters {
-		padding-left: 16px;
-		padding-right: 16px;
+		padding-left: $spacing-4;
+		padding-right: $spacing-4;
 	}
 
 	.filters {
 		&__layout {
-			gap: 20px;
+			gap: $spacing-5;
 		}
 
 		&__group {
