@@ -1,5 +1,11 @@
 <section class="define-campaign">
 	<header class="card__header">
+		@if (isPreviewing()) {
+		<button mat-button class="back-btn" type="button" (click)="onEditAgain()">
+			<mat-icon>arrow_back</mat-icon>
+			Back to Edit
+		</button>
+		}
 		<h2>{{ isPreviewing() ? 'Review Campaign' : 'Define Campaigns' }}</h2>
 		@if (!isPreviewing()) {
 		<button mat-flat-button class="define-campaign__save" type="submit" form="campaignForm">Save</button>
@@ -291,9 +297,6 @@
 		}
 
 		<div class="define-campaign__preview-actions">
-			<button mat-stroked-button type="button" class="define-campaign__back-btn" (click)="onEditAgain()">
-				Back to Edit
-			</button>
 			<button mat-flat-button type="button" class="define-campaign__save" (click)="onConfirmSubmit()">
 				Confirm &amp; Save
 			</button>

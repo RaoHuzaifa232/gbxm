@@ -1,0 +1,39 @@
+@use '@gbxm/styles/_variables.scss' as *;
+@use '@gbxm/styles/_header-card.scss' as *;
+
+.my-campaigns__filters {
+	padding: $spacing-5;
+	border-bottom: 1px solid $color-divider;
+}
+
+// ─── Campaign detail view ─────────────────────────────────────────────────────
+
+.detail-view {
+	&__header {
+		display: flex;
+		align-items: center;
+		gap: $spacing-3;
+		padding: $spacing-5 $spacing-6;
+	}
+
+	&__title {
+		flex: 1;
+		font-size: $font-size-xl;
+		font-weight: $font-weight-medium;
+		color: $color-text-strong;
+		margin: 0;
+	}
+}
+
+.back-btn {
+	color: $color-text-muted;
+	--mdc-text-button-label-text-color: #{$color-text-muted};
+	padding: 0 $spacing-2;
+
+	mat-icon {
+		font-size: $font-size-lg;
+		width: $font-size-lg;
+		height: $font-size-lg;
+		margin-right: 2px;
+	}
+}

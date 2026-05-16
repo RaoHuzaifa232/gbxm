@@ -325,7 +325,7 @@ export class DefineCampaignComponent {
           { label: 'Number of Properties', value: this.displayValue(raw.numberOfProperties) },
           { label: 'Product Price Vary', value: this.displayValue(raw.productPriceVary) },
           { label: 'Agent Success Fee', value: this.displayValue(raw.agentSuccessFee) },
-          { label: 'Date Initiated', value: this.formatDate(raw.dateInitiated) || 'N/A' }
+          { label: 'Date Initiated', value: this.formatDate(raw.dateInitiated) || '—' }
         ]
       }
     ];
@@ -333,15 +333,15 @@ export class DefineCampaignComponent {
 
   private displayValue(value: string | null | undefined): string {
     if (value === null || value === undefined) {
-      return 'N/A';
+      return '—';
     }
     const trimmed = String(value).trim();
-    return trimmed.length === 0 ? 'N/A' : trimmed;
+    return trimmed.length === 0 ? '—' : trimmed;
   }
 
   private fileName(value: File | null | undefined): string {
     if (!value) {
-      return 'N/A';
+      return '—';
     }
     return value.name;
   }
