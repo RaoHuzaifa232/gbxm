@@ -17,5 +17,12 @@
 
 	&__actions {
 		gap: $spacing-2;
+
+		button[mat-flat-button] {
+			background-color: $color-action-primary;
+			color: $color-text-inverse;
+			border-radius: $radius-md;
+			--mdc-filled-button-container-shape: #{$radius-md};
+		}
 	}
 }
