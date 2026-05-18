@@ -39,6 +39,32 @@
         [class.badge-rejected]="selectedProfile()!.status === 'rejected'">
         {{ getStatusLabel(selectedProfile()!.status) }}
       </span>
+      <div class="operator-info-bar__actions">
+        @if (selectedProfile()!.status !== 'verified') {
+          <button mat-stroked-button color="primary" type="button"
+            (click)="changeStatus('verified')"
+            matTooltip="Mark as Verified">
+            <mat-icon>check_circle</mat-icon>
+            Verify
+          </button>
+        }
+        @if (selectedProfile()!.status !== 'rejected') {
+          <button mat-stroked-button color="warn" type="button"
+            (click)="changeStatus('rejected')"
+            matTooltip="Reject this operator">
+            <mat-icon>cancel</mat-icon>
+            Reject
+          </button>
+        }
+        @if (selectedProfile()!.status === 'rejected' || selectedProfile()!.status === 'verified') {
+          <button mat-stroked-button type="button"
+            (click)="changeStatus('pending')"
+            matTooltip="Reset to Pending">
+            <mat-icon>refresh</mat-icon>
+            Reset to Pending
+          </button>
+        }
+      </div>
     </div>
 
     <!-- Profile Form -->
@@ -46,8 +72,7 @@
       <app-profile-form
         mode="verify"
         [profileData]="selectedProfile()!"
-        (profileVerified)="onProfileVerified()"
-        (profileRejected)="onProfileRejected()"/>
+        [showVerifyRejectActions]="false"/>
     </div>
 
   } @else {

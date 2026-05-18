@@ -84,6 +84,7 @@ const URL_PATTERN = '(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})([/\\w .-]*)*/?';
 export class ProfileFormComponent implements OnInit, OnChanges {
   @Input({ required: true }) mode: ProfileFormMode = 'self';
   @Input() profileData: OperatorProfile | null = null;
+  @Input() showVerifyRejectActions = true;
 
   @Output() formSaved = new EventEmitter<void>();
   @Output() formSubmitted = new EventEmitter<void>();

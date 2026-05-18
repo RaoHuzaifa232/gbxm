@@ -84,6 +84,46 @@
     color: $color-text-tertiary;
     white-space: nowrap;
   }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: $spacing-2;
+    flex-wrap: wrap;
+    margin-left: auto;
+
+    @media (max-width: 767px) {
+      margin-left: 0;
+      width: 100%;
+    }
+
+    button {
+      height: 40px;
+      font-size: 13px;
+
+      &[color='primary'] {
+        --mdc-outlined-button-label-text-color: #{$color-action-primary};
+        --mdc-outlined-button-outline-color: #{$color-action-primary};
+      }
+
+      &[color='warn'] {
+        --mdc-outlined-button-label-text-color: #{$color-error};
+        --mdc-outlined-button-outline-color: #{$color-error};
+      }
+
+      &:not([color]) {
+        --mdc-outlined-button-label-text-color: #{$color-text-primary};
+        --mdc-outlined-button-outline-color: #{$color-border-light};
+      }
+
+      mat-icon {
+        font-size: $font-size-base;
+        width: $font-size-base;
+        height: $font-size-base;
+        margin-right: $spacing-1;
+      }
+    }
+  }
 }
 
 // ─── Status badges
