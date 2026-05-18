@@ -6,10 +6,9 @@
 
   <!-- Operator Selection -->
   <div class="operator-selector">
-    <h3 class="selector-title">Select Operator</h3>
     <form [formGroup]="operatorForm" class="selector-form">
       <mat-form-field appearance="outline" class="selector-field">
-        <mat-label>Choose Operator</mat-label>
+        <mat-label>Select Operator</mat-label>
         <mat-select formControlName="selectedUserId"
           (selectionChange)="onOperatorChange($event.value)">
           <mat-option [value]="null">— Select an operator —</mat-option>

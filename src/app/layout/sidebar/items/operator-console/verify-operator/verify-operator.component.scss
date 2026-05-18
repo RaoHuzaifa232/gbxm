@@ -5,8 +5,7 @@
   margin-bottom: 0;
 }
 
-// ─── Body layout ─────────────────────────────────────────────────────────────
-// Horizontal padding lives on child sections so the info bar bleeds edge-to-edge.
+// ─── Body layout
 
 .verify-operator-body {
   padding: $spacing-6 0;
@@ -16,20 +15,13 @@
   }
 }
 
-// ─── Operator selector ────────────────────────────────────────────────────────
+// ─── Operator selector 
 
 .operator-selector {
   padding: 0 $spacing-6;
 
   @media (max-width: 767px) {
     padding: 0 $spacing-4;
-  }
-
-  .selector-title {
-    font-size: $font-size-md;
-    font-weight: $font-weight-medium;
-    color: $color-text-primary;
-    margin: 0 0 $spacing-3 0;
   }
 
   .selector-form {
@@ -54,7 +46,7 @@
   border-top-color: $color-divider !important;
 }
 
-// ─── Operator info bar — visually matches profile-view__history ───────────────
+// ─── Operator info bar — visually matches profile-view__history
 
 .operator-info-bar {
   display: flex;
@@ -94,7 +86,7 @@
   }
 }
 
-// ─── Status badges ────────────────────────────────────────────────────────────
+// ─── Status badges
 
 .status-badge {
   display: inline-flex;
@@ -126,7 +118,7 @@
   }
 }
 
-// ─── Profile form wrapper ─────────────────────────────────────────────────────
+// ─── Profile form wrapper
 
 .profile-form-wrapper {
   padding: $spacing-6;
@@ -136,7 +128,7 @@
   }
 }
 
-// ─── Empty state ─────────────────────────────────────────────────────────────
+// ─── Empty state 
 
 .empty-state {
   display: flex;
