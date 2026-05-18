@@ -1,59 +1,74 @@
 <aside class="sidebar">
-    <div class="sidebar__header">
-        <div class="sidebar__label">MENU</div>
-        @if (isMobile()) {
-        <button class="sidebar__close-btn" (click)="closeSidebar.emit()">
-            <span class="sidebar__close-icon" style="--icon-url: url('assets/icons/arrow-back.svg');"></span>
-        </button>
-        }
-    </div>
 
-    <mat-accordion class="sidebar__nav" aria-label="Sidebar navigation">
-        @for (group of navData; track group.label) {
-        <mat-expansion-panel class="sidebar__group" routerLinkActive #rlaGroup="routerLinkActive"
-            [expanded]="rlaGroup.isActive">
-            <mat-expansion-panel-header>
-                <mat-panel-title>{{ group.label }}</mat-panel-title>
-            </mat-expansion-panel-header>
-            <mat-nav-list>
-                @for (item of group.children; track item.label) {
-                @if (item.children) {
-                <!-- Sub-group -->
-                <mat-expansion-panel class="sidebar__group" routerLinkActive #rlaSub="routerLinkActive"
-                    [expanded]="rlaSub.isActive">
-                    <mat-expansion-panel-header>
-                        <mat-panel-title>
-                            @if (item.icon) {
-                            <span class="sidebar__icon" [style.--icon-url]="getIconUrl(item.icon)"
-                                aria-hidden="true"></span>
-                            }
-                            <span>{{ item.label }}</span>
-                        </mat-panel-title>
-                    </mat-expansion-panel-header>
-                    <mat-nav-list>
-                        @for (subItem of item.children; track subItem.label) {
-                        <a mat-list-item (click)="onItemClick()" [routerLink]="subItem.link" routerLinkActive="active">
-                            @if (subItem.icon) {
-                            <span class="sidebar__icon" [style.--icon-url]="getIconUrl(subItem.icon)"
-                                aria-hidden="true"></span>
-                            }
-                            <span>{{ subItem.label }}</span>
-                        </a>
-                        }
-                    </mat-nav-list>
-                </mat-expansion-panel>
-                } @else {
-                <!-- Regular item -->
-                <a mat-list-item (click)="onItemClick()" [routerLink]="item.link" routerLinkActive="active">
+  <!-- MENU label + (mobile) close -->
+  <div class="sidebar__header">
+    <span class="sidebar__label">MENU</span>
+    @if (isMobile()) {
+      <button mat-icon-button class="sidebar__close" (click)="closeSidebar.emit()" aria-label="Close menu">
+        <mat-icon>close</mat-icon>
+      </button>
+    }
+  </div>
+
+  <!-- Navigation -->
+  <mat-accordion class="sidebar__nav" displayMode="flat">
+    @for (group of navData; track group.label) {
+      <mat-expansion-panel class="nav-section"
+        routerLinkActive="has-active"
+        [expanded]="!isCollapsed(group.label)"
+        (opened)="setCollapsed(group.label, false)"
+        (closed)="setCollapsed(group.label, true)">
+
+        <mat-expansion-panel-header class="nav-section__header" collapsedHeight="44px" expandedHeight="44px">
+          <mat-panel-title class="nav-section__title">
+            @if (group.matIcon) {
+              <mat-icon class="nav-section__icon">{{ group.matIcon }}</mat-icon>
+            }
+            <span class="nav-section__label-text">{{ group.label }}</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <div class="nav-section__body">
+          @for (item of group.children; track item.label) {
+            @if (item.children) {
+              <mat-expansion-panel class="nav-subgroup"
+                [expanded]="!isCollapsed(item.label)"
+                (opened)="setCollapsed(item.label, false)"
+                (closed)="setCollapsed(item.label, true)">
+                <mat-expansion-panel-header collapsedHeight="34px" expandedHeight="34px">
+                  <mat-panel-title class="nav-subgroup__title">
                     @if (item.icon) {
-                    <span class="sidebar__icon" [style.--icon-url]="getIconUrl(item.icon)" aria-hidden="true"></span>
+                      <span class="nav-icon" [style.--icon-url]="getIconUrl(item.icon)" aria-hidden="true"></span>
                     }
                     <span>{{ item.label }}</span>
-                </a>
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="nav-subgroup__body">
+                  @for (sub of item.children; track sub.label) {
+                    <a class="nav-item" (click)="onItemClick()"
+                      [routerLink]="sub.link" routerLinkActive="is-active">
+                      @if (sub.icon) {
+                        <span class="nav-icon" [style.--icon-url]="getIconUrl(sub.icon)" aria-hidden="true"></span>
+                      }
+                      <span class="nav-item__label">{{ sub.label }}</span>
+                    </a>
+                  }
+                </div>
+              </mat-expansion-panel>
+            } @else {
+              <a class="nav-item" (click)="onItemClick()"
+                [routerLink]="item.link" routerLinkActive="is-active">
+                @if (item.icon) {
+                  <span class="nav-icon" [style.--icon-url]="getIconUrl(item.icon)" aria-hidden="true"></span>
                 }
-                }
-            </mat-nav-list>
-        </mat-expansion-panel>
-        }
-    </mat-accordion>
+                <span class="nav-item__label">{{ item.label }}</span>
+              </a>
+            }
+          }
+        </div>
+
+      </mat-expansion-panel>
+    }
+  </mat-accordion>
+
 </aside>

@@ -1,7 +1,8 @@
 export interface NavItem {
   label: string;
   link?: string;
-  icon?: string;
+  icon?: string;       // SVG asset filename (for items)
+  matIcon?: string;    // Material icon name (for top-level groups)
   children?: NavItem[];
   expanded?: boolean;
 }
@@ -9,6 +10,7 @@ export interface NavItem {
 export const NAVIGATION_DATA: NavItem[] = [
   {
     label: 'Operator Console',
+    matIcon: 'manage_accounts',
     children: [
       { label: 'Edit My Profile', link: '/operator-console/edit-my-profile', icon: 'person_edit.svg' },
       { label: 'View All Profiles', link: '/operator-console/view-all-profiles', icon: 'headset_mic.svg' },
@@ -17,6 +19,7 @@ export const NAVIGATION_DATA: NavItem[] = [
   },
   {
     label: 'Campaigns',
+    matIcon: 'campaign',
     children: [
       { label: 'All Campaigns', link: '/campaigns/all-campaigns', icon: 'holiday_village.svg' },
       { label: 'Define Campaigns', link: '/campaigns/define-campaign', icon: 'quick_reference_all.svg' },
@@ -27,12 +30,14 @@ export const NAVIGATION_DATA: NavItem[] = [
   },
   {
     label: 'Communications',
+    matIcon: 'forum',
     children: [
       { label: 'Campaign Messages', link: '/coming-soon/campaign-messages', icon: 'Vector.svg' }
     ]
   },
   {
     label: 'Introduction & Concepts',
+    matIcon: 'menu_book',
     children: [
       { label: 'Property Welcome', link: '/coming-soon/property-welcome', icon: 'PropertyWelcome.svg' },
       { label: 'Hospitality Professional!', link: '/coming-soon/hospitality-professional', icon: 'HospitalityProfessional.svg' },
@@ -52,6 +57,7 @@ export const NAVIGATION_DATA: NavItem[] = [
   },
   {
     label: 'GBXM Components',
+    matIcon: 'widgets',
     children: [
       { label: 'Job Guides', link: '/coming-soon/job-guides', icon: 'JobGuides.svg' },
       { label: 'Daily Briefings', link: '/coming-soon/daily-briefings', icon: 'DailyBriefings.svg' },
@@ -65,6 +71,7 @@ export const NAVIGATION_DATA: NavItem[] = [
   },
   {
     label: 'Directory',
+    matIcon: 'folder_open',
     children: [
       { label: 'Property Details', link: '/coming-soon/property-details', icon: 'PropertyDetails.svg' },
       { label: 'Your Contacts', link: '/coming-soon/your-contacts', icon: 'YourContacts.svg' }
@@ -72,6 +79,7 @@ export const NAVIGATION_DATA: NavItem[] = [
   },
   {
     label: 'Hands On',
+    matIcon: 'back_hand',
     children: [
       { label: 'GM Access Credentials', link: '/coming-soon/gm-access-credentials', icon: 'GMAccessCredentials.svg' },
       { label: 'Invite ExCom', link: '/coming-soon/invite-excom', icon: 'InviteExCom.svg' },
@@ -80,6 +88,7 @@ export const NAVIGATION_DATA: NavItem[] = [
   },
   {
     label: 'Licencing',
+    matIcon: 'vpn_key',
     children: [
       {
         label: 'Property License (EULA)',
@@ -104,6 +113,7 @@ export const NAVIGATION_DATA: NavItem[] = [
   },
   {
     label: 'Activation',
+    matIcon: 'power_settings_new',
     children: [
       { label: 'Switch On', link: '/coming-soon/switch-on', icon: 'SwitchOn.svg' },
       { label: 'Expand', link: '/coming-soon/expand', icon: 'Expand.svg' },
@@ -112,6 +122,7 @@ export const NAVIGATION_DATA: NavItem[] = [
   },
   {
     label: 'Other Information',
+    matIcon: 'info',
     children: [
       { label: 'Papers', link: '/coming-soon/papers', icon: 'Papers.svg' },
       { label: 'Videos', link: '/coming-soon/videos', icon: 'Videos.svg' },

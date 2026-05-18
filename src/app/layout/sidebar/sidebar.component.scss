@@ -1,249 +1,262 @@
 @use '@gbxm/styles/_variables.scss' as *;
 @use '@gbxm/styles/_mixins.scss' as *;
 
+// ─── Host & shell ───────────────────────────────────────────────────────────
+:host {
+  display: block;
+  height: 100%;
+}
+
 .sidebar {
-  padding: 0 10px 12px 16px;
-  background: $color-surface-inverse;
-  color: $color-text-inverse;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  height: 100%;
+  background: $color-surface-inverse;
+  color: $color-text-inverse;
 
   &__header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    position: sticky;
-    top: 0;
-    background: $color-surface-inverse;
-    z-index: $z-sidenav;
-    padding-top: $spacing-6;
+    justify-content: space-between;
+    padding: $spacing-5 $spacing-4 $spacing-3;
   }
 
   &__label {
-    font-weight: $font-weight-semibold;
-    font-size: $font-size-base;
-    line-height: 1;
-    letter-spacing: 0.06em;
+    font-size: 14px;
+    font-weight: $font-weight-normal;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     color: $color-text-on-inverse-muted;
   }
 
-  &__close-btn {
-    background: transparent;
-    border: none;
-    color: $color-text-panel-title;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: $spacing-1;
-  }
-
-  &__close-icon {
-    width: 24px;
-    height: 24px;
-    display: inline-block;
-    background-color: currentColor;
-    -webkit-mask: var(--icon-url) no-repeat center;
-    mask: var(--icon-url) no-repeat center;
-    -webkit-mask-size: contain;
-    mask-size: contain;
+  &__close {
+    color: $color-text-on-inverse-muted;
   }
 
   &__nav {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0 $spacing-3 $spacing-4;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
 
-    .mat-expansion-panel {
-      border-radius: $radius-sm;
-    }
-
-    .mat-expansion-panel-spacing {
-      margin: 0;
-    }
-
-    ::ng-deep {
-      .mat-expansion-panel-body {
-        padding: 0;
-
-        .mdc-list {
-          padding: 0;
-        }
-      }
-
-      .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled=true]):hover {
-        background: $color-surface-muted;
-      }
+    &::-webkit-scrollbar { width: 6px; }
+    &::-webkit-scrollbar-track { background: transparent; }
+    &::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 6px;
     }
   }
+}
 
-  &__group {
-    background: $color-surface-muted;
-    border-radius: $radius-sm;
-    overflow: hidden;
-    box-shadow: none;
-    border: 0;
+// ─── Top-level section (expansion panel) ────────────────────────────────────
+.nav-section {
+  // Reset Material chrome on the panel host
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: $radius-md !important;
+  color: inherit;
+  margin: 0 0 2px 0 !important;
+  transition: background 180ms ease;
 
-    .mat-expansion-panel-header {
-      padding: $spacing-3;
-      font-size: $font-size-lg;
-      font-weight: $font-weight-medium;
-      height: auto;
+  ::ng-deep .mat-expansion-panel-body {
+    padding: 0;
+  }
 
-      .mat-expansion-panel-header-title {
-        color: $color-text-panel-title;
-        gap: $spacing-2;
+  // Header (collapsed default)
+  ::ng-deep .mat-expansion-panel-header {
+    padding: 0 $spacing-3;
+    border-radius: $radius-md;
+    transition: background 150ms ease;
 
-        .sidebar__icon {
-          width: 16px;
-          height: 16px;
-          display: inline-block;
-          background-color: currentColor;
-          -webkit-mask: var(--icon-url) no-repeat center;
-          mask: var(--icon-url) no-repeat center;
-          -webkit-mask-size: contain;
-          mask-size: contain;
-          flex: 0 0 20px;
-        }
-      }
+    .mat-content {
+      align-items: center;
+      overflow: visible;
+    }
 
-      ::ng-deep {
-        .mat-expansion-indicator svg {
-          width: 20px;
-          height: 20px;
-          fill: $color-text-panel-title;
-        }
+    .mat-expansion-indicator {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &::after {
+        color: $color-text-on-inverse-muted;
+        padding: 3px;
+        transition: color 150ms ease;
       }
     }
 
-    .mat-expansion-panel-header.mat-expanded {
-      background: $color-surface-muted;
-      color: $color-text-inverse;
+    &:hover:not([aria-disabled='true']) {
+      background: rgba(255, 255, 255, 0.07);
 
-      .mat-expansion-panel-header-title {
+      .nav-section__icon,
+      .nav-section__label-text {
         color: $color-text-inverse;
       }
 
-      ::ng-deep {
-        .mat-expansion-indicator svg {
-          width: 20px;
-          height: 20px;
-          fill: $color-text-inverse;
-        }
-      }
-    }
-
-    ::ng-deep .mat-expansion-panel-content {
-      position: relative;
-      margin-left: $spacing-3;
-
-      &::before {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: 0;
-        bottom: 6px;
-        width: 1px;
-        background: rgba(255, 255, 255, 0.1);
-      }
-
-      .mat-nav-list {
-        padding: $spacing-1 0;
-      }
-
-      a.mat-mdc-list-item {
-        padding-left: $spacing-3 !important;
-        margin-left: 0;
-      }
-
-      .sidebar__group {
-        background: transparent;
-        border-radius: 0;
-
-        .mat-expansion-panel-header {
-          padding-left: $spacing-3;
-          font-size: $font-size-base;
-          max-height: 32px;
-
-          .mat-expansion-panel-header-title {
-            color: $color-text-on-inverse-muted;
-          }
-
-          &:hover {
-            background: rgba(255, 255, 255, 0.05);
-
-            .mat-expansion-panel-header-title {
-              color: $color-text-inverse;
-            }
-          }
-        }
-
-        .mat-expansion-panel-header.mat-expanded {
-          background: transparent;
-        }
-
-        .mat-expansion-panel-content {
-          position: relative;
-          margin-left: $spacing-3;
-
-          &::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 6px;
-            width: 1px;
-            background: rgba(255, 255, 255, 0.1);
-          }
-
-          a.mat-mdc-list-item {
-            padding-left: $spacing-3 !important;
-          }
-        }
-      }
-    }
-
-    ::ng-deep {
-      a.mat-mdc-list-item {
-        border-radius: $radius-md;
-        font-size: $font-size-sm;
-        max-height: 32px;
-        padding: 0 $spacing-3;
-
-        .mdc-list-item__primary-text {
-          color: $color-text-panel-title;
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          gap: $spacing-2;
-          font-size: $font-size-base;
-          font-weight: $font-weight-medium;
-          letter-spacing: normal;
-        }
-
-        .sidebar__icon {
-          width: 16px;
-          height: 16px;
-          display: inline-block;
-          background-color: currentColor;
-          -webkit-mask: var(--icon-url) no-repeat center;
-          mask: var(--icon-url) no-repeat center;
-          -webkit-mask-size: contain;
-          mask-size: contain;
-          flex: 0 0 20px;
-        }
-      }
-
-      a.mat-mdc-list-item:hover,
-      a.mat-mdc-list-item.active {
-        background: $color-accent;
-
-        .mdc-list-item__primary-text {
-          color: $color-text-inverse;
-        }
+      .mat-expansion-indicator::after {
+        color: $color-text-inverse;
       }
     }
   }
+
+  &__title {
+    display: flex !important;
+    align-items: center;
+    gap: $spacing-3;
+    margin: 0;
+  }
+
+  &__icon {
+    color: $color-text-on-inverse-muted;
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    transition: color 150ms ease;
+  }
+
+  &__label-text {
+    font-size: 14px;
+    font-weight: $font-weight-medium;
+    color: $color-text-on-inverse-muted;
+    transition: color 150ms ease;
+    line-height: 1;
+  }
+
+  // Expanded: card-like background + bright icon/label/chevron
+  &.mat-expanded {
+    background: $color-surface-muted !important;
+
+    .nav-section__icon,
+    .nav-section__label-text {
+      color: $color-text-inverse;
+    }
+
+    ::ng-deep .mat-expansion-indicator::after {
+      color: $color-text-inverse;
+    }
+  }
+
+  // Body (children container)
+  &__body {
+    padding: 0 $spacing-3 $spacing-2 $spacing-3 + 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+}
+
+// ─── Nested sub-group ───────────────────────────────────────────────────────
+.nav-subgroup {
+  background: transparent !important;
+  box-shadow: none !important;
+  border-radius: $radius-sm !important;
+  margin: 0 !important;
+
+  ::ng-deep .mat-expansion-panel-body {
+    padding: 0;
+  }
+
+  ::ng-deep .mat-expansion-panel-header {
+    padding: 0 $spacing-2;
+    border-radius: $radius-sm;
+    transition: background 150ms ease;
+
+    .mat-content {
+      align-items: center;
+    }
+
+    .mat-expansion-indicator::after {
+      color: $color-text-on-inverse-muted;
+      padding: 2px;
+    }
+
+    &:hover:not([aria-disabled='true']) {
+      background: rgba(255, 255, 255, 0.05);
+
+      .nav-subgroup__title {
+        color: $color-text-inverse;
+      }
+    }
+  }
+
+  &__title {
+    display: flex !important;
+    align-items: center;
+    gap: $spacing-2;
+    color: $color-text-on-muted;
+    font-size: 14px;
+    font-weight: $font-weight-medium;
+    margin: 0;
+    transition: color 150ms ease;
+  }
+
+  &__body {
+    padding: 2px 0 4px $spacing-2;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+}
+
+// ─── Nav item (sub-item link) ───────────────────────────────────────────────
+.nav-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: $spacing-2;
+  padding: 8px $spacing-3;
+  border-radius: $radius-md;
+  color: $color-text-on-muted;
+  font-size: 14px;
+  font-weight: $font-weight-normal;
+  line-height: 1.2;
+  text-decoration: none;
+  cursor: pointer;
+  background: transparent;
+  transition: background 150ms ease, color 150ms ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: $color-text-inverse;
+  }
+
+  &.is-active {
+    background: $color-accent;
+    color: $color-text-inverse;
+    font-weight: $font-weight-normal;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: -6px;
+      top: 6px;
+      bottom: 6px;
+      width: 2px;
+      border-radius: 1px;
+      background: $color-accent;
+    }
+  }
+
+  &__label {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+// ─── Mask-icon (for items + subgroup titles) ────────────────────────────────
+.nav-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  display: inline-block;
+  background-color: currentColor;
+  -webkit-mask: var(--icon-url) no-repeat center;
+  mask: var(--icon-url) no-repeat center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
 }
