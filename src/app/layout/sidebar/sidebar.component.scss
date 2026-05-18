@@ -99,6 +99,12 @@
         color: $color-text-inverse;
       }
     }
+
+    @media (hover: none) {
+      &:not([aria-disabled='true']):hover {
+        background: transparent !important;
+      }
+    }
   }
 
   &__title {
@@ -178,6 +184,12 @@
 
       .nav-subgroup__title {
         color: $color-text-inverse;
+      }
+    }
+
+    @media (hover: none) {
+      &:not([aria-disabled='true']):hover {
+        background: transparent !important;
       }
     }
   }
