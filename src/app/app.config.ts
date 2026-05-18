@@ -1,5 +1,6 @@
 import { ApplicationConfig, importProvidersFrom, provideExperimentalZonelessChangeDetection } from '@angular/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MAT_TOOLTIP_DEFAULT_OPTIONS } from '@angular/material/tooltip';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { PreloadAllModules, provideRouter, withPreloading, withHashLocation } from '@angular/router';
@@ -11,6 +12,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes, withPreloading(PreloadAllModules), withHashLocation()),
     provideAnimationsAsync(),
     provideClientHydration(withEventReplay()),
-    importProvidersFrom(MatSnackBarModule)
+    importProvidersFrom(MatSnackBarModule),
+    { provide: MAT_TOOLTIP_DEFAULT_OPTIONS, useValue: { touchGestures: 'off' } }
   ]
 };
