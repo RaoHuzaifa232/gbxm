@@ -81,3 +81,22 @@ $radius-sm:   4px;
 $radius-md:   6px;
 $radius-lg:   8px;
 $radius-pill: 12px;
+
+// ─── Breakpoints (mobile-first) ───────────────────────────────────────────────
+$breakpoint-sm:  576px;
+$breakpoint-md:  768px;
+$breakpoint-lg:  1024px;
+$breakpoint-xl:  1280px;
+$breakpoint-2xl: 1536px;
+
+// ─── Layout ───────────────────────────────────────────────────────────────────
+$sidenav-width:     264px;
+$content-max-width: 1440px;
+$form-max-width:    720px;
+
+// ─── Z-index scale ────────────────────────────────────────────────────────────
+$z-dropdown: 100;
+$z-sidenav:  200;
+$z-header:   300;
+$z-modal:    400;
+$z-toast:    500;

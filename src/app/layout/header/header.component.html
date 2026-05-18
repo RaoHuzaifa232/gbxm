@@ -1,11 +1,16 @@
-<div class="header">
+<header class="header">
+  <div class="header__start">
+    <button class="header__menu-btn" mat-icon-button (click)="menuToggle.emit()" aria-label="Toggle navigation">
+      <mat-icon>menu</mat-icon>
+    </button>
     <div class="header__logo">
-        <img ngSrc="assets/images/gbxm-logo.svg" width="36" height="36" alt="gbxm logo" priority />
-        <p>GBXM</p>
+      <img ngSrc="assets/images/gbxm-logo.svg" width="36" height="36" alt="gbxm logo" priority />
+      <span class="header__brand">GBXM</span>
     </div>
+  </div>
 
-    <div class="header__actions">
-        <img ngSrc="assets/icons/settings.svg" width="20" height="20" alt="settings" />
-        <img ngSrc="assets/images/user-avatar.svg" width="32" height="32" alt="user avatar" />
-    </div>
-</div>
+  <div class="header__actions">
+    <img ngSrc="assets/icons/settings.svg" width="20" height="20" alt="settings" />
+    <img ngSrc="assets/images/user-avatar.svg" width="32" height="32" alt="user avatar" />
+  </div>
+</header>

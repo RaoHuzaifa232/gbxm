@@ -1,255 +1,249 @@
 @use '@gbxm/styles/_variables.scss' as *;
+@use '@gbxm/styles/_mixins.scss' as *;
 
 .sidebar {
-    padding: 0 16px 12px 16px;
-    padding-right: 10px;
+  padding: 0 10px 12px 16px;
+  background: $color-surface-inverse;
+  color: $color-text-inverse;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
     background: $color-surface-inverse;
-    color: $color-text-inverse;
+    z-index: $z-sidenav;
+    padding-top: $spacing-6;
+  }
+
+  &__label {
+    font-weight: $font-weight-semibold;
+    font-size: $font-size-base;
+    line-height: 1;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: $color-text-on-inverse-muted;
+  }
+
+  &__close-btn {
+    background: transparent;
+    border: none;
+    color: $color-text-panel-title;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: $spacing-1;
+  }
+
+  &__close-icon {
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    background-color: currentColor;
+    -webkit-mask: var(--icon-url) no-repeat center;
+    mask: var(--icon-url) no-repeat center;
+    -webkit-mask-size: contain;
+    mask-size: contain;
+  }
+
+  &__nav {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 5px;
 
-    &__header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        position: sticky;
-        top: 0;
-        background: $color-surface-inverse;
-        z-index: 10;
-        padding-top: 28px;
+    .mat-expansion-panel {
+      border-radius: $radius-sm;
     }
 
-    &__label {
-        font-weight: 600;
-        font-size: 14px;
-        line-height: 100%;
-        letter-spacing: 6%;
-        vertical-align: middle;
-        text-transform: uppercase;
-        color: $color-text-on-inverse-muted;
+    .mat-expansion-panel-spacing {
+      margin: 0;
     }
 
-    &__close-btn {
-        background: transparent;
-        border: none;
-        color: $color-text-panel-title;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 4px;
-    }
+    ::ng-deep {
+      .mat-expansion-panel-body {
+        padding: 0;
 
-    &__close-icon {
-        width: 24px;
-        height: 24px;
-        display: inline-block;
-        background-color: currentColor;
-        -webkit-mask: var(--icon-url) no-repeat center;
-        mask: var(--icon-url) no-repeat center;
-        -webkit-mask-size: contain;
-        mask-size: contain;
-    }
-
-    &__nav {
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
-
-        .mat-expansion-panel {
-            border-radius: 4px;
+        .mdc-list {
+          padding: 0;
         }
+      }
 
-        .mat-expansion-panel-spacing {
-            margin: 0px;
-        }
-
-        ::ng-deep {
-            .mat-expansion-panel-body {
-                padding: 0px;
-
-                .mdc-list {
-                    padding: 0px;
-                }
-            }
-
-            .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled=true]):hover {
-                background: $color-surface-muted;
-            }
-        }
-    }
-
-    &__group {
+      .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:not([aria-disabled=true]):hover {
         background: $color-surface-muted;
-        border-radius: 4px;
-        overflow: hidden;
-        box-shadow: none;
-        border: 0;
+      }
+    }
+  }
+
+  &__group {
+    background: $color-surface-muted;
+    border-radius: $radius-sm;
+    overflow: hidden;
+    box-shadow: none;
+    border: 0;
+
+    .mat-expansion-panel-header {
+      padding: $spacing-3;
+      font-size: $font-size-lg;
+      font-weight: $font-weight-medium;
+      height: auto;
+
+      .mat-expansion-panel-header-title {
+        color: $color-text-panel-title;
+        gap: $spacing-2;
+
+        .sidebar__icon {
+          width: 16px;
+          height: 16px;
+          display: inline-block;
+          background-color: currentColor;
+          -webkit-mask: var(--icon-url) no-repeat center;
+          mask: var(--icon-url) no-repeat center;
+          -webkit-mask-size: contain;
+          mask-size: contain;
+          flex: 0 0 20px;
+        }
+      }
+
+      ::ng-deep {
+        .mat-expansion-indicator svg {
+          width: 20px;
+          height: 20px;
+          fill: $color-text-panel-title;
+        }
+      }
+    }
+
+    .mat-expansion-panel-header.mat-expanded {
+      background: $color-surface-muted;
+      color: $color-text-inverse;
+
+      .mat-expansion-panel-header-title {
+        color: $color-text-inverse;
+      }
+
+      ::ng-deep {
+        .mat-expansion-indicator svg {
+          width: 20px;
+          height: 20px;
+          fill: $color-text-inverse;
+        }
+      }
+    }
+
+    ::ng-deep .mat-expansion-panel-content {
+      position: relative;
+      margin-left: $spacing-3;
+
+      &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 6px;
+        width: 1px;
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      .mat-nav-list {
+        padding: $spacing-1 0;
+      }
+
+      a.mat-mdc-list-item {
+        padding-left: $spacing-3 !important;
+        margin-left: 0;
+      }
+
+      .sidebar__group {
+        background: transparent;
+        border-radius: 0;
 
         .mat-expansion-panel-header {
-            padding: 12px;
-            font-size: 16px;
-            font-weight: 500;
-            height: auto;
+          padding-left: $spacing-3;
+          font-size: $font-size-base;
+          max-height: 32px;
+
+          .mat-expansion-panel-header-title {
+            color: $color-text-on-inverse-muted;
+          }
+
+          &:hover {
+            background: rgba(255, 255, 255, 0.05);
 
             .mat-expansion-panel-header-title {
-                color: $color-text-panel-title;
-                gap: 8px;
-
-                .sidebar__icon {
-                    width: 16px;
-                    height: 16px;
-                    display: inline-block;
-                    background-color: currentColor;
-                    -webkit-mask: var(--icon-url) no-repeat center;
-                    mask: var(--icon-url) no-repeat center;
-                    -webkit-mask-size: contain;
-                    mask-size: contain;
-                    flex: 0 0 20px;
-                }
+              color: $color-text-inverse;
             }
-
-            ::ng-deep {
-                .mat-expansion-indicator svg {
-                    width: 20px;
-                    height: 20px;
-                    fill: $color-text-panel-title;
-                }
-            }
+          }
         }
 
         .mat-expansion-panel-header.mat-expanded {
-            background: $color-surface-muted;
-            color: $color-text-inverse;
-
-            .mat-expansion-panel-header-title {
-                color: $color-text-inverse;
-            }
-
-            ::ng-deep {
-                .mat-expansion-indicator svg {
-                    width: 20px;
-                    height: 20px;
-                    fill: $color-text-inverse;
-                }
-            }
+          background: transparent;
         }
 
-        // --- Visible Nesting Hierarchy ---
-        ::ng-deep .mat-expansion-panel-content {
-            // Level 1 Nesting (Inside Main Expansion)
-            position: relative;
-            margin-left: 12px;
+        .mat-expansion-panel-content {
+          position: relative;
+          margin-left: $spacing-3;
 
-            &::before {
-                content: '';
-                position: absolute;
-                left: 0;
-                top: 0;
-                bottom: 6px;
-                width: 1px;
-                background: rgba(255, 255, 255, 0.1);
-            }
+          &::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 6px;
+            width: 1px;
+            background: rgba(255, 255, 255, 0.1);
+          }
 
-            .mat-nav-list {
-                padding: 4px 0;
-            }
-
-            // Reset for Level 1 Items
-            a.mat-mdc-list-item {
-                padding-left: 12px !important;
-                margin-left: 0;
-            }
-
-            // Nested Expansion Panels (Level 1 Sub-menus)
-            .sidebar__group {
-                background: transparent;
-                border-radius: 0;
-
-                .mat-expansion-panel-header {
-                    padding-left: 12px;
-                    font-size: 14px;
-                    max-height: 32px;
-
-                    .mat-expansion-panel-header-title {
-                        color: $color-text-on-inverse-muted;
-                    }
-
-                    &:hover {
-                        background: rgba(255, 255, 255, 0.05);
-
-                        .mat-expansion-panel-header-title {
-                            color: $color-text-inverse;
-                        }
-                    }
-                }
-
-                .mat-expansion-panel-header.mat-expanded {
-                    background: transparent;
-                }
-
-                // Level 2 Nesting (Inside Sub-menu)
-                .mat-expansion-panel-content {
-                    position: relative;
-                    margin-left: 12px;
-
-                    &::before {
-                        content: '';
-                        position: absolute;
-                        left: 0;
-                        top: 0;
-                        bottom: 6px;
-                        width: 1px;
-                        background: rgba(255, 255, 255, 0.1);
-                    }
-
-                    a.mat-mdc-list-item {
-                        padding-left: 12px !important;
-                    }
-                }
-            }
+          a.mat-mdc-list-item {
+            padding-left: $spacing-3 !important;
+          }
         }
-
-        ::ng-deep {
-            a.mat-mdc-list-item {
-                border-radius: 6px;
-                font-size: 13px;
-                max-height: 32px;
-                padding: 0px 12px;
-
-                .mdc-list-item__primary-text {
-                    color: $color-text-panel-title;
-                    display: flex;
-                    flex-direction: row;
-                    align-items: center;
-                    gap: 8px;
-                    font-size: 14px;
-                    font-weight: 500;
-                    letter-spacing: normal;
-                }
-
-                .sidebar__icon {
-                    width: 16px;
-                    height: 16px;
-                    display: inline-block;
-                    background-color: currentColor;
-                    -webkit-mask: var(--icon-url) no-repeat center;
-                    mask: var(--icon-url) no-repeat center;
-                    -webkit-mask-size: contain;
-                    mask-size: contain;
-                    flex: 0 0 20px;
-                }
-            }
-
-            a.mat-mdc-list-item:hover,
-            a.mat-mdc-list-item.active {
-                background: $color-accent;
-
-                .mdc-list-item__primary-text {
-                    color: $color-text-inverse;
-                }
-            }
-        }
+      }
     }
+
+    ::ng-deep {
+      a.mat-mdc-list-item {
+        border-radius: $radius-md;
+        font-size: $font-size-sm;
+        max-height: 32px;
+        padding: 0 $spacing-3;
+
+        .mdc-list-item__primary-text {
+          color: $color-text-panel-title;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          gap: $spacing-2;
+          font-size: $font-size-base;
+          font-weight: $font-weight-medium;
+          letter-spacing: normal;
+        }
+
+        .sidebar__icon {
+          width: 16px;
+          height: 16px;
+          display: inline-block;
+          background-color: currentColor;
+          -webkit-mask: var(--icon-url) no-repeat center;
+          mask: var(--icon-url) no-repeat center;
+          -webkit-mask-size: contain;
+          mask-size: contain;
+          flex: 0 0 20px;
+        }
+      }
+
+      a.mat-mdc-list-item:hover,
+      a.mat-mdc-list-item.active {
+        background: $color-accent;
+
+        .mdc-list-item__primary-text {
+          color: $color-text-inverse;
+        }
+      }
+    }
+  }
 }

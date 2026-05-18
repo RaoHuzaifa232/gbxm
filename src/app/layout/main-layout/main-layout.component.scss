@@ -1,68 +1,43 @@
 @use '@gbxm/styles/_variables.scss' as *;
+@use '@gbxm/styles/_mixins.scss' as *;
 
 :host {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
 
 .layout {
-    flex: 1;
-    box-sizing: border-box;
+  flex: 1;
+  overflow: hidden;
+
+  &__sidenav {
+    width: $sidenav-width;
+    border-right: 0;
+    background: $color-surface-inverse;
     overflow: hidden;
+    border-radius: 0;
+    height: 100%;
+  }
 
-    &__sidenav {
-        width: 264px;
-        max-width: 264px;
-        border-right: 0;
-        background: $color-surface-inverse;
-        overflow: hidden;
-        border-radius: 0px;
-        height: 100%;
+  &__content {
+    background: $color-bg-main;
+    height: 100%;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  &__main {
+    min-height: 100%;
+    padding: $spacing-3;
+    box-sizing: border-box;
+
+    @include md {
+      padding: $spacing-4;
     }
 
-    &__content {
-        background: $color-bg-main;
-        position: relative;
-        height: 100%;
-        overflow: auto; // Let the sidenav content handle the scroll
-        -webkit-overflow-scrolling: touch;
+    @include xl {
+      padding: $spacing-6;
     }
-
-    &__open-handle {
-        position: fixed;
-        left: 0;
-        top: 78px;
-        width: 18px;
-        height: 36px;
-        background-color: $color-surface-muted;
-        border: none;
-        border-radius: 0 50px 50px 0;
-        color: $color-text-panel-title;
-        padding: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        z-index: 1000;
-        box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
-
-        mat-icon {
-            font-size: 18px;
-            width: 18px;
-            height: 18px;
-            margin-right: 2px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-    }
-
-    main {
-
-        min-height: 100%;
-        padding: 16px;
-        margin: 0;
-        box-sizing: border-box;
-    }
+  }
 }

@@ -1,0 +1,25 @@
+@use 'variables' as v;
+
+// Centered max-width wrapper for full page content
+.page-container {
+  width: 100%;
+  max-width: v.$content-max-width;
+  margin-inline: auto;
+  box-sizing: border-box;
+}
+
+// Narrow centered wrapper for forms and single-column flows
+.form-container {
+  width: 100%;
+  max-width: v.$form-max-width;
+  margin-inline: auto;
+  box-sizing: border-box;
+}
+
+// Standard white card surface
+.content-card {
+  background: #fff;
+  border-radius: v.$radius-lg;
+  border: 1px solid v.$color-border-light;
+  overflow: hidden;
+}
