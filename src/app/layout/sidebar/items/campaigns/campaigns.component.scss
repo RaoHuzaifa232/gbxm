@@ -2,34 +2,34 @@
 @use '@gbxm/styles/_page-titles.scss' as *;
 
 .campaigns {
-	color: $color-text-primary;
+  color: $color-text-primary;
 
-	&__card {
-		background: #ffffff;
-		border: 1px solid $color-divider;
-		border-radius: 8px;
-		box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
-		overflow: hidden;
-	}
+  &__card {
+    background: #ffffff;
+    border: 1px solid $color-divider;
+    border-radius: 8px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+  }
 
-	&__card-header {
-		padding: 16px 20px;
-		border-bottom: 1px solid $color-divider;
+  &__card-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid $color-divider;
 
-		h2 {
-			margin: 0;
-			font-size: 18px;
-			font-weight: 600;
-			color: $color-text-primary;
-		}
-	}
+    h2 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 600;
+      color: $color-text-primary;
+    }
+  }
 }
 
 @media (max-width: 960px) {
-	.campaigns {
-		&__card-header {
-			padding-left: 16px;
-			padding-right: 16px;
-		}
-	}
+  .campaigns {
+    &__card-header {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+  }
 }

@@ -3,9 +3,12 @@
 <app-header (menuToggle)="sidenav.toggle()" />
 
 <mat-sidenav-container class="layout">
-  <mat-sidenav #sidenav class="layout__sidenav"
+  <mat-sidenav
+    #sidenav
+    class="layout__sidenav"
     [mode]="mobile ? 'over' : 'side'"
-    [opened]="!mobile">
+    [opened]="!mobile"
+  >
     <app-sidebar [isMobile]="mobile" (closeSidebar)="sidenav.close()" />
   </mat-sidenav>
 

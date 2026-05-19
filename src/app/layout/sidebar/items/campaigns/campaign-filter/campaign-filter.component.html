@@ -1,0 +1,59 @@
+<form [formGroup]="form" class="campaign-filter" aria-label="Campaign filters">
+  @if (showCampaignSelect()) {
+    <div class="filter__row filter__row--campaigns">
+      <mat-form-field appearance="outline" subscriptSizing="dynamic" class="filter__campaign-field">
+        <mat-label>Select Campaign Name</mat-label>
+        <mat-select formControlName="campaignId">
+          @for (c of campaigns(); track c.id) {
+            <mat-option [value]="c.id">{{ c.name }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" subscriptSizing="dynamic" class="filter__campaign-field">
+        <mat-label>Select Campaign Number</mat-label>
+        <mat-select formControlName="campaignId">
+          @for (c of campaigns(); track c.id) {
+            <mat-option [value]="c.id">{{ c.id }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </div>
+  }
+
+  <div class="filter__row filter__row--controls">
+    @if (showOperator()) {
+      <mat-form-field appearance="outline" subscriptSizing="dynamic" class="filter__operator-field">
+        <mat-label>Select Operator</mat-label>
+        <mat-select formControlName="operatorId">
+          <mat-option value="all">All</mat-option>
+          <mat-option value="operator-1">Operator 1</mat-option>
+          <mat-option value="operator-2">Operator 2</mat-option>
+          <mat-option value="operator-3">Operator 3</mat-option>
+        </mat-select>
+      </mat-form-field>
+    }
+
+    @if (showType()) {
+      <mat-radio-group class="radio-pills" aria-label="Campaign type" formControlName="typeKey">
+        <mat-radio-button value="all">All</mat-radio-button>
+        <mat-radio-button value="agent">Agent</mat-radio-button>
+        <mat-radio-button value="brand">Brand/syndicate</mat-radio-button>
+        <mat-radio-button value="geo">Geographic</mat-radio-button>
+        <mat-radio-button value="thematic">Thematic</mat-radio-button>
+      </mat-radio-group>
+    }
+
+    @if (showStatus()) {
+      <mat-radio-group class="radio-pills" aria-label="Campaign status" formControlName="status">
+        <mat-radio-button value="all">All</mat-radio-button>
+        <mat-radio-button value="live">Live</mat-radio-button>
+        <mat-radio-button value="draft">Draft</mat-radio-button>
+      </mat-radio-group>
+    }
+
+    @if (showViewNoPickLists()) {
+      <mat-checkbox formControlName="viewNoPickLists">View No Pick Lists</mat-checkbox>
+    }
+  </div>
+</form>

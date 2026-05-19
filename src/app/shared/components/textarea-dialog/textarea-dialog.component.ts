@@ -23,11 +23,11 @@ export interface TextareaDialogData {
     MatDialogModule,
     MatButtonModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
   ],
   templateUrl: './textarea-dialog.component.html',
   styleUrl: './textarea-dialog.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TextareaDialogComponent {
   data = inject<TextareaDialogData>(MAT_DIALOG_DATA);

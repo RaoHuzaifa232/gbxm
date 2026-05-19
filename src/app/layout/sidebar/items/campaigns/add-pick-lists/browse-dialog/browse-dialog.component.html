@@ -1,13 +1,14 @@
 <h2 mat-dialog-title class="browse-dialog__title">Add Pick Lists to {{ data.campaign.name }}</h2>
 
 <mat-dialog-content class="browse-dialog__content">
-	<mat-form-field appearance="outline" subscriptSizing="dynamic" class="browse-dialog__field">
-		<input matInput [formControl]="fileNameControl" />
-	</mat-form-field>
+  <mat-form-field appearance="outline" subscriptSizing="dynamic" class="browse-dialog__field">
+    <input matInput [formControl]="fileNameControl" />
+  </mat-form-field>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end" class="browse-dialog__actions">
-	<button mat-flat-button color="primary" type="button" (click)="onSave()">Save</button>
-	<button mat-flat-button color="primary" type="button" (click)="onRun()">Run</button>
-	<button mat-flat-button color="primary" type="button" (click)="onUpload()">Upload</button>
+  <button mat-button mat-dialog-close type="button" class="dialog-close-btn" (click)="onClose()">
+    Close
+  </button>
+  <button mat-flat-button color="primary" type="button" (click)="onUpload()">Upload</button>
 </mat-dialog-actions>

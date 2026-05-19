@@ -8,7 +8,7 @@ import { MatIcon } from '@angular/material/icon';
   imports: [NgOptimizedImage, MatIconButton, MatIcon],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent {
   menuToggle = output<void>();

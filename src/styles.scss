@@ -4,57 +4,57 @@
 
 html,
 body {
-    height: 100%;
+  height: 100%;
 }
 
 body {
-    margin: 0;
-    font-family: Roboto, "Helvetica Neue", sans-serif;
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
 
 /* Mat drawer fills the sidenav; the sidebar component manages its own scroll */
 .mat-drawer-inner-container {
-    height: 100%;
-    overflow: hidden;
+  height: 100%;
+  overflow: hidden;
 }
 
 /* Generic 40px height fix and color theme for Angular Material Outline Form Fields (Excluding Textareas) */
 .mat-mdc-form-field.mat-form-field-appearance-outline {
-    // Theme Colors
-    --mdc-outlined-text-field-outline-color: #{variables.$color-border-muted};
-    --mdc-outlined-text-field-hover-outline-color: #{variables.$color-border-muted};
-    --mdc-outlined-text-field-focus-outline-color: #{variables.$color-border-muted};
-    --mdc-outlined-text-field-label-text-color: #{variables.$color-text-primary};
-    --mdc-outlined-text-field-hover-label-text-color: #{variables.$color-border-muted};
-    --mdc-outlined-text-field-focus-label-text-color: #{variables.$color-border-muted};
+  // Theme Colors
+  --mdc-outlined-text-field-outline-color: #{variables.$color-border-muted};
+  --mdc-outlined-text-field-hover-outline-color: #{variables.$color-border-muted};
+  --mdc-outlined-text-field-focus-outline-color: #{variables.$color-border-muted};
+  --mdc-outlined-text-field-label-text-color: #{variables.$color-text-primary};
+  --mdc-outlined-text-field-hover-label-text-color: #{variables.$color-border-muted};
+  --mdc-outlined-text-field-focus-label-text-color: #{variables.$color-border-muted};
 
-    &:not(:has(textarea)) {
-        .mat-mdc-text-field-wrapper {
-            height: 40px;
-        }
-
-        .mat-mdc-form-field-flex {
-            height: 40px;
-            align-items: center;
-        }
-
-        .mat-mdc-form-field-infix {
-            padding-top: 8px !important;
-            padding-bottom: 8px !important;
-            min-height: 40px !important;
-        }
-
-        /* Fix Resting Label Centering */
-        .mdc-floating-label:not(.mdc-floating-label--float-above) {
-            top: 50% !important;
-            transform: translateY(-50%) !important;
-        }
-
-        /* Fix Floating Label Position */
-        .mdc-floating-label--float-above {
-            transform: translateY(-38px) scale(0.75) !important;
-        }
+  &:not(:has(textarea)) {
+    .mat-mdc-text-field-wrapper {
+      height: 40px;
     }
+
+    .mat-mdc-form-field-flex {
+      height: 40px;
+      align-items: center;
+    }
+
+    .mat-mdc-form-field-infix {
+      padding-top: 8px !important;
+      padding-bottom: 8px !important;
+      min-height: 40px !important;
+    }
+
+    /* Fix Resting Label Centering */
+    .mdc-floating-label:not(.mdc-floating-label--float-above) {
+      top: 50% !important;
+      transform: translateY(-50%) !important;
+    }
+
+    /* Fix Floating Label Position */
+    .mdc-floating-label--float-above {
+      transform: translateY(-38px) scale(0.75) !important;
+    }
+  }
 }
 
 /* HIGH SPECIFICITY FIX: Force filled/disabled border color */
@@ -62,28 +62,29 @@ body {
 .mat-mdc-form-field.mat-form-field-appearance-outline.mat-form-field-disabled,
 .mat-mdc-form-field.mat-form-field-appearance-outline:has(input:not(:placeholder-shown)),
 .mat-mdc-form-field.mat-form-field-appearance-outline:has(.ng-dirty:not(.ng-pristine)) {
-    --mdc-outlined-text-field-outline-color: #{variables.$color-field-border-filled} !important;
-    --mdc-outlined-text-field-focus-outline-color: #{variables.$color-field-border-filled} !important;
-    --mdc-outlined-text-field-hover-outline-color: #{variables.$color-field-border-filled} !important;
-    --mdc-outlined-text-field-disabled-outline-color: #{variables.$color-field-border-filled} !important;
+  --mdc-outlined-text-field-outline-color: #{variables.$color-field-border-filled} !important;
+  --mdc-outlined-text-field-focus-outline-color: #{variables.$color-field-border-filled} !important;
+  --mdc-outlined-text-field-hover-outline-color: #{variables.$color-field-border-filled} !important;
+  --mdc-outlined-text-field-disabled-outline-color: #{variables.$color-field-border-filled} !important;
 
-    .mdc-notched-outline__leading,
-    .mdc-notched-outline__notch,
-    .mdc-notched-outline__trailing {
-        border-color: #{variables.$color-field-border-filled} !important;
-        border-width: 1px !important;
-        opacity: 1 !important;
-    }
+  .mdc-notched-outline__leading,
+  .mdc-notched-outline__notch,
+  .mdc-notched-outline__trailing {
+    border-color: #{variables.$color-field-border-filled} !important;
+    border-width: 1px !important;
+    opacity: 1 !important;
+  }
 
-    .mdc-text-field,
-    .mdc-notched-outline,
-    .mdc-notched-outline>div {
-        border-color: #{variables.$color-field-border-filled} !important;
-    }
+  .mdc-text-field,
+  .mdc-notched-outline,
+  .mdc-notched-outline > div {
+    border-color: #{variables.$color-field-border-filled} !important;
+  }
 }
 
-.mat-mdc-form-field.mat-mdc-form-field.mat-mdc-form-field.mat-mdc-form-field.mat-mdc-form-field.mat-mdc-form-field .mdc-notched-outline__notch {
-    border-left: none !important;
+.mat-mdc-form-field.mat-mdc-form-field.mat-mdc-form-field.mat-mdc-form-field.mat-mdc-form-field.mat-mdc-form-field
+  .mdc-notched-outline__notch {
+  border-left: none !important;
 }
 
 /* Global Styles for all rectangular Material Buttons */
@@ -92,135 +93,134 @@ body {
 .mat-mdc-flat-button,
 .mat-mdc-stroked-button,
 .mat-mdc-outlined-button {
-    border-radius: 6px !important;
-    min-width: 80px !important;
+  border-radius: 6px !important;
+  min-width: 80px !important;
 }
 
 /* Global Dialog Action Buttons */
 .dialog-save-btn {
-    --mdc-filled-button-container-color: #{variables.$color-action-primary};
-    --mdc-filled-button-label-text-color: #{variables.$color-text-inverse};
-    background-color: variables.$color-action-primary !important;
-    color: variables.$color-text-inverse !important;
-    border-radius: 6px !important;
+  --mdc-filled-button-container-color: #{variables.$color-action-primary};
+  --mdc-filled-button-label-text-color: #{variables.$color-text-inverse};
+  background-color: variables.$color-action-primary !important;
+  color: variables.$color-text-inverse !important;
+  border-radius: 6px !important;
 }
 
 .dialog-close-btn {
-    --mdc-text-button-label-text-color: #{variables.$color-action-primary};
-    color: variables.$color-action-primary !important;
-    border-radius: 6px !important;
+  --mdc-text-button-label-text-color: #{variables.$color-action-primary};
+  color: variables.$color-action-primary !important;
+  border-radius: 6px !important;
 }
 
 /* Global Border Radius for Dialogs */
 .mat-mdc-dialog-container .mdc-dialog__surface {
-    border-radius: 6px !important;
+  border-radius: 6px !important;
 }
 
 .mat-mdc-dialog-title {
-    padding: 24px !important;
-    padding-bottom: 0px !important;
+  padding: 24px !important;
+  padding-bottom: 0px !important;
 }
-
 
 .mat-mdc-dialog-title::before,
 .mat-mdc-dialog-surface::before {
-    content: none !important;
+  content: none !important;
 }
 
 /* Toast Styles */
 .toast-success {
-    --mdc-snackbar-container-color: #{variables.$color-toast-success};
-    --mat-snack-bar-button-color: #{variables.$color-text-inverse};
-    --mdc-snackbar-supporting-text-color: #{variables.$color-text-inverse};
+  --mdc-snackbar-container-color: #{variables.$color-toast-success};
+  --mat-snack-bar-button-color: #{variables.$color-text-inverse};
+  --mdc-snackbar-supporting-text-color: #{variables.$color-text-inverse};
 }
 
 .toast-error {
-    --mdc-snackbar-container-color: #{variables.$color-toast-error};
-    --mat-snack-bar-button-color: #{variables.$color-text-inverse};
-    --mdc-snackbar-supporting-text-color: #{variables.$color-text-inverse};
+  --mdc-snackbar-container-color: #{variables.$color-toast-error};
+  --mat-snack-bar-button-color: #{variables.$color-text-inverse};
+  --mdc-snackbar-supporting-text-color: #{variables.$color-text-inverse};
 }
 
 .toast-info {
-    --mdc-snackbar-container-color: #{variables.$color-toast-info};
-    --mat-snack-bar-button-color: #{variables.$color-text-inverse};
-    --mdc-snackbar-supporting-text-color: #{variables.$color-text-inverse};
+  --mdc-snackbar-container-color: #{variables.$color-toast-info};
+  --mat-snack-bar-button-color: #{variables.$color-text-inverse};
+  --mdc-snackbar-supporting-text-color: #{variables.$color-text-inverse};
 }
 
 /* Global Select & Option Theme */
 .mat-mdc-select {
-    font-size: 14px;
-    font-weight: 500;
+  font-size: 14px;
+  font-weight: 500;
 }
 
 .mat-mdc-select-panel {
-    border-radius: 6px !important;
-    padding: 4px 0 !important;
+  border-radius: 6px !important;
+  padding: 4px 0 !important;
 }
 
 .mat-mdc-option {
-    min-height: 40px !important;
-    font-size: 14px !important;
+  min-height: 40px !important;
+  font-size: 14px !important;
 
-    &.mdc-list-item--selected:not(.mdc-list-item--disabled) {
-        .mdc-list-item__primary-text {
-            color: #{variables.$color-action-primary} !important;
-        }
-
-        background-color: rgba(variables.$color-action-primary, 0.08) !important;
+  &.mdc-list-item--selected:not(.mdc-list-item--disabled) {
+    .mdc-list-item__primary-text {
+      color: #{variables.$color-action-primary} !important;
     }
 
-    &:hover:not(.mdc-list-item--selected):not(.mdc-list-item--disabled) {
-        background-color: rgba(0, 0, 0, 0.04) !important;
-    }
+    background-color: rgba(variables.$color-action-primary, 0.08) !important;
+  }
+
+  &:hover:not(.mdc-list-item--selected):not(.mdc-list-item--disabled) {
+    background-color: rgba(0, 0, 0, 0.04) !important;
+  }
 }
 
 /* Global Checkbox Theme */
 .mat-mdc-checkbox {
-    --mdc-checkbox-selected-focus-icon-color: #{variables.$color-action-primary};
-    --mdc-checkbox-selected-hover-icon-color: #{variables.$color-action-primary};
-    --mdc-checkbox-selected-icon-color: #{variables.$color-action-primary};
-    --mdc-checkbox-selected-pressed-icon-color: #{variables.$color-action-primary};
-    --mdc-checkbox-unselected-icon-color: #{variables.$color-border-muted};
+  --mdc-checkbox-selected-focus-icon-color: #{variables.$color-action-primary};
+  --mdc-checkbox-selected-hover-icon-color: #{variables.$color-action-primary};
+  --mdc-checkbox-selected-icon-color: #{variables.$color-action-primary};
+  --mdc-checkbox-selected-pressed-icon-color: #{variables.$color-action-primary};
+  --mdc-checkbox-unselected-icon-color: #{variables.$color-border-muted};
 }
 
 /* Global Radio Pills Theme */
 .mat-mdc-radio-group.radio-pills {
-    display: flex;
-    flex-wrap: wrap; // Allow wrapping on small screens
-    gap: 4px;
-    background: #f1f3f4;
-    padding: 4px;
-    border-radius: 8px;
-    border: 1px solid #{variables.$color-divider};
-    width: fit-content;
+  display: flex;
+  flex-wrap: wrap; // Allow wrapping on small screens
+  gap: 4px;
+  background: #f1f3f4;
+  padding: 4px;
+  border-radius: 8px;
+  border: 1px solid #{variables.$color-divider};
+  width: fit-content;
 
-    .mat-mdc-radio-button {
-        .mdc-radio {
-            display: none;
-        }
-
-        .mdc-label {
-            padding: 6px 16px;
-            border-radius: 6px;
-            font-size: 13px;
-            font-weight: 500;
-            color: #{variables.$color-text-primary};
-            cursor: pointer;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            white-space: nowrap;
-            text-align: center;
-            display: block;
-            width: 100%;
-        }
-
-        &.mat-mdc-radio-checked .mdc-label {
-            background: #ffffff;
-            color: #{variables.$color-action-primary};
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-        }
-
-        &:hover:not(.mat-mdc-radio-checked) .mdc-label {
-            background: rgba(0, 0, 0, 0.04);
-        }
+  .mat-mdc-radio-button {
+    .mdc-radio {
+      display: none;
     }
+
+    .mdc-label {
+      padding: 6px 16px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #{variables.$color-text-primary};
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      white-space: nowrap;
+      text-align: center;
+      display: block;
+      width: 100%;
+    }
+
+    &.mat-mdc-radio-checked .mdc-label {
+      background: #ffffff;
+      color: #{variables.$color-action-primary};
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    }
+
+    &:hover:not(.mat-mdc-radio-checked) .mdc-label {
+      background: rgba(0, 0, 0, 0.04);
+    }
+  }
 }

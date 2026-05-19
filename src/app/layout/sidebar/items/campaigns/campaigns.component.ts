@@ -5,8 +5,6 @@ import { RouterOutlet } from '@angular/router';
   imports: [RouterOutlet],
   templateUrl: './campaigns.component.html',
   styleUrl: './campaigns.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CampaignsComponent {
-
-}
+export class CampaignsComponent {}

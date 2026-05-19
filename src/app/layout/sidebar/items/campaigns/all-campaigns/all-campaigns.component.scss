@@ -4,42 +4,42 @@
 // ─── Filters ─────────────────────────────────────────────────────────────────
 
 .campaigns__filters {
-	padding: $spacing-4 $spacing-5 $spacing-2 $spacing-5;
-	border-bottom: 1px solid $color-divider;
+  padding: $spacing-4 $spacing-5 $spacing-2 $spacing-5;
+  border-bottom: 1px solid $color-divider;
 }
 
 .filters {
-	&__layout {
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-		gap: $spacing-8;
-		flex-wrap: wrap;
-	}
+  &__layout {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: $spacing-8;
+    flex-wrap: wrap;
+  }
 
-	&__group {
-		display: flex;
-		flex-direction: column;
-		gap: $spacing-2;
+  &__group {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-2;
 
-		&--operator {
-			width: 240px;
-		}
-	}
+    &--operator {
+      width: 240px;
+    }
+  }
 
-	&__label {
-		font-size: $font-size-sm;
-		font-weight: $font-weight-medium;
-		letter-spacing: 0.05em;
-		text-transform: uppercase;
-		color: $color-text-tertiary;
-		display: flex;
-		align-items: center;
-	}
+  &__label {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-medium;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: $color-text-tertiary;
+    display: flex;
+    align-items: center;
+  }
 
-	&__field {
-		width: 100%;
-	}
+  &__field {
+    width: 100%;
+  }
 }
 
 // ─── Detail view (campaign-details & property-view) ──────────────────────────
@@ -63,7 +63,6 @@
     color: $color-text-strong;
     margin: 0;
   }
-
 }
 
 // ─── Back button — minimal text button ───────────────────────────────────────
@@ -71,7 +70,7 @@
 .back-btn {
   color: $color-text-muted;
   --mdc-text-button-label-text-color: #{$color-text-muted};
-//   height: 40px;
+  //   height: 40px;
   padding: 0 $spacing-2;
 
   mat-icon {
@@ -106,26 +105,26 @@
 // ─── Responsive ──────────────────────────────────────────────────────────────
 
 @media (max-width: 960px) {
-	.campaigns__filters {
-		padding-left: $spacing-4;
-		padding-right: $spacing-4;
-	}
+  .campaigns__filters {
+    padding-left: $spacing-4;
+    padding-right: $spacing-4;
+  }
 }
 
 @media (max-width: 720px) {
-	.campaigns__filters {
-		padding-left: $spacing-4;
-		padding-right: $spacing-4;
-	}
+  .campaigns__filters {
+    padding-left: $spacing-4;
+    padding-right: $spacing-4;
+  }
 
-	.filters {
-		&__layout {
-			gap: $spacing-5;
-		}
+  .filters {
+    &__layout {
+      gap: $spacing-5;
+    }
 
-		&__group {
-			width: 100% !important;
-			gap: 10px;
-		}
-	}
+    &__group {
+      width: 100% !important;
+      gap: 10px;
+    }
+  }
 }

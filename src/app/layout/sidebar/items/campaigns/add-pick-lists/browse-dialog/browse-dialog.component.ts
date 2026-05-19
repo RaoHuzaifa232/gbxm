@@ -1,8 +1,8 @@
+import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Campaign } from '@gbxm/core/services/campaign.service';
@@ -27,11 +27,11 @@ export interface BrowseDialogResult {
     MatDialogModule,
     MatButtonModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
   ],
   templateUrl: './browse-dialog.component.html',
   styleUrl: './browse-dialog.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BrowseDialogComponent {
   private dialogRef = inject<MatDialogRef<BrowseDialogComponent, BrowseDialogResult>>(MatDialogRef);
@@ -45,15 +45,14 @@ export class BrowseDialogComponent {
     return `${namePart}_${id}`;
   }
 
-  onSave(): void {
-    this.dialogRef.close({ fileName: this.fileNameControl.value ?? '', action: 'save' });
-  }
-
-  onRun(): void {
-    this.dialogRef.close({ fileName: this.fileNameControl.value ?? '', action: 'run' });
+  onClose(): void {
+    this.dialogRef.close();
   }
 
   onUpload(): void {
-    this.dialogRef.close({ fileName: this.fileNameControl.value ?? '', action: 'upload' });
+    this.dialogRef.close({
+      fileName: this.fileNameControl.value ?? '',
+      action: 'upload',
+    });
   }
 }

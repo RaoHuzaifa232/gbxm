@@ -21,13 +21,13 @@ GBXM is an Angular 19 application using standalone components, SSR, and a Materi
 
 ## Styling (SCSS Control and Variables)
 
-Centralized SCSS tokens live in src/styles/_variables.scss and are consumed via @use in component styles, for example:
+Centralized SCSS tokens live in src/styles/\_variables.scss and are consumed via @use in component styles, for example:
 
 ```scss
 @use '@gbxm/styles/_variables.scss' as *;
 
 .header {
-	color: $color-text-strong;
+  color: $color-text-strong;
 }
 ```
 

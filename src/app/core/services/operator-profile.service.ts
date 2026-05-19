@@ -21,9 +21,9 @@ const MOCK_PROFILES: OperatorProfile[] = [
     status: 'pending',
     statusHistory: [
       { status: 'draft', timestamp: '2024-11-01T09:00:00.000Z' },
-      { status: 'pending', timestamp: '2024-11-05T14:30:00.000Z' }
+      { status: 'pending', timestamp: '2024-11-05T14:30:00.000Z' },
     ],
-    updatedAt: '2024-11-05T14:30:00.000Z'
+    updatedAt: '2024-11-05T14:30:00.000Z',
   },
   {
     userId: '47291',
@@ -46,9 +46,9 @@ const MOCK_PROFILES: OperatorProfile[] = [
     statusHistory: [
       { status: 'draft', timestamp: '2024-10-15T10:00:00.000Z' },
       { status: 'pending', timestamp: '2024-10-20T09:15:00.000Z' },
-      { status: 'verified', timestamp: '2024-10-28T16:45:00.000Z' }
+      { status: 'verified', timestamp: '2024-10-28T16:45:00.000Z' },
     ],
-    updatedAt: '2024-10-28T16:45:00.000Z'
+    updatedAt: '2024-10-28T16:45:00.000Z',
   },
   {
     userId: '58302',
@@ -65,9 +65,9 @@ const MOCK_PROFILES: OperatorProfile[] = [
     statusHistory: [
       { status: 'draft', timestamp: '2024-10-10T08:00:00.000Z' },
       { status: 'pending', timestamp: '2024-10-18T11:00:00.000Z' },
-      { status: 'rejected', timestamp: '2024-11-02T09:30:00.000Z' }
+      { status: 'rejected', timestamp: '2024-11-02T09:30:00.000Z' },
     ],
-    updatedAt: '2024-11-02T09:30:00.000Z'
+    updatedAt: '2024-11-02T09:30:00.000Z',
   },
   {
     userId: '61459',
@@ -82,11 +82,9 @@ const MOCK_PROFILES: OperatorProfile[] = [
     linkedIn: 'linkedin.com/in/emilybrown',
     teamsId: 'emily.brown',
     status: 'draft',
-    statusHistory: [
-      { status: 'draft', timestamp: '2024-11-08T13:00:00.000Z' }
-    ],
-    updatedAt: '2024-11-08T13:00:00.000Z'
-  }
+    statusHistory: [{ status: 'draft', timestamp: '2024-11-08T13:00:00.000Z' }],
+    updatedAt: '2024-11-08T13:00:00.000Z',
+  },
 ];
 
 @Injectable({ providedIn: 'root' })
@@ -96,38 +94,40 @@ export class OperatorProfileService {
   readonly profiles = signal<OperatorProfile[]>(MOCK_PROFILES);
 
   getProfile(userId: string): OperatorProfile | undefined {
-    return this.profiles().find(p => p.userId === userId);
+    return this.profiles().find((p) => p.userId === userId);
   }
 
   saveOwnProfile(data: Record<string, unknown>): void {
     try {
       localStorage.setItem(OperatorProfileService.STORAGE_KEY, JSON.stringify(data));
-    } catch { }
+    } catch {}
   }
 
   loadOwnProfile(): Record<string, unknown> | null {
     try {
       const raw = localStorage.getItem(OperatorProfileService.STORAGE_KEY);
-      return raw ? JSON.parse(raw) as Record<string, unknown> : null;
-    } catch { return null; }
+      return raw ? (JSON.parse(raw) as Record<string, unknown>) : null;
+    } catch {
+      return null;
+    }
   }
 
   clearOwnProfile(): void {
     try {
       localStorage.removeItem(OperatorProfileService.STORAGE_KEY);
-    } catch { }
+    } catch {}
   }
 
   updateStatus(userId: string, status: OperatorStatus): void {
     const now = new Date().toISOString();
-    this.profiles.update(profiles =>
-      profiles.map(p =>
+    this.profiles.update((profiles) =>
+      profiles.map((p) =>
         p.userId === userId
           ? {
               ...p,
               status,
               updatedAt: now,
-              statusHistory: [...p.statusHistory, { status, timestamp: now }]
+              statusHistory: [...p.statusHistory, { status, timestamp: now }],
             }
           : p
       )

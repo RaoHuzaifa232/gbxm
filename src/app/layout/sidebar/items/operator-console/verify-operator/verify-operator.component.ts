@@ -27,11 +27,11 @@ import { ToastService } from '@gbxm/core/services/toast.service';
     MatSelectModule,
     MatDividerModule,
     MatTooltipModule,
-    ProfileFormComponent
+    ProfileFormComponent,
   ],
   templateUrl: './verify-operator.component.html',
   styleUrl: './verify-operator.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class VerifyOperatorComponent {
   private fb = inject(FormBuilder);
@@ -43,7 +43,7 @@ export class VerifyOperatorComponent {
   selectedProfile = signal<OperatorProfile | null>(null);
 
   operatorForm = this.fb.group({
-    selectedUserId: this.fb.control<string | null>(null)
+    selectedUserId: this.fb.control<string | null>(null),
   });
 
   onOperatorChange(userId: string | null): void {
@@ -63,25 +63,28 @@ export class VerifyOperatorComponent {
       draft: 'Draft',
       pending: 'Pending',
       verified: 'Verify',
-      rejected: 'Reject'
+      rejected: 'Reject',
     };
 
-    this.dialog.open(ConfirmationDialogComponent, {
-      ...DIALOG_SIZES.small,
-      data: {
-        title: `${labels[status]} Operator`,
-        message: `Are you sure you want to set this operator's status to "${labels[status]}"?`,
-        confirmText: labels[status],
-        cancelText: 'Cancel'
-      }
-    }).afterClosed().subscribe(result => {
-      if (result) {
-        this.profileService.updateStatus(profile.userId, status);
-        const updated = this.profileService.getProfile(profile.userId);
-        if (updated) this.selectedProfile.set(updated);
-        this.toast.success(`Status updated to "${labels[status]}".`);
-      }
-    });
+    this.dialog
+      .open(ConfirmationDialogComponent, {
+        ...DIALOG_SIZES.small,
+        data: {
+          title: `${labels[status]} Operator`,
+          message: `Are you sure you want to set this operator's status to "${labels[status]}"?`,
+          confirmText: labels[status],
+          cancelText: 'Cancel',
+        },
+      })
+      .afterClosed()
+      .subscribe((result) => {
+        if (result) {
+          this.profileService.updateStatus(profile.userId, status);
+          const updated = this.profileService.getProfile(profile.userId);
+          if (updated) this.selectedProfile.set(updated);
+          this.toast.success(`Status updated to "${labels[status]}".`);
+        }
+      });
   }
 
   getStatusLabel(status: OperatorStatus): string {
@@ -89,7 +92,7 @@ export class VerifyOperatorComponent {
       draft: 'Draft',
       pending: 'Pending',
       verified: 'Verified',
-      rejected: 'Rejected'
+      rejected: 'Rejected',
     };
     return map[status] ?? status;
   }

@@ -1,28 +1,28 @@
 @use '@gbxm/styles/_variables.scss' as *;
 
 .browse-dialog {
-	&__title {
-		font-size: $font-size-xl !important;
-		font-weight: $font-weight-semibold !important;
-		color: $color-text-strong;
-	}
+  &__title {
+    font-size: $font-size-xl !important;
+    font-weight: $font-weight-semibold !important;
+    color: $color-text-strong;
+  }
 
-	&__content {
-		padding-top: $spacing-2 !important;
-	}
+  &__content {
+    padding-top: $spacing-2 !important;
+  }
 
-	&__field {
-		width: 100%;
-	}
+  &__field {
+    width: 100%;
+  }
 
-	&__actions {
-		gap: $spacing-2;
+  &__actions {
+    gap: $spacing-2;
 
-		button[mat-flat-button] {
-			background-color: $color-action-primary;
-			color: $color-text-inverse;
-			border-radius: $radius-md;
-			--mdc-filled-button-container-shape: #{$radius-md};
-		}
-	}
+    button[mat-flat-button] {
+      background-color: $color-action-primary;
+      color: $color-text-inverse;
+      border-radius: $radius-md;
+      --mdc-filled-button-container-shape: #{$radius-md};
+    }
+  }
 }

@@ -3,8 +3,9 @@
 
 .card__header {
   margin-bottom: 0;
-  justify-content: start
-}.back-btn {
+  justify-content: start;
+}
+.back-btn {
   color: $color-text-muted;
   --mdc-text-button-label-text-color: #{$color-text-muted};
   padding: 0 $spacing-2;

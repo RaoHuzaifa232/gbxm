@@ -1,15 +1,19 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
-import { MatRadioModule } from '@angular/material/radio';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { Campaign, CampaignService } from '@gbxm/core/services/campaign.service';
-import { GenericTableComponent, TableAction, TableColumn } from '@gbxm/shared/components/generic-table/generic-table.component';
+import {
+  GenericTableComponent,
+  TableAction,
+  TableColumn,
+} from '@gbxm/shared/components/generic-table/generic-table.component';
+import {
+  CampaignFilterComponent,
+  CampaignFilterValue,
+} from '../campaign-filter/campaign-filter.component';
 
-type StatusFilter = 'all' | 'live' | 'draft';
 type ViewState = 'table' | 'campaign-details';
 
 @Component({
@@ -17,39 +21,41 @@ type ViewState = 'table' | 'campaign-details';
   standalone: true,
   imports: [
     CommonModule,
-    ReactiveFormsModule,
     MatButtonModule,
     MatDividerModule,
     MatIconModule,
-    MatRadioModule,
-    GenericTableComponent
+    GenericTableComponent,
+    CampaignFilterComponent,
   ],
   templateUrl: './my-campaigns.component.html',
   styleUrl: './my-campaigns.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MyCampaignsComponent {
-  private fb = inject(FormBuilder);
   private campaignService = inject(CampaignService);
 
   viewState = signal<ViewState>('table');
   selectedCampaign = signal<Campaign | null>(null);
 
-  filterForm = this.fb.group({
-    status: this.fb.control<StatusFilter>('live')
+  private filters = signal<CampaignFilterValue>({
+    campaignId: '',
+    operatorId: 'all',
+    typeKey: 'all',
+    status: 'all',
+    viewNoPickLists: true,
   });
 
-  private filterSignal = toSignal(this.filterForm.valueChanges, {
-    initialValue: this.filterForm.getRawValue()
-  });
+  onFiltersChange(value: CampaignFilterValue): void {
+    this.filters.set(value);
+  }
 
   // ── Table view ────────────────────────────────────────────────────────────────
 
   filteredCampaigns = computed(() => {
-    const { status } = this.filterSignal();
+    const { status } = this.filters();
     const campaigns = this.campaignService.campaigns();
-    if (status === 'live') return campaigns.filter(c => c.pickListDate.trim().length > 0);
-    if (status === 'draft') return campaigns.filter(c => c.pickListDate.trim() === '');
+    if (status === 'live') return campaigns.filter((c) => c.pickListDate.trim().length > 0);
+    if (status === 'draft') return campaigns.filter((c) => c.pickListDate.trim() === '');
     return campaigns;
   });
 
@@ -65,7 +71,7 @@ export class MyCampaignsComponent {
     { key: 'dateInitiated', header: 'Initiate', sortable: true },
     { key: 'pickListDate', header: 'Live', sortable: true },
     { key: 'numberOfProperties', header: 'Log on', sortable: true },
-    { key: 'campaignLead', header: 'Lead', sortable: true }
+    { key: 'campaignLead', header: 'Lead', sortable: true },
   ];
 
   tableActions: TableAction[] = [
@@ -73,8 +79,8 @@ export class MyCampaignsComponent {
       label: 'View',
       icon: 'visibility',
       tooltip: 'View campaign details',
-      handler: (row) => this.openCampaignDetails(row as unknown as Campaign)
-    }
+      handler: (row) => this.openCampaignDetails(row as unknown as Campaign),
+    },
   ];
 
   // ── Campaign details ──────────────────────────────────────────────────────────
@@ -85,7 +91,7 @@ export class MyCampaignsComponent {
     { key: 'email', header: 'Email' },
     { key: 'phone', header: 'Phone' },
     { key: 'logOn', header: 'Log On' },
-    { key: 'excom', header: 'Excom' }
+    { key: 'excom', header: 'Excom' },
   ];
 
   campaignDetailActions: TableAction[] = [];
@@ -93,7 +99,10 @@ export class MyCampaignsComponent {
   campaignDetailData = computed(() => {
     const campaign = this.selectedCampaign();
     if (!campaign) return [];
-    return this.campaignService.getHotelsForCampaign(campaign.id) as unknown as Record<string, unknown>[];
+    return this.campaignService.getHotelsForCampaign(campaign.id) as unknown as Record<
+      string,
+      unknown
+    >[];
   });
 
   // ── Navigation ────────────────────────────────────────────────────────────────

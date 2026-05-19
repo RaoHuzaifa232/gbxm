@@ -1,7 +1,6 @@
 <!-- Toolbar — shown when searchable or exportable -->
 @if (searchable || exportable) {
   <div class="gt-toolbar">
-
     <!-- Left: search input -->
     <div class="gt-toolbar-left">
       @if (searchable) {
@@ -13,9 +12,15 @@
             placeholder="Search..."
             [value]="searchQuery()"
             (input)="onSearchChange($any($event.target).value)"
-            aria-label="Search table">
+            aria-label="Search table"
+          />
           @if (searchQuery()) {
-            <button class="gt-search__clear" type="button" (click)="clearSearch()" aria-label="Clear search">
+            <button
+              class="gt-search__clear"
+              type="button"
+              (click)="clearSearch()"
+              aria-label="Clear search"
+            >
               <mat-icon>close</mat-icon>
             </button>
           }
@@ -29,9 +34,13 @@
         <span class="gt-selection-badge">{{ selectedCount() }} selected</span>
       }
       @if (exportable) {
-        <button mat-stroked-button class="gt-export-btn" type="button"
+        <button
+          mat-stroked-button
+          class="gt-export-btn"
+          type="button"
           [matMenuTriggerFor]="gtExportMenu"
-          matTooltip="Export to Excel">
+          matTooltip="Export to Excel"
+        >
           <mat-icon>file_download</mat-icon>
           <span class="gt-export-label">Export</span>
           <mat-icon class="gt-export-caret">arrow_drop_down</mat-icon>
@@ -42,7 +51,12 @@
             <span>Export all rows</span>
           </button>
           @if (selectable) {
-            <button mat-menu-item type="button" (click)="exportSelected()" [disabled]="selectedCount() === 0">
+            <button
+              mat-menu-item
+              type="button"
+              (click)="exportSelected()"
+              [disabled]="selectedCount() === 0"
+            >
               <mat-icon>checklist</mat-icon>
               <span>Export selected ({{ selectedCount() }})</span>
             </button>
@@ -50,7 +64,6 @@
         </mat-menu>
       }
     </div>
-
   </div>
 }
 
@@ -58,7 +71,6 @@
 <div class="generic-table-wrapper" [class.gt-table-hidden]="isMobile()">
   <div class="gt-table-body" [style.max-height]="tableHeight || null">
     <mat-table [dataSource]="dataSource" matSort class="generic-table" aria-label="Data table">
-
       <!-- Optional checkbox selection column -->
       @if (selectable) {
         <ng-container matColumnDef="_select">
@@ -67,7 +79,8 @@
               (change)="masterToggle()"
               [checked]="isAllVisibleSelected()"
               [indeterminate]="isSomeVisibleSelected()"
-              aria-label="Select all on this page">
+              aria-label="Select all on this page"
+            >
             </mat-checkbox>
           </mat-header-cell>
           <mat-cell *matCellDef="let row" class="gt-select-cell">
@@ -75,7 +88,8 @@
               (click)="$event.stopPropagation()"
               (change)="toggleRow(row)"
               [checked]="isSelected(row)"
-              aria-label="Select row">
+              aria-label="Select row"
+            >
             </mat-checkbox>
           </mat-cell>
         </ng-container>
@@ -84,17 +98,21 @@
       <!-- Dynamic data columns -->
       @for (column of columns; track column.key) {
         <ng-container [matColumnDef]="column.key">
-          <mat-header-cell *matHeaderCellDef
+          <mat-header-cell
+            *matHeaderCellDef
             [mat-sort-header]="column.sortable ? column.key : ''"
             [disabled]="!column.sortable"
-            [style.min-width]="column.minWidth ?? 'auto'">
+            [style.min-width]="column.minWidth ?? 'auto'"
+          >
             {{ column.header }}
           </mat-header-cell>
           <mat-cell *matCellDef="let row">
             @if (getBadge(row, column); as badge) {
               <span class="status-badge" [ngClass]="badge.cssClass">{{ badge.text }}</span>
             } @else {
-              <span [matTooltip]="getCellValue(row, column)" [matTooltipShowDelay]="600">{{ getCellValue(row, column) }}</span>
+              <span [matTooltip]="getCellValue(row, column)" [matTooltipShowDelay]="600">{{
+                getCellValue(row, column)
+              }}</span>
             }
           </mat-cell>
         </ng-container>
@@ -114,19 +132,22 @@
                       [matTooltip]="action.tooltip ?? action.label"
                       (click)="onActionClick(action, row)"
                       type="button"
-                      [attr.aria-label]="action.label">
+                      [attr.aria-label]="action.label"
+                    >
                       <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                         <path [attr.d]="action.svgPath"></path>
                       </svg>
                     </button>
                   } @else {
-                    <button mat-icon-button
+                    <button
+                      mat-icon-button
                       [color]="action.color ?? 'primary'"
                       [class]="action.buttonClass ?? ''"
                       [matTooltip]="action.tooltip ?? action.label"
                       (click)="onActionClick(action, row)"
                       type="button"
-                      [attr.aria-label]="action.label">
+                      [attr.aria-label]="action.label"
+                    >
                       <mat-icon>{{ action.icon }}</mat-icon>
                     </button>
                   }
@@ -137,8 +158,8 @@
         </ng-container>
       }
 
-      <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"/>
-      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true" />
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
 
       <tr class="mat-row" *matNoDataRow>
         <td class="mat-cell gt-no-data" [attr.colspan]="displayedColumns.length">
@@ -155,7 +176,8 @@
   [pageSize]="defaultPageSize"
   showFirstLastButtons
   aria-label="Select page"
-  class="gt-paginator"/>
+  class="gt-paginator"
+/>
 
 <!-- Auto-generated mobile cards — shown when isMobile(); paginated via visibleRows() -->
 @if (mobileBreakpoint > 0) {
@@ -177,18 +199,21 @@
                         [matTooltip]="action.tooltip ?? action.label"
                         (click)="onActionClick(action, row)"
                         type="button"
-                        [attr.aria-label]="action.label">
+                        [attr.aria-label]="action.label"
+                      >
                         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                           <path [attr.d]="action.svgPath"></path>
                         </svg>
                       </button>
                     } @else {
-                      <button mat-icon-button
+                      <button
+                        mat-icon-button
                         [color]="action.color ?? 'primary'"
                         (click)="onActionClick(action, row)"
                         type="button"
                         [attr.aria-label]="action.label"
-                        [matTooltip]="action.tooltip ?? action.label">
+                        [matTooltip]="action.tooltip ?? action.label"
+                      >
                         <mat-icon>{{ action.icon }}</mat-icon>
                       </button>
                     }

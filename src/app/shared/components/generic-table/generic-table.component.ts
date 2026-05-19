@@ -15,7 +15,7 @@ import {
   SimpleChanges,
   ViewChild,
   inject,
-  signal
+  signal,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
@@ -61,11 +61,11 @@ export interface TableAction {
     MatIconModule,
     MatTooltipModule,
     MatCheckboxModule,
-    MatMenuModule
+    MatMenuModule,
   ],
   templateUrl: './generic-table.component.html',
   styleUrl: './generic-table.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GenericTableComponent implements OnInit, AfterViewInit, OnChanges {
   @Input({ required: true }) columns: TableColumn[] = [];
@@ -80,7 +80,10 @@ export class GenericTableComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() exportFileName: string = 'export';
   @Input() tableHeight: string = '';
 
-  @Output() actionClicked = new EventEmitter<{ action: TableAction; row: Record<string, unknown> }>();
+  @Output() actionClicked = new EventEmitter<{
+    action: TableAction;
+    row: Record<string, unknown>;
+  }>();
   @Output() selectionChange = new EventEmitter<Record<string, unknown>[]>();
 
   @ViewChild(MatSort) sort?: MatSort;
@@ -101,7 +104,7 @@ export class GenericTableComponent implements OnInit, AfterViewInit, OnChanges {
   get displayedColumns(): string[] {
     const cols: string[] = [];
     if (this.selectable) cols.push('_select');
-    cols.push(...this.columns.map(c => c.key));
+    cols.push(...this.columns.map((c) => c.key));
     if (this.actions.length > 0) cols.push('_actions');
     return cols;
   }
@@ -115,7 +118,7 @@ export class GenericTableComponent implements OnInit, AfterViewInit, OnChanges {
       this.breakpointObserver
         .observe(`(max-width: ${this.mobileBreakpoint}px)`)
         .pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe(result => {
+        .subscribe((result) => {
           this.isMobile.set(result.matches);
         });
     }
@@ -166,18 +169,18 @@ export class GenericTableComponent implements OnInit, AfterViewInit, OnChanges {
 
   isAllVisibleSelected(): boolean {
     const visible = this.visibleRows();
-    return visible.length > 0 && visible.every(r => this._selection.isSelected(r));
+    return visible.length > 0 && visible.every((r) => this._selection.isSelected(r));
   }
 
   isSomeVisibleSelected(): boolean {
     const visible = this.visibleRows();
-    return visible.some(r => this._selection.isSelected(r)) && !this.isAllVisibleSelected();
+    return visible.some((r) => this._selection.isSelected(r)) && !this.isAllVisibleSelected();
   }
 
   masterToggle(): void {
     const visible = this.visibleRows();
     if (this.isAllVisibleSelected()) {
-      visible.forEach(r => this._selection.deselect(r));
+      visible.forEach((r) => this._selection.deselect(r));
     } else {
       this._selection.select(...visible);
     }
@@ -192,7 +195,10 @@ export class GenericTableComponent implements OnInit, AfterViewInit, OnChanges {
     return value != null ? String(value) : '';
   }
 
-  getBadge(row: Record<string, unknown>, column: TableColumn): { text: string; cssClass: string } | null {
+  getBadge(
+    row: Record<string, unknown>,
+    column: TableColumn
+  ): { text: string; cssClass: string } | null {
     return column.badge ? column.badge(row) : null;
   }
 
@@ -237,7 +243,11 @@ export class GenericTableComponent implements OnInit, AfterViewInit, OnChanges {
       this.toast.info('Select at least one row to export.');
       return;
     }
-    this.exportService.exportToExcel(rows, this.buildExportColumns(), `${this.exportFileName}-selected`);
+    this.exportService.exportToExcel(
+      rows,
+      this.buildExportColumns(),
+      `${this.exportFileName}-selected`
+    );
     this.toast.success(`Exported ${rows.length} selected ${rows.length === 1 ? 'row' : 'rows'}.`);
   }
 
@@ -256,7 +266,7 @@ export class GenericTableComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   private buildExportColumns() {
-    return this.columns.map(col => ({
+    return this.columns.map((col) => ({
       header: col.header,
       selector: (row: Record<string, unknown>) => {
         if (col.badge) {
@@ -266,7 +276,7 @@ export class GenericTableComponent implements OnInit, AfterViewInit, OnChanges {
         if (col.cell) return col.cell(row);
         const val = row[col.key];
         return val != null ? String(val) : '';
-      }
+      },
     }));
   }
 }

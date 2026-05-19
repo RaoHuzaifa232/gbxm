@@ -17,7 +17,7 @@ export interface ProfileFormDialogData {
   imports: [MatDialogModule, MatButtonModule, MatIconModule, ProfileFormComponent],
   templateUrl: './profile-form-dialog.component.html',
   styleUrl: './profile-form-dialog.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileFormDialogComponent {
   data = inject<ProfileFormDialogData>(MAT_DIALOG_DATA);

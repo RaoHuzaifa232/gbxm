@@ -1,0 +1,59 @@
+@use '@gbxm/styles/_variables.scss' as *;
+
+.campaign-filter {
+  padding: $spacing-4 $spacing-5 $spacing-2 $spacing-5;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-4;
+  border-bottom: 1px solid $color-divider;
+}
+
+.filter__row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: $spacing-4;
+
+  &--campaigns {
+    gap: $spacing-4;
+  }
+
+  &--controls {
+    gap: $spacing-6;
+  }
+}
+
+.filter__campaign-field {
+  flex: 1;
+  min-width: 220px;
+}
+
+.filter__operator-field {
+  width: 240px;
+}
+
+@media (max-width: 960px) {
+  .campaign-filter {
+    padding-left: $spacing-4;
+    padding-right: $spacing-4;
+  }
+}
+
+@media (max-width: 720px) {
+  .campaign-filter {
+    padding: $spacing-4;
+  }
+
+  .filter__campaign-field,
+  .filter__operator-field {
+    width: 100%;
+    min-width: unset;
+    flex: unset;
+  }
+
+  .filter__row--controls {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $spacing-4;
+  }
+}

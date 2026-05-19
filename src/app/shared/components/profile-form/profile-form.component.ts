@@ -8,10 +8,16 @@ import {
   Output,
   SimpleChanges,
   inject,
-  signal
+  signal,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
@@ -21,7 +27,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FileUploadComponent } from '@gbxm/shared/components/file-upload/file-upload.component';
 import { ConfirmationDialogComponent } from '@gbxm/shared/components/confirmation-dialog/confirmation-dialog.component';
-import { TextareaDialogComponent, TextareaDialogData } from '@gbxm/shared/components/textarea-dialog/textarea-dialog.component';
+import {
+  TextareaDialogComponent,
+  TextareaDialogData,
+} from '@gbxm/shared/components/textarea-dialog/textarea-dialog.component';
 import { ToastService } from '@gbxm/core/services/toast.service';
 import { DIALOG_SIZES } from '@gbxm/core/models/dialog.model';
 import { OperatorProfile, ProfileFormMode } from '@gbxm/core/models/operator-profile.model';
@@ -75,11 +84,11 @@ const URL_PATTERN = '(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})([/\\w .-]*)*/?';
     MatTooltipModule,
     MatDialogModule,
     MatIconModule,
-    FileUploadComponent
+    FileUploadComponent,
   ],
   templateUrl: './profile-form.component.html',
   styleUrl: './profile-form.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProfileFormComponent implements OnInit, OnChanges {
   @Input({ required: true }) mode: ProfileFormMode = 'self';
@@ -108,9 +117,18 @@ export class ProfileFormComponent implements OnInit, OnChanges {
     operator: this.fb.control<string | null>({ value: 'Associate Representative', disabled: true }),
     userId: this.fb.control<string | null>({ value: '36574', disabled: true }),
     personalEmail: this.fb.control<string | null>('', [Validators.required, Validators.email]),
-    cellAndText: this.fb.control<string | null>('', [Validators.required, Validators.pattern('^\\+?[0-9\\s\\-\\(\\)]+$')]),
-    contactEmail: this.fb.control<string | null>({ value: 'licensingM01@gbxm.com', disabled: true }, [Validators.required, Validators.email]),
-    companyEmail: this.fb.control<string | null>({ value: 'company@gbxm.com', disabled: true }, [Validators.required, Validators.email]),
+    cellAndText: this.fb.control<string | null>('', [
+      Validators.required,
+      Validators.pattern('^\\+?[0-9\\s\\-\\(\\)]+$'),
+    ]),
+    contactEmail: this.fb.control<string | null>(
+      { value: 'licensingM01@gbxm.com', disabled: true },
+      [Validators.required, Validators.email]
+    ),
+    companyEmail: this.fb.control<string | null>({ value: 'company@gbxm.com', disabled: true }, [
+      Validators.required,
+      Validators.email,
+    ]),
     linkedIn: this.fb.control<string | null>('', Validators.pattern(URL_PATTERN)),
     teamsId: this.fb.control<string | null>(''),
     aboutMe: this.fb.control<string | null>(''),
@@ -121,7 +139,7 @@ export class ProfileFormComponent implements OnInit, OnChanges {
     digitalPresence1: this.fb.control<string | null>('', Validators.pattern(URL_PATTERN)),
     digitalPresence2: this.fb.control<string | null>('', Validators.pattern(URL_PATTERN)),
     digitalPresence3: this.fb.control<string | null>('', Validators.pattern(URL_PATTERN)),
-    digitalPresence4: this.fb.control<string | null>('', Validators.pattern(URL_PATTERN))
+    digitalPresence4: this.fb.control<string | null>('', Validators.pattern(URL_PATTERN)),
   });
 
   ngOnInit(): void {
@@ -150,12 +168,12 @@ export class ProfileFormComponent implements OnInit, OnChanges {
           label: 'Biography',
           placeholder: 'Write a short biography or summary about yourself...',
           initialValue: this.profileForm.get('aboutMe')?.value ?? '',
-          rows: 8
-        }
+          rows: 8,
+        },
       }
     );
 
-    dialogRef.afterClosed().subscribe(value => {
+    dialogRef.afterClosed().subscribe((value) => {
       if (value !== undefined && value !== null) {
         this.profileForm.controls.aboutMe.setValue(value);
       }
@@ -171,7 +189,9 @@ export class ProfileFormComponent implements OnInit, OnChanges {
     this.previewSections.set(this.buildPreviewSections());
     this.isPreviewing.set(true);
     this.previewChange.emit(true);
-    try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch { }
+    try {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch {}
   }
 
   onEditAgain(): void {
@@ -192,11 +212,11 @@ export class ProfileFormComponent implements OnInit, OnChanges {
         title: 'Save Changes',
         message: 'You are about to save your profile changes. Do you want to proceed?',
         confirmText: 'Save',
-        cancelText: 'Cancel'
-      }
+        cancelText: 'Cancel',
+      },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         if (this.mode === 'self') {
           this.persistToStorage();
@@ -214,11 +234,11 @@ export class ProfileFormComponent implements OnInit, OnChanges {
         title: 'Submit Profile',
         message: 'You are about to submit your profile. Do you want to proceed?',
         confirmText: 'Submit',
-        cancelText: 'Cancel'
-      }
+        cancelText: 'Cancel',
+      },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         if (this.mode === 'self') {
           this.profileService.clearOwnProfile();
@@ -245,11 +265,11 @@ export class ProfileFormComponent implements OnInit, OnChanges {
         title: 'Submit Profile',
         message: 'You are about to submit this profile. Do you want to proceed?',
         confirmText: 'Submit',
-        cancelText: 'Cancel'
-      }
+        cancelText: 'Cancel',
+      },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.toast.success('Profile submitted successfully!');
         this.formSubmitted.emit();
@@ -258,20 +278,23 @@ export class ProfileFormComponent implements OnInit, OnChanges {
   }
 
   onEmailLink(): void {
-    this.dialog.open(ConfirmationDialogComponent, {
-      ...DIALOG_SIZES.small,
-      data: {
-        title: 'Send Email Link',
-        message: 'Send a profile completion link to this operator via email?',
-        confirmText: 'Send',
-        cancelText: 'Cancel'
-      }
-    }).afterClosed().subscribe(result => {
-      if (result) {
-        this.toast.success('Email link sent successfully!');
-        this.emailLinkClicked.emit();
-      }
-    });
+    this.dialog
+      .open(ConfirmationDialogComponent, {
+        ...DIALOG_SIZES.small,
+        data: {
+          title: 'Send Email Link',
+          message: 'Send a profile completion link to this operator via email?',
+          confirmText: 'Send',
+          cancelText: 'Cancel',
+        },
+      })
+      .afterClosed()
+      .subscribe((result) => {
+        if (result) {
+          this.toast.success('Email link sent successfully!');
+          this.emailLinkClicked.emit();
+        }
+      });
   }
 
   onVerify(): void {
@@ -281,37 +304,43 @@ export class ProfileFormComponent implements OnInit, OnChanges {
       return;
     }
 
-    this.dialog.open(ConfirmationDialogComponent, {
-      ...DIALOG_SIZES.small,
-      data: {
-        title: 'Approve Operator',
-        message: 'Are you sure you want to approve this operator profile?',
-        confirmText: 'Approve',
-        cancelText: 'Cancel'
-      }
-    }).afterClosed().subscribe(result => {
-      if (result) {
-        this.toast.success('Operator profile approved!');
-        this.profileVerified.emit();
-      }
-    });
+    this.dialog
+      .open(ConfirmationDialogComponent, {
+        ...DIALOG_SIZES.small,
+        data: {
+          title: 'Approve Operator',
+          message: 'Are you sure you want to approve this operator profile?',
+          confirmText: 'Approve',
+          cancelText: 'Cancel',
+        },
+      })
+      .afterClosed()
+      .subscribe((result) => {
+        if (result) {
+          this.toast.success('Operator profile approved!');
+          this.profileVerified.emit();
+        }
+      });
   }
 
   onReject(): void {
-    this.dialog.open(ConfirmationDialogComponent, {
-      ...DIALOG_SIZES.small,
-      data: {
-        title: 'Reject Operator',
-        message: 'Are you sure you want to reject this operator profile?',
-        confirmText: 'Reject',
-        cancelText: 'Cancel'
-      }
-    }).afterClosed().subscribe(result => {
-      if (result) {
-        this.toast.success('Operator profile rejected.');
-        this.profileRejected.emit();
-      }
-    });
+    this.dialog
+      .open(ConfirmationDialogComponent, {
+        ...DIALOG_SIZES.small,
+        data: {
+          title: 'Reject Operator',
+          message: 'Are you sure you want to reject this operator profile?',
+          confirmText: 'Reject',
+          cancelText: 'Cancel',
+        },
+      })
+      .afterClosed()
+      .subscribe((result) => {
+        if (result) {
+          this.toast.success('Operator profile rejected.');
+          this.profileRejected.emit();
+        }
+      });
   }
 
   private populateForm(data: OperatorProfile): void {
@@ -333,7 +362,7 @@ export class ProfileFormComponent implements OnInit, OnChanges {
       digitalPresence1: data.digitalPresence1 ?? '',
       digitalPresence2: data.digitalPresence2 ?? '',
       digitalPresence3: data.digitalPresence3 ?? '',
-      digitalPresence4: data.digitalPresence4 ?? ''
+      digitalPresence4: data.digitalPresence4 ?? '',
     });
   }
 
@@ -368,9 +397,9 @@ export class ProfileFormComponent implements OnInit, OnChanges {
           { label: 'Teams ID', value: this.display(raw.teamsId) },
           { label: 'A Little About Me', value: this.display(raw.aboutMe) },
           { label: 'Trading Entity', value: this.display(raw.tradingEntity) },
-          { label: 'Registration Number', value: this.display(raw.registrationNumber) }
-        ]
-      }
+          { label: 'Registration Number', value: this.display(raw.registrationNumber) },
+        ],
+      },
     ];
   }
 

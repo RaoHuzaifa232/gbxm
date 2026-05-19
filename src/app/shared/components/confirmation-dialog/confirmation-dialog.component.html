@@ -1,16 +1,16 @@
 <div class="confirmation-dialog">
-	<h2 mat-dialog-title class="confirmation-dialog__title">{{ data.title }}</h2>
+  <h2 mat-dialog-title class="confirmation-dialog__title">{{ data.title }}</h2>
 
-	<mat-dialog-content class="confirmation-dialog__content">
-		<p class="confirmation-dialog__message">{{ data.message }}</p>
-	</mat-dialog-content>
+  <mat-dialog-content class="confirmation-dialog__content">
+    <p class="confirmation-dialog__message">{{ data.message }}</p>
+  </mat-dialog-content>
 
-	<mat-dialog-actions align="end" class="confirmation-dialog__actions">
-		<button mat-button [mat-dialog-close]="false" type="button" class="dialog-close-btn">
-			{{ cancelText }}
-		</button>
-		<button mat-flat-button [mat-dialog-close]="true" type="button" class="dialog-save-btn">
-			{{ confirmText }}
-		</button>
-	</mat-dialog-actions>
+  <mat-dialog-actions align="end" class="confirmation-dialog__actions">
+    <button mat-button [mat-dialog-close]="false" type="button" class="dialog-close-btn">
+      {{ cancelText }}
+    </button>
+    <button mat-flat-button [mat-dialog-close]="true" type="button" class="dialog-save-btn">
+      {{ confirmText }}
+    </button>
+  </mat-dialog-actions>
 </div>

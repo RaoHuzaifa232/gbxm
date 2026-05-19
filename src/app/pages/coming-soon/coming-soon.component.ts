@@ -11,12 +11,12 @@ import { map } from 'rxjs';
   imports: [MatIconModule, MatButtonModule, RouterLink, CommonModule],
   templateUrl: './coming-soon.component.html',
   styleUrl: './coming-soon.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ComingSoonComponent {
   private route = inject(ActivatedRoute);
 
   featureName = toSignal(
-    this.route.params.pipe(map(params => params['feature']?.replace(/-/g, ' ')))
+    this.route.params.pipe(map((params) => params['feature']?.replace(/-/g, ' ')))
   );
 }

@@ -8,9 +8,8 @@ describe('VerifyOperatorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [VerifyOperatorComponent]
-    })
-    .compileComponents();
+      imports: [VerifyOperatorComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(VerifyOperatorComponent);
     component = fixture.componentInstance;

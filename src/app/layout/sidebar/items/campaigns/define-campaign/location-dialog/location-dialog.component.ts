@@ -7,7 +7,7 @@ import {
   HostListener,
   inject,
   signal,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -50,16 +50,16 @@ const COUNTRY_DATA: CountryConfig[] = [
       'South Australia': ['Adelaide', 'Mount Gambier'],
       Tasmania: ['Hobart', 'Launceston'],
       Victoria: ['Ballarat', 'Geelong', 'Melbourne'],
-      'Western Australia': ['Bunbury', 'Fremantle', 'Perth']
-    }
+      'Western Australia': ['Bunbury', 'Fremantle', 'Perth'],
+    },
   },
 
   {
     name: 'Indonesia',
     states: {
       Bali: ['Nusa Dua', 'Seminyak', 'Ubud'],
-      Java: ['Bandung', 'Jakarta', 'Surabaya']
-    }
+      Java: ['Bandung', 'Jakarta', 'Surabaya'],
+    },
   },
 
   {
@@ -67,8 +67,8 @@ const COUNTRY_DATA: CountryConfig[] = [
     states: {
       Andalusia: ['Granada', 'Málaga', 'Seville'],
       Catalonia: ['Barcelona', 'Girona'],
-      'Community of Madrid': ['Alcalá de Henares', 'Madrid']
-    }
+      'Community of Madrid': ['Alcalá de Henares', 'Madrid'],
+    },
   },
 
   {
@@ -76,8 +76,8 @@ const COUNTRY_DATA: CountryConfig[] = [
     states: {
       England: ['Brighton', 'London', 'Manchester'],
       Scotland: ['Edinburgh', 'Glasgow'],
-      Wales: ['Cardiff', 'Swansea']
-    }
+      Wales: ['Cardiff', 'Swansea'],
+    },
   },
 
   {
@@ -86,9 +86,9 @@ const COUNTRY_DATA: CountryConfig[] = [
       California: ['Los Angeles', 'San Diego', 'San Francisco'],
       Illinois: ['Chicago', 'Naperville', 'Springfield'],
       'New York': ['Albany', 'Buffalo', 'New York City'],
-      Texas: ['Austin', 'Dallas', 'Houston']
-    }
-  }
+      Texas: ['Austin', 'Dallas', 'Houston'],
+    },
+  },
 ];
 
 const ALLOWED_EXTENSIONS = ['.csv', '.xlsx', '.xls', '.json', '.geojson'];
@@ -104,11 +104,11 @@ const ALLOWED_EXTENSIONS = ['.csv', '.xlsx', '.xls', '.json', '.geojson'];
     MatFormFieldModule,
     MatSelectModule,
     MatIconModule,
-    MatTooltipModule
+    MatTooltipModule,
   ],
   templateUrl: './location-dialog.component.html',
   styleUrl: './location-dialog.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LocationDialogComponent {
   private fb = inject(FormBuilder);
@@ -117,12 +117,15 @@ export class LocationDialogComponent {
   private initialCountry = this.data.country ?? null;
   private initialState = this.data.state ?? null;
   private initialLocale = this.data.locale ?? null;
-  private initialStateValue = this.getStatesFor(this.initialCountry).length ? this.initialState : null;
-  private initialLocaleValue = this.getLocalesFor(this.initialCountry, this.initialStateValue).length
+  private initialStateValue = this.getStatesFor(this.initialCountry).length
+    ? this.initialState
+    : null;
+  private initialLocaleValue = this.getLocalesFor(this.initialCountry, this.initialStateValue)
+    .length
     ? this.initialLocale
     : null;
 
-  countries = COUNTRY_DATA.map(c => c.name);
+  countries = COUNTRY_DATA.map((c) => c.name);
   uploadedFile = signal<File | null>(null);
   isDragOver = signal(false);
   uploadError = signal<string | null>(null);
@@ -134,19 +137,19 @@ export class LocationDialogComponent {
     country: this.fb.control<string | null>(this.initialCountry),
     state: this.fb.control<string | null>({
       value: this.initialStateValue,
-      disabled: this.getStatesFor(this.initialCountry).length === 0
+      disabled: this.getStatesFor(this.initialCountry).length === 0,
     }),
     locale: this.fb.control<string | null>({
       value: this.initialLocaleValue,
-      disabled: this.getLocalesFor(this.initialCountry, this.initialStateValue).length === 0
-    })
+      disabled: this.getLocalesFor(this.initialCountry, this.initialStateValue).length === 0,
+    }),
   });
 
   private countrySignal = signal<string | null>(this.form.controls.country.value);
   private stateSignal = signal<string | null>(this.form.controls.state.value);
 
   constructor() {
-    this.form.controls.country.valueChanges.subscribe(value => {
+    this.form.controls.country.valueChanges.subscribe((value) => {
       this.countrySignal.set(value);
       if (value !== this.data.country) {
         this.form.controls.state.setValue(null);
@@ -154,7 +157,7 @@ export class LocationDialogComponent {
       }
       this.updateDisabledState();
     });
-    this.form.controls.state.valueChanges.subscribe(value => {
+    this.form.controls.state.valueChanges.subscribe((value) => {
       this.stateSignal.set(value);
       if (value !== this.data.state) {
         this.form.controls.locale.setValue(null);
@@ -170,7 +173,7 @@ export class LocationDialogComponent {
     if (!country) {
       return [];
     }
-    const match = COUNTRY_DATA.find(c => c.name === country);
+    const match = COUNTRY_DATA.find((c) => c.name === country);
     return match ? Object.keys(match.states) : [];
   });
 
@@ -180,7 +183,7 @@ export class LocationDialogComponent {
     if (!country || !state) {
       return [];
     }
-    const match = COUNTRY_DATA.find(c => c.name === country);
+    const match = COUNTRY_DATA.find((c) => c.name === country);
     return match?.states[state] ?? [];
   });
 
@@ -234,7 +237,7 @@ export class LocationDialogComponent {
       country: value.country,
       state: value.state,
       locale: value.locale,
-      uploadedFile: this.uploadedFile()
+      uploadedFile: this.uploadedFile(),
     });
   }
 
@@ -243,7 +246,7 @@ export class LocationDialogComponent {
       return;
     }
     const lower = file.name.toLowerCase();
-    const isValid = ALLOWED_EXTENSIONS.some(ext => lower.endsWith(ext));
+    const isValid = ALLOWED_EXTENSIONS.some((ext) => lower.endsWith(ext));
     if (!isValid) {
       this.uploadError.set('Invalid file format. Accepted: CSV, XLSX, XLS, JSON, GeoJSON.');
       this.uploadedFile.set(null);
@@ -257,7 +260,7 @@ export class LocationDialogComponent {
     if (!country) {
       return [];
     }
-    const match = COUNTRY_DATA.find(c => c.name === country);
+    const match = COUNTRY_DATA.find((c) => c.name === country);
     return match ? Object.keys(match.states) : [];
   }
 
@@ -265,7 +268,7 @@ export class LocationDialogComponent {
     if (!country || !state) {
       return [];
     }
-    const match = COUNTRY_DATA.find(c => c.name === country);
+    const match = COUNTRY_DATA.find((c) => c.name === country);
     return match?.states[state] ?? [];
   }
 

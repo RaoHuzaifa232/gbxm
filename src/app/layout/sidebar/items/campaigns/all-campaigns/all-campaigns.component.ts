@@ -1,16 +1,20 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
-import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { Campaign, CampaignHotel, CampaignService, CampaignTypeKey } from '@gbxm/core/services/campaign.service';
-import { GenericTableComponent, TableAction, TableColumn } from '@gbxm/shared/components/generic-table/generic-table.component';
+import { Campaign, CampaignHotel, CampaignService } from '@gbxm/core/services/campaign.service';
+import {
+  GenericTableComponent,
+  TableAction,
+  TableColumn,
+} from '@gbxm/shared/components/generic-table/generic-table.component';
+import {
+  CampaignFilterComponent,
+  CampaignFilterValue,
+} from '../campaign-filter/campaign-filter.component';
 
 type ViewState = 'table' | 'campaign-details' | 'property-view';
 
@@ -19,22 +23,19 @@ type ViewState = 'table' | 'campaign-details' | 'property-view';
   standalone: true,
   imports: [
     CommonModule,
-    ReactiveFormsModule,
     MatButtonModule,
-    MatCheckboxModule,
     MatDividerModule,
     MatFormFieldModule,
     MatIconModule,
-    MatRadioModule,
     MatSelectModule,
-    GenericTableComponent
+    GenericTableComponent,
+    CampaignFilterComponent,
   ],
   templateUrl: './all-campaigns.component.html',
   styleUrl: './all-campaigns.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AllCampaignsComponent {
-  private fb = inject(FormBuilder);
   private campaignsService = inject(CampaignService);
 
   viewState = signal<ViewState>('table');
@@ -45,24 +46,26 @@ export class AllCampaignsComponent {
 
   // ── Filters (table view only) ────────────────────────────────────────────────
 
-  filtersForm = this.fb.group({
-    operatorId: this.fb.control('all'),
-    typeKey: this.fb.control<'all' | CampaignTypeKey>('all'),
-    viewNoPickLists: this.fb.control(true)
+  private filters = signal<CampaignFilterValue>({
+    campaignId: '',
+    operatorId: 'all',
+    typeKey: 'all',
+    status: 'all',
+    viewNoPickLists: true,
   });
 
-  private filtersSignal = toSignal(this.filtersForm.valueChanges, {
-    initialValue: this.filtersForm.getRawValue()
-  });
+  onFiltersChange(value: CampaignFilterValue): void {
+    this.filters.set(value);
+  }
 
   filteredCampaigns = computed(() => {
     const campaigns = this.campaignsService.campaigns();
-    const filters = this.filtersSignal();
+    const f = this.filters();
 
-    return campaigns.filter(campaign => {
-      const operatorMatches = filters.operatorId === 'all' || campaign.operatorId === filters.operatorId;
-      const typeMatches = filters.typeKey === 'all' || campaign.typeKey === filters.typeKey;
-      const pickListMatches = filters.viewNoPickLists || campaign.pickListDate.trim().length > 0;
+    return campaigns.filter((campaign) => {
+      const operatorMatches = f.operatorId === 'all' || campaign.operatorId === f.operatorId;
+      const typeMatches = f.typeKey === 'all' || campaign.typeKey === f.typeKey;
+      const pickListMatches = f.viewNoPickLists || campaign.pickListDate.trim().length > 0;
       return operatorMatches && typeMatches && pickListMatches;
     });
   });
@@ -74,7 +77,7 @@ export class AllCampaignsComponent {
     { key: 'name', header: 'Name', sortable: true },
     { key: 'typeLabel', header: 'Type', sortable: true },
     { key: 'pickListDate', header: 'Pick List Date', sortable: true },
-    { key: 'count', header: 'No', sortable: true }
+    { key: 'count', header: 'No', sortable: true },
   ];
 
   campaignActions: TableAction[] = [
@@ -82,8 +85,8 @@ export class AllCampaignsComponent {
       label: 'View Details',
       icon: 'visibility',
       tooltip: 'View campaign properties',
-      handler: (row) => this.openCampaignDetails(row as unknown as Campaign)
-    }
+      handler: (row) => this.openCampaignDetails(row as unknown as Campaign),
+    },
   ];
 
   // ── Campaign details ─────────────────────────────────────────────────────────
@@ -109,15 +112,19 @@ export class AllCampaignsComponent {
   campaignDetailData = computed(() => {
     const campaign = this.selectedCampaign();
     if (!campaign) return [];
-    return this.campaignsService.getHotelsForCampaign(campaign.id) as unknown as Record<string, unknown>[];
+    return this.campaignsService.getHotelsForCampaign(campaign.id) as unknown as Record<
+      string,
+      unknown
+    >[];
   });
 
   // ── Property view ────────────────────────────────────────────────────────────
 
   allCampaigns = computed(() => this.campaignsService.campaigns());
 
-  propertyViewCampaign = computed(() =>
-    this.campaignsService.campaigns().find(c => c.id === this.propertyViewCampaignId()) ?? null
+  propertyViewCampaign = computed(
+    () =>
+      this.campaignsService.campaigns().find((c) => c.id === this.propertyViewCampaignId()) ?? null
   );
 
   propertyViewColumns: TableColumn[] = [
@@ -134,8 +141,8 @@ export class AllCampaignsComponent {
       label: 'View',
       icon: 'visibility',
       tooltip: 'View',
-      handler: () => {}
-    }
+      handler: () => {},
+    },
   ];
 
   propertyViewData = computed(() => {

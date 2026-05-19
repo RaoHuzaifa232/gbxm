@@ -16,7 +16,7 @@ export interface ConfirmationDialogData {
   imports: [CommonModule, MatDialogModule, MatButtonModule],
   templateUrl: './confirmation-dialog.component.html',
   styleUrl: './confirmation-dialog.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConfirmationDialogComponent {
   data = inject<ConfirmationDialogData>(MAT_DIALOG_DATA);

@@ -10,14 +10,14 @@ import { NAVIGATION_DATA } from '@gbxm/core/models/nav-item.model';
   imports: [RouterLink, RouterLinkActive, MatIcon, MatIconButton, MatExpansionModule],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SidebarComponent {
   isMobile = input(false);
   closeSidebar = output<void>();
 
   navData = NAVIGATION_DATA;
-  private collapsedSections = signal<Set<string>>(new Set(NAVIGATION_DATA.map(g => g.label)));
+  private collapsedSections = signal<Set<string>>(new Set(NAVIGATION_DATA.map((g) => g.label)));
 
   isCollapsed(label: string): boolean {
     return this.collapsedSections().has(label);

@@ -11,20 +11,23 @@ export class ExportService {
     const safeName = this.sanitizeFileName(fileName);
     const html = this.buildHtmlTable(rows, columns);
     const blob = new Blob([html], {
-      type: 'application/vnd.ms-excel;charset=utf-8;'
+      type: 'application/vnd.ms-excel;charset=utf-8;',
     });
     this.downloadBlob(blob, `${safeName}.xls`);
   }
 
   private buildHtmlTable<T>(rows: T[], columns: ExportColumn<T>[]): string {
     const headerHtml = columns
-      .map(column => `<th style="background:#f1f3f4;border:1px solid #d0d4d7;padding:6px 10px;text-align:left;">${this.escape(column.header)}</th>`)
+      .map(
+        (column) =>
+          `<th style="background:#f1f3f4;border:1px solid #d0d4d7;padding:6px 10px;text-align:left;">${this.escape(column.header)}</th>`
+      )
       .join('');
 
     const rowsHtml = rows
-      .map(row => {
+      .map((row) => {
         const cells = columns
-          .map(column => {
+          .map((column) => {
             const raw = column.selector(row);
             const value = raw === null || raw === undefined ? '' : String(raw);
             return `<td style="border:1px solid #d0d4d7;padding:6px 10px;">${this.escape(value)}</td>`;

@@ -8,12 +8,14 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:gbxm": "ng build --configuration production && node dist/gbxm/server/server.mjs",
-    "deploy": "ng build --configuration=static --base-href=/gbxm/ && npx shx cp dist/gbxm/browser/index.html dist/gbxm/browser/404.html && npx angular-cli-ghpages --dir=dist/gbxm/browser"
+    "deploy": "ng build --configuration=static --base-href=/gbxm/ && npx shx cp dist/gbxm/browser/index.html dist/gbxm/browser/404.html && npx angular-cli-ghpages --dir=dist/gbxm/browser",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "private": true,
   "dependencies": {
-    "@angular/cdk": "^19.2.19",
     "@angular/animations": "^19.2.0",
+    "@angular/cdk": "^19.2.19",
     "@angular/common": "^19.2.0",
     "@angular/compiler": "^19.2.0",
     "@angular/core": "^19.2.0",
@@ -45,6 +47,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "prettier": "^3.8.3",
     "typescript": "~5.7.2"
   }
 }

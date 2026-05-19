@@ -1,8 +1,6 @@
 @if (viewingProfile()) {
-
   <!-- ── Inline profile view ── -->
   <div class="profile-view">
-
     <!-- Back bar -->
     <div class="profile-view__topbar">
       <button mat-button class="profile-view__back-btn" (click)="backToTable()" type="button">
@@ -22,25 +20,36 @@
       <!-- Status change actions -->
       <div class="profile-view__status-actions">
         @if (viewingProfile()!.status !== 'verified') {
-          <button mat-stroked-button color="primary" type="button"
+          <button
+            mat-stroked-button
+            color="primary"
+            type="button"
             (click)="changeStatus('verified')"
-            matTooltip="Mark as Verified">
+            matTooltip="Mark as Verified"
+          >
             <mat-icon>check_circle</mat-icon>
             Verify
           </button>
         }
         @if (viewingProfile()!.status !== 'rejected') {
-          <button mat-stroked-button color="warn" type="button"
+          <button
+            mat-stroked-button
+            color="warn"
+            type="button"
             (click)="changeStatus('rejected')"
-            matTooltip="Reject this operator">
+            matTooltip="Reject this operator"
+          >
             <mat-icon>cancel</mat-icon>
             Reject
           </button>
         }
         @if (viewingProfile()!.status === 'rejected' || viewingProfile()!.status === 'verified') {
-          <button mat-stroked-button type="button"
+          <button
+            mat-stroked-button
+            type="button"
             (click)="changeStatus('pending')"
-            matTooltip="Reset to Pending">
+            matTooltip="Reset to Pending"
+          >
             <mat-icon>refresh</mat-icon>
             Reset to Pending
           </button>
@@ -74,12 +83,11 @@
         [profileData]="viewingProfile()!"
         (formSaved)="onFormSaved()"
         (formSubmitted)="onFormSubmitted()"
-        (emailLinkClicked)="onEmailLink()"/>
+        (emailLinkClicked)="onEmailLink()"
+      />
     </div>
   </div>
-
 } @else {
-
   <!-- ── Table view ── -->
   <header class="card__header">
     <h2>View All Profiles</h2>
@@ -93,7 +101,6 @@
       [pageSizeOptions]="[5, 10, 25]"
       [defaultPageSize]="10"
       [mobileBreakpoint]="720"
-      />
+    />
   </div>
-
 }

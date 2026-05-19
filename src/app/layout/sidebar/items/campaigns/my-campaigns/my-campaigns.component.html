@@ -1,49 +1,47 @@
 @if (viewState() === 'table') {
+  <header class="card__header">
+    <h2>My Campaigns</h2>
+  </header>
 
-<header class="card__header">
-	<h2>My Campaigns</h2>
-</header>
+  <app-campaign-filter
+    [showOperator]="false"
+    [showType]="false"
+    [showStatus]="true"
+    [showViewNoPickLists]="false"
+    (filtersChange)="onFiltersChange($event)"
+  />
 
-<form class="my-campaigns__filters" [formGroup]="filterForm" aria-label="Campaign status filter">
-	<mat-radio-group class="radio-pills" formControlName="status" aria-label="Status">
-		<mat-radio-button value="all">All</mat-radio-button>
-		<mat-radio-button value="live">Live</mat-radio-button>
-		<mat-radio-button value="draft">Draft</mat-radio-button>
-	</mat-radio-group>
-</form>
-
-<mat-divider />
-
-<app-generic-table
-	[columns]="columns"
-	[data]="tableData()"
-	[actions]="tableActions"
-	[pageSizeOptions]="pageSizeOptions"
-	[defaultPageSize]="10"
-	[mobileBreakpoint]="720" />
-
+  <app-generic-table
+    [columns]="columns"
+    [data]="tableData()"
+    [actions]="tableActions"
+    [pageSizeOptions]="pageSizeOptions"
+    [searchable]="true"
+    [exportable]="true"
+    [defaultPageSize]="10"
+    [mobileBreakpoint]="720"
+  />
 }
 
 @if (viewState() === 'campaign-details') {
+  <div class="detail-view__header">
+    <button mat-button class="back-btn" type="button" (click)="backToTable()">
+      <mat-icon>arrow_back</mat-icon>
+      Back
+    </button>
+    <h2 class="detail-view__title">
+      {{ selectedCampaign()!.name }} {{ selectedCampaign()!.id }} detail view
+    </h2>
+  </div>
 
-<div class="detail-view__header">
-	<button mat-button class="back-btn" type="button" (click)="backToTable()">
-		<mat-icon>arrow_back</mat-icon>
-		Back
-	</button>
-	<h2 class="detail-view__title">
-		{{ selectedCampaign()!.name }} {{ selectedCampaign()!.id }} detail view
-	</h2>
-</div>
+  <mat-divider />
 
-<mat-divider />
-
-<app-generic-table
-	[columns]="campaignDetailColumns"
-	[data]="campaignDetailData()"
-	[actions]="campaignDetailActions"
-	[pageSizeOptions]="[5, 10, 25]"
-	[defaultPageSize]="10"
-	[mobileBreakpoint]="720" />
-
+  <app-generic-table
+    [columns]="campaignDetailColumns"
+    [data]="campaignDetailData()"
+    [actions]="campaignDetailActions"
+    [pageSizeOptions]="[5, 10, 25]"
+    [defaultPageSize]="10"
+    [mobileBreakpoint]="720"
+  />
 }

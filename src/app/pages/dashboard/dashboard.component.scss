@@ -1,29 +1,29 @@
 @use '@gbxm/styles/_variables.scss' as *;
 
 .dashboard--simple {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 60vh;
-    padding: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  padding: 24px;
 
-    .page-main-title {
-        font-size: 48px;
-        font-weight: 600;
-        color: #33373D;
-        margin: 0;
-        text-align: center;
-        animation: fadeIn 0.8s ease-out;
-    }
+  .page-main-title {
+    font-size: 48px;
+    font-weight: 600;
+    color: #33373d;
+    margin: 0;
+    text-align: center;
+    animation: fadeIn 0.8s ease-out;
+  }
 }
 
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

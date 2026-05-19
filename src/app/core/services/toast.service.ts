@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ToastService {
   private snackBar = inject(MatSnackBar);
@@ -12,7 +12,7 @@ export class ToastService {
       duration: 3000,
       horizontalPosition: 'right',
       verticalPosition: 'top',
-      panelClass: ['toast-success']
+      panelClass: ['toast-success'],
     });
   }
 
@@ -21,7 +21,7 @@ export class ToastService {
       duration: 5000,
       horizontalPosition: 'right',
       verticalPosition: 'top',
-      panelClass: ['toast-error']
+      panelClass: ['toast-error'],
     });
   }
 
@@ -30,7 +30,7 @@ export class ToastService {
       duration: 3000,
       horizontalPosition: 'right',
       verticalPosition: 'top',
-      panelClass: ['toast-info']
+      panelClass: ['toast-info'],
     });
   }
 }

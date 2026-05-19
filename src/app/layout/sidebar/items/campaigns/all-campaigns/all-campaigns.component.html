@@ -1,38 +1,10 @@
 <!-- ── Campaigns table ── -->
 @if (viewState() === 'table') {
-
   <header class="card__header">
     <h2>All Campaigns</h2>
   </header>
 
-  <form class="campaigns__filters" aria-label="Campaign filters" [formGroup]="filtersForm">
-    <div class="filters__layout">
-      <div class="filters__group filters__group--operator">
-        <mat-form-field class="filters__field" appearance="outline" subscriptSizing="dynamic">
-          <mat-label>Select Operator</mat-label>
-          <mat-select formControlName="operatorId">
-            <mat-option value="all">All Operators</mat-option>
-            <mat-option value="operator-1">Operator 1</mat-option>
-            <mat-option value="operator-2">Operator 2</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-
-      <div class="filters__group filters__group--type">
-        <mat-radio-group class="radio-pills" aria-label="Campaign type" formControlName="typeKey">
-          <mat-radio-button value="all">All</mat-radio-button>
-          <mat-radio-button value="agent">Agent</mat-radio-button>
-          <mat-radio-button value="brand">Brand/syndicate</mat-radio-button>
-          <mat-radio-button value="geo">Geographic</mat-radio-button>
-          <mat-radio-button value="thematic">Thematic</mat-radio-button>
-        </mat-radio-group>
-      </div>
-
-      <div class="filters__group filters__group--view">
-        <mat-checkbox formControlName="viewNoPickLists">View No Pick Lists</mat-checkbox>
-      </div>
-    </div>
-  </form>
+  <app-campaign-filter (filtersChange)="onFiltersChange($event)" />
 
   <app-generic-table
     [columns]="columns"
@@ -45,13 +17,12 @@
     [defaultPageSize]="10"
     [mobileBreakpoint]="720"
     [searchable]="true"
-    class="campaigns__gt"/>
-
+    class="campaigns__gt"
+  />
 }
 
 <!-- ── Campaign details ── -->
 @if (viewState() === 'campaign-details') {
-
   <div class="detail-view">
     <div class="detail-view__header">
       <button mat-button class="back-btn" (click)="backToTable()" type="button">
@@ -73,12 +44,10 @@
       [defaultPageSize]="10"
     />
   </div>
-
 }
 
 <!-- ── Property view ── -->
 @if (viewState() === 'property-view') {
-
   <div class="detail-view">
     <div class="detail-view__header">
       <button mat-button class="back-btn" (click)="backToCampaignDetails()" type="button">
@@ -86,9 +55,7 @@
         Back
       </button>
       <h2 class="detail-view__title">Property View</h2>
-      <button mat-raised-button color="primary" type="button">
-        Add
-      </button>
+      <button mat-raised-button color="primary" type="button">Add</button>
     </div>
 
     <mat-divider />
@@ -96,7 +63,10 @@
     <div class="property-view__filters">
       <mat-form-field appearance="outline" class="property-view__filter-field">
         <mat-label>Select Campaign Name</mat-label>
-        <mat-select [value]="propertyViewCampaignId()" (selectionChange)="onCampaignChange($event.value)">
+        <mat-select
+          [value]="propertyViewCampaignId()"
+          (selectionChange)="onCampaignChange($event.value)"
+        >
           @for (c of allCampaigns(); track c.id) {
             <mat-option [value]="c.id">{{ c.name }}</mat-option>
           }
@@ -105,7 +75,10 @@
 
       <mat-form-field appearance="outline" class="property-view__filter-field">
         <mat-label>Select Campaign Number</mat-label>
-        <mat-select [value]="propertyViewCampaignId()" (selectionChange)="onCampaignChange($event.value)">
+        <mat-select
+          [value]="propertyViewCampaignId()"
+          (selectionChange)="onCampaignChange($event.value)"
+        >
           @for (c of allCampaigns(); track c.id) {
             <mat-option [value]="c.id">{{ c.id }}</mat-option>
           }
@@ -121,5 +94,4 @@
       [defaultPageSize]="10"
     />
   </div>
-
 }

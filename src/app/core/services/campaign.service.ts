@@ -43,86 +43,121 @@ export interface Campaign {
 
 const SAMPLE_HOTELS_BY_CAMPAIGN: Record<string, CampaignHotel[]> = {
   '00001': [
-    { name: 'Ubud Tropical Resort', location: 'Ubud, Bali', status: 'Active', gm: 'Indra Sulimani Ibid', email: 'indrasulimni@UbudResort.id', phone: '+6230981673' },
-    { name: 'Seminyak Beach Villas', location: 'Seminyak, Bali', status: 'Active', gm: 'Patrick Geddes', email: 'PatrickG@SeminyakVillas.com', phone: '+6230981673' },
-    { name: 'Nusa Dua Pearl', location: 'Nusa Dua, Bali', status: 'Pending', gm: 'Ayu Pratiwi', email: 'apratiwi@NusaDuaPearl.id', phone: '+6230981674' }
+    {
+      name: 'Ubud Tropical Resort',
+      location: 'Ubud, Bali',
+      status: 'Active',
+      gm: 'Indra Sulimani Ibid',
+      email: 'indrasulimni@UbudResort.id',
+      phone: '+6230981673',
+    },
+    {
+      name: 'Seminyak Beach Villas',
+      location: 'Seminyak, Bali',
+      status: 'Active',
+      gm: 'Patrick Geddes',
+      email: 'PatrickG@SeminyakVillas.com',
+      phone: '+6230981673',
+    },
+    {
+      name: 'Nusa Dua Pearl',
+      location: 'Nusa Dua, Bali',
+      status: 'Pending',
+      gm: 'Ayu Pratiwi',
+      email: 'apratiwi@NusaDuaPearl.id',
+      phone: '+6230981674',
+    },
   ],
 
   '00002': [
-    { name: 'Pacific Crest Hotel', location: 'San Diego, CA', status: 'Active', gm: 'James Morrison', email: 'jmorrison@pacificcrest.com', phone: '+16195551234' },
-    { name: 'Gaslamp Boutique', location: 'San Diego, CA', status: 'Active', gm: 'Linda Park', email: 'lpark@gaslampboutique.com', phone: '+16195555678' }
+    {
+      name: 'Pacific Crest Hotel',
+      location: 'San Diego, CA',
+      status: 'Active',
+      gm: 'James Morrison',
+      email: 'jmorrison@pacificcrest.com',
+      phone: '+16195551234',
+    },
+    {
+      name: 'Gaslamp Boutique',
+      location: 'San Diego, CA',
+      status: 'Active',
+      gm: 'Linda Park',
+      email: 'lpark@gaslampboutique.com',
+      phone: '+16195555678',
+    },
   ],
 
   '00003': [
     { name: 'Spring Garden Inn', location: 'Lisbon, PT', status: 'Active' },
     { name: 'Lotus Bloom Resort', location: 'Porto, PT', status: 'Active' },
-    { name: 'Cherry Blossom Hotel', location: 'Madrid, ES', status: 'Pending' }
+    { name: 'Cherry Blossom Hotel', location: 'Madrid, ES', status: 'Pending' },
   ],
 
   '00004': [
     { name: 'Coastline Grand', location: 'Brighton, UK', status: 'Active' },
-    { name: 'Seabreeze Suites', location: 'Cornwall, UK', status: 'Active' }
+    { name: 'Seabreeze Suites', location: 'Cornwall, UK', status: 'Active' },
   ],
 
   '00005': [
     { name: 'Desert Crown Palace', location: 'Dubai Marina, UAE', status: 'Active' },
     { name: 'Palm Oasis Resort', location: 'Palm Jumeirah, UAE', status: 'Active' },
-    { name: 'Golden Dunes Hotel', location: 'Downtown Dubai, UAE', status: 'Pending' }
+    { name: 'Golden Dunes Hotel', location: 'Downtown Dubai, UAE', status: 'Pending' },
   ],
 
   '00006': [
     { name: 'Snow Peak Lodge', location: 'Aspen, USA', status: 'Active' },
-    { name: 'Frost Valley Resort', location: 'Whistler, Canada', status: 'Active' }
+    { name: 'Frost Valley Resort', location: 'Whistler, Canada', status: 'Active' },
   ],
 
   '00007': [
     { name: 'Royal Vienna Suites', location: 'Vienna, AT', status: 'Active' },
     { name: 'Paris Elite Stay', location: 'Paris, FR', status: 'Active' },
-    { name: 'Rome Imperial Hotel', location: 'Rome, IT', status: 'Pending' }
+    { name: 'Rome Imperial Hotel', location: 'Rome, IT', status: 'Pending' },
   ],
 
   '00008': [
     { name: 'Phuket Paradise Resort', location: 'Phuket, Thailand', status: 'Active' },
-    { name: 'Krabi Sunset Villas', location: 'Krabi, Thailand', status: 'Active' }
+    { name: 'Krabi Sunset Villas', location: 'Krabi, Thailand', status: 'Active' },
   ],
 
   '00009': [
     { name: 'Tokyo Sky Hotel', location: 'Tokyo, Japan', status: 'Active' },
     { name: 'Shibuya Central Inn', location: 'Shibuya, Tokyo', status: 'Active' },
-    { name: 'Sakura Palace', location: 'Shinjuku, Tokyo', status: 'Pending' }
+    { name: 'Sakura Palace', location: 'Shinjuku, Tokyo', status: 'Pending' },
   ],
 
   '00010': [
     { name: 'Sunrise Budget Suites', location: 'Miami, USA', status: 'Active' },
-    { name: 'Holiday Saver Inn', location: 'Orlando, USA', status: 'Active' }
+    { name: 'Holiday Saver Inn', location: 'Orlando, USA', status: 'Active' },
   ],
 
   '00011': [
     { name: 'Maldives Water Villas', location: 'Male, Maldives', status: 'Active' },
-    { name: 'Ocean Breeze Retreat', location: 'Vaavu Atoll, Maldives', status: 'Active' }
+    { name: 'Ocean Breeze Retreat', location: 'Vaavu Atoll, Maldives', status: 'Active' },
   ],
 
   '00012': [
     { name: 'Evergreen Mountain Lodge', location: 'Swiss Alps, CH', status: 'Active' },
-    { name: 'Nature Bliss Retreat', location: 'Banff, Canada', status: 'Pending' }
+    { name: 'Nature Bliss Retreat', location: 'Banff, Canada', status: 'Pending' },
   ],
 
   '00013': [
     { name: 'Manhattan Luxury Stay', location: 'New York, USA', status: 'Active' },
     { name: 'Central Park Suites', location: 'New York, USA', status: 'Active' },
-    { name: 'Times Square Grand', location: 'New York, USA', status: 'Pending' }
+    { name: 'Times Square Grand', location: 'New York, USA', status: 'Pending' },
   ],
 
   '00014': [
     { name: 'Savannah Wild Resort', location: 'Nairobi, Kenya', status: 'Active' },
-    { name: 'Safari Explorer Camp', location: 'Serengeti, Tanzania', status: 'Active' }
+    { name: 'Safari Explorer Camp', location: 'Serengeti, Tanzania', status: 'Active' },
   ],
 
   '00015': [
     { name: 'Eiffel View Palace', location: 'Paris, FR', status: 'Active' },
     { name: 'Louvre Boutique Hotel', location: 'Paris, FR', status: 'Active' },
-    { name: 'Seine Riverside Suites', location: 'Paris, FR', status: 'Pending' }
-  ]
+    { name: 'Seine Riverside Suites', location: 'Paris, FR', status: 'Pending' },
+  ],
 };
 
 const INITIAL_CAMPAIGNS: Campaign[] = [
@@ -151,7 +186,7 @@ const INITIAL_CAMPAIGNS: Campaign[] = [
     productPriceVary: '',
     agentSuccessFee: '',
     dateInitiated: '',
-    hotels: SAMPLE_HOTELS_BY_CAMPAIGN['00001']
+    hotels: SAMPLE_HOTELS_BY_CAMPAIGN['00001'],
   },
   {
     id: '00002',
@@ -178,7 +213,7 @@ const INITIAL_CAMPAIGNS: Campaign[] = [
     productPriceVary: '',
     agentSuccessFee: '',
     dateInitiated: '',
-    hotels: SAMPLE_HOTELS_BY_CAMPAIGN['00002']
+    hotels: SAMPLE_HOTELS_BY_CAMPAIGN['00002'],
   },
   {
     id: '00003',
@@ -205,7 +240,7 @@ const INITIAL_CAMPAIGNS: Campaign[] = [
     productPriceVary: '',
     agentSuccessFee: '',
     dateInitiated: '04/25/2026',
-    hotels: SAMPLE_HOTELS_BY_CAMPAIGN['00003']
+    hotels: SAMPLE_HOTELS_BY_CAMPAIGN['00003'],
   },
   {
     id: '00004',
@@ -232,7 +267,7 @@ const INITIAL_CAMPAIGNS: Campaign[] = [
     productPriceVary: '',
     agentSuccessFee: '',
     dateInitiated: '04/30/2026',
-    hotels: SAMPLE_HOTELS_BY_CAMPAIGN['00004']
+    hotels: SAMPLE_HOTELS_BY_CAMPAIGN['00004'],
   },
   {
     id: '00005',
@@ -259,7 +294,7 @@ const INITIAL_CAMPAIGNS: Campaign[] = [
     productPriceVary: '',
     agentSuccessFee: '',
     dateInitiated: '05/01/2026',
-    hotels: SAMPLE_HOTELS_BY_CAMPAIGN['00005']
+    hotels: SAMPLE_HOTELS_BY_CAMPAIGN['00005'],
   },
   {
     id: '00006',
@@ -286,7 +321,7 @@ const INITIAL_CAMPAIGNS: Campaign[] = [
     productPriceVary: '',
     agentSuccessFee: '',
     dateInitiated: '05/03/2026',
-    hotels: SAMPLE_HOTELS_BY_CAMPAIGN['00006']
+    hotels: SAMPLE_HOTELS_BY_CAMPAIGN['00006'],
   },
   {
     id: '00007',
@@ -313,7 +348,7 @@ const INITIAL_CAMPAIGNS: Campaign[] = [
     productPriceVary: '',
     agentSuccessFee: '',
     dateInitiated: '05/05/2026',
-    hotels: SAMPLE_HOTELS_BY_CAMPAIGN['00007']
+    hotels: SAMPLE_HOTELS_BY_CAMPAIGN['00007'],
   },
   {
     id: '00008',
@@ -340,7 +375,7 @@ const INITIAL_CAMPAIGNS: Campaign[] = [
     productPriceVary: '',
     agentSuccessFee: '',
     dateInitiated: '05/08/2026',
-    hotels: SAMPLE_HOTELS_BY_CAMPAIGN['00008']
+    hotels: SAMPLE_HOTELS_BY_CAMPAIGN['00008'],
   },
   {
     id: '00009',
@@ -367,7 +402,7 @@ const INITIAL_CAMPAIGNS: Campaign[] = [
     productPriceVary: '',
     agentSuccessFee: '',
     dateInitiated: '05/10/2026',
-    hotels: SAMPLE_HOTELS_BY_CAMPAIGN['00009']
+    hotels: SAMPLE_HOTELS_BY_CAMPAIGN['00009'],
   },
   {
     id: '00010',
@@ -394,7 +429,7 @@ const INITIAL_CAMPAIGNS: Campaign[] = [
     productPriceVary: '',
     agentSuccessFee: '',
     dateInitiated: '05/12/2026',
-    hotels: SAMPLE_HOTELS_BY_CAMPAIGN['00010']
+    hotels: SAMPLE_HOTELS_BY_CAMPAIGN['00010'],
   },
   {
     id: '00011',
@@ -421,7 +456,7 @@ const INITIAL_CAMPAIGNS: Campaign[] = [
     productPriceVary: '',
     agentSuccessFee: '',
     dateInitiated: '05/15/2026',
-    hotels: SAMPLE_HOTELS_BY_CAMPAIGN['00011']
+    hotels: SAMPLE_HOTELS_BY_CAMPAIGN['00011'],
   },
   {
     id: '00012',
@@ -448,7 +483,7 @@ const INITIAL_CAMPAIGNS: Campaign[] = [
     productPriceVary: '',
     agentSuccessFee: '',
     dateInitiated: '05/18/2026',
-    hotels: SAMPLE_HOTELS_BY_CAMPAIGN['00012']
+    hotels: SAMPLE_HOTELS_BY_CAMPAIGN['00012'],
   },
   {
     id: '00013',
@@ -475,7 +510,7 @@ const INITIAL_CAMPAIGNS: Campaign[] = [
     productPriceVary: '',
     agentSuccessFee: '',
     dateInitiated: '05/20/2026',
-    hotels: SAMPLE_HOTELS_BY_CAMPAIGN['00013']
+    hotels: SAMPLE_HOTELS_BY_CAMPAIGN['00013'],
   },
   {
     id: '00014',
@@ -502,7 +537,7 @@ const INITIAL_CAMPAIGNS: Campaign[] = [
     productPriceVary: '',
     agentSuccessFee: '',
     dateInitiated: '05/22/2026',
-    hotels: SAMPLE_HOTELS_BY_CAMPAIGN['00014']
+    hotels: SAMPLE_HOTELS_BY_CAMPAIGN['00014'],
   },
   {
     id: '00015',
@@ -529,12 +564,12 @@ const INITIAL_CAMPAIGNS: Campaign[] = [
     productPriceVary: '',
     agentSuccessFee: '',
     dateInitiated: '05/25/2026',
-    hotels: SAMPLE_HOTELS_BY_CAMPAIGN['00015']
-  }
+    hotels: SAMPLE_HOTELS_BY_CAMPAIGN['00015'],
+  },
 ];
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CampaignService {
   private storageKey = 'gbxm.campaigns';
@@ -548,11 +583,11 @@ export class CampaignService {
   }
 
   addCampaign(campaign: Campaign) {
-    this.campaignsSignal.update(items => [campaign, ...items]);
+    this.campaignsSignal.update((items) => [campaign, ...items]);
   }
 
   getHotelsForCampaign(campaignId: string): CampaignHotel[] {
-    const campaign = this.campaignsSignal().find(c => c.id === campaignId);
+    const campaign = this.campaignsSignal().find((c) => c.id === campaignId);
     if (campaign?.hotels && campaign.hotels.length > 0) {
       return campaign.hotels;
     }
@@ -582,25 +617,27 @@ export class CampaignService {
   }
 
   private mergeWithInitial(stored: Campaign[]): Campaign[] {
-    const storedMap = new Map(stored.map(campaign => [campaign.id, campaign]));
-    const merged = INITIAL_CAMPAIGNS.map(initial => {
+    const storedMap = new Map(stored.map((campaign) => [campaign.id, campaign]));
+    const merged = INITIAL_CAMPAIGNS.map((initial) => {
       const override = storedMap.get(initial.id);
       const mergedCampaign = override ? { ...initial, ...override } : initial;
       return {
         ...mergedCampaign,
-        hotels: mergedCampaign.hotels && mergedCampaign.hotels.length > 0
-          ? mergedCampaign.hotels
-          : SAMPLE_HOTELS_BY_CAMPAIGN[mergedCampaign.id] ?? []
+        hotels:
+          mergedCampaign.hotels && mergedCampaign.hotels.length > 0
+            ? mergedCampaign.hotels
+            : (SAMPLE_HOTELS_BY_CAMPAIGN[mergedCampaign.id] ?? []),
       };
     });
 
     const additional = stored
-      .filter(campaign => !INITIAL_CAMPAIGNS.some(initial => initial.id === campaign.id))
-      .map(campaign => ({
+      .filter((campaign) => !INITIAL_CAMPAIGNS.some((initial) => initial.id === campaign.id))
+      .map((campaign) => ({
         ...campaign,
-        hotels: campaign.hotels && campaign.hotels.length > 0
-          ? campaign.hotels
-          : SAMPLE_HOTELS_BY_CAMPAIGN[campaign.id] ?? []
+        hotels:
+          campaign.hotels && campaign.hotels.length > 0
+            ? campaign.hotels
+            : (SAMPLE_HOTELS_BY_CAMPAIGN[campaign.id] ?? []),
       }));
 
     return [...merged, ...additional];

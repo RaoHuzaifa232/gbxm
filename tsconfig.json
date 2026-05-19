@@ -19,24 +19,12 @@
     "target": "ES2022",
     "module": "ES2022",
     "paths": {
-      "@gbxm/layout/*": [
-        "./src/app/layout/*"
-      ],
-      "@gbxm/styles/*": [
-        "./src/styles/*"
-      ],
-      "@gbxm/items/*": [
-        "./src/app/layout/sidebar/items/*"
-      ],
-      "@gbxm/pages/*": [
-        "./src/app/pages/*"
-      ],
-      "@gbxm/core/*": [
-        "./src/app/core/*"
-      ],
-      "@gbxm/shared/*": [
-        "./src/app/shared/*"
-      ]
+      "@gbxm/layout/*": ["./src/app/layout/*"],
+      "@gbxm/styles/*": ["./src/styles/*"],
+      "@gbxm/items/*": ["./src/app/layout/sidebar/items/*"],
+      "@gbxm/pages/*": ["./src/app/pages/*"],
+      "@gbxm/core/*": ["./src/app/core/*"],
+      "@gbxm/shared/*": ["./src/app/shared/*"]
     }
   },
   "angularCompilerOptions": {

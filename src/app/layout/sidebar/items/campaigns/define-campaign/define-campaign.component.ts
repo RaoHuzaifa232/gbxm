@@ -19,13 +19,13 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '@gbxm/shared/components/confirmation-dialog/confirmation-dialog.component';
 import {
   TextareaDialogComponent,
-  TextareaDialogData
+  TextareaDialogData,
 } from '@gbxm/shared/components/textarea-dialog/textarea-dialog.component';
 import { DIALOG_SIZES } from '@gbxm/core/models/dialog.model';
 import {
   LocationDialogComponent,
   LocationDialogData,
-  LocationDialogResult
+  LocationDialogResult,
 } from './location-dialog/location-dialog.component';
 
 interface PreviewField {
@@ -81,11 +81,11 @@ interface CampaignForm {
     MatDividerModule,
     MatIconModule,
     MatTooltipModule,
-    FileUploadComponent
+    FileUploadComponent,
   ],
   templateUrl: './define-campaign.component.html',
   styleUrl: './define-campaign.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DefineCampaignComponent {
   private fb = inject(FormBuilder);
@@ -113,7 +113,7 @@ export class DefineCampaignComponent {
     '60%',
     '80%',
     '90%',
-    '100%'
+    '100%',
   ];
   successFeeOptions = ['3%', '5%', '10%', '15%', '20%', '25%'];
 
@@ -143,21 +143,21 @@ export class DefineCampaignComponent {
     numberOfProperties: this.fb.control<string | null>('', [Validators.pattern('^[0-9]*$')]),
     productPriceVary: this.fb.control<string | null>(null),
     agentSuccessFee: this.fb.control<string | null>(null),
-    dateInitiated: this.fb.control<Date | null>(null)
+    dateInitiated: this.fb.control<Date | null>(null),
   });
 
   private typeSignal = toSignal(this.form.controls.type.valueChanges, {
-    initialValue: this.form.controls.type.value
+    initialValue: this.form.controls.type.value,
   });
 
   isGeographic = computed(() => this.typeSignal() === 'Geographic');
 
   notesInternalValue = toSignal(this.form.controls.notesInternal.valueChanges, {
-    initialValue: this.form.controls.notesInternal.value
+    initialValue: this.form.controls.notesInternal.value,
   });
 
   notesExternalValue = toSignal(this.form.controls.notesExternal.valueChanges, {
-    initialValue: this.form.controls.notesExternal.value
+    initialValue: this.form.controls.notesExternal.value,
   });
 
   locationLabel = signal<string>('');
@@ -170,28 +170,29 @@ export class DefineCampaignComponent {
 
   openLocationDialog(): void {
     const { country, state, locale } = this.form.getRawValue();
-    const dialogRef = this.dialog.open<LocationDialogComponent, LocationDialogData, LocationDialogResult | null>(
+    const dialogRef = this.dialog.open<
       LocationDialogComponent,
-      {
-        width: '560px',
-        maxWidth: '92vw',
-        autoFocus: false,
-        data: {
-          country: country ?? null,
-          state: state ?? null,
-          locale: locale ?? null
-        }
-      }
-    );
+      LocationDialogData,
+      LocationDialogResult | null
+    >(LocationDialogComponent, {
+      width: '560px',
+      maxWidth: '92vw',
+      autoFocus: false,
+      data: {
+        country: country ?? null,
+        state: state ?? null,
+        locale: locale ?? null,
+      },
+    });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (!result) {
         return;
       }
       this.form.patchValue({
         country: result.country,
         state: result.state,
-        locale: result.locale
+        locale: result.locale,
       });
       if (result.uploadedFile) {
         this.form.controls.geoFile.setValue(result.uploadedFile);
@@ -216,18 +217,17 @@ export class DefineCampaignComponent {
           label: isInternal ? 'Notes visible to internal staff' : 'Notes visible to clients',
           placeholder: isInternal ? 'Add internal notes' : 'Add external notes',
           initialValue: this.form.controls[controlName].value ?? '',
-          rows: 8
-        }
+          rows: 8,
+        },
       }
     );
 
-    dialogRef.afterClosed().subscribe(value => {
+    dialogRef.afterClosed().subscribe((value) => {
       if (value !== undefined && value !== null) {
         this.form.controls[controlName].setValue(value);
       }
     });
   }
-
 
   onPreview() {
     if (this.form.invalid) {
@@ -256,11 +256,11 @@ export class DefineCampaignComponent {
         title: 'Save Campaign',
         message: 'You are about to save this campaign. Do you want to proceed?',
         confirmText: 'Save',
-        cancelText: 'Cancel'
-      }
+        cancelText: 'Cancel',
+      },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.performSave();
       }
@@ -273,7 +273,7 @@ export class DefineCampaignComponent {
 
     const detailsFields: PreviewField[] = [
       { label: 'Type', value: this.displayValue(raw.type) },
-      { label: geographic ? 'Location' : 'Name of Campaign', value: this.displayValue(raw.name) }
+      { label: geographic ? 'Location' : 'Name of Campaign', value: this.displayValue(raw.name) },
     ];
 
     if (geographic) {
@@ -294,7 +294,7 @@ export class DefineCampaignComponent {
     return [
       {
         title: '1. Campaign details',
-        fields: detailsFields
+        fields: detailsFields,
       },
       {
         title: '2. Team & licensing',
@@ -305,8 +305,8 @@ export class DefineCampaignComponent {
           { label: 'Data Collator', value: this.displayValue(raw.dataCollator) },
           { label: 'Associate Representative', value: this.displayValue(raw.associateRep) },
           { label: 'Self Licensing', value: this.displayValue(raw.selfLicensing) },
-          { label: 'License Type', value: this.displayValue(raw.licenseType) }
-        ]
+          { label: 'License Type', value: this.displayValue(raw.licenseType) },
+        ],
       },
       {
         title: '3. Assets & links',
@@ -316,8 +316,8 @@ export class DefineCampaignComponent {
           { label: 'Campaign URL', value: this.displayValue(raw.urlLink) },
           { label: 'Campaign Video URL', value: this.displayValue(raw.videoLink) },
           { label: 'Internal Notes', value: this.displayValue(raw.notesInternal) },
-          { label: 'External Notes', value: this.displayValue(raw.notesExternal) }
-        ]
+          { label: 'External Notes', value: this.displayValue(raw.notesExternal) },
+        ],
       },
       {
         title: '4. Details & timeline',
@@ -325,9 +325,9 @@ export class DefineCampaignComponent {
           { label: 'Number of Properties', value: this.displayValue(raw.numberOfProperties) },
           { label: 'Product Price Vary', value: this.displayValue(raw.productPriceVary) },
           { label: 'Agent Success Fee', value: this.displayValue(raw.agentSuccessFee) },
-          { label: 'Date Initiated', value: this.formatDate(raw.dateInitiated) || '—' }
-        ]
-      }
+          { label: 'Date Initiated', value: this.formatDate(raw.dateInitiated) || '—' },
+        ],
+      },
     ];
   }
 
@@ -375,7 +375,7 @@ export class DefineCampaignComponent {
       numberOfProperties: this.form.value.numberOfProperties ?? '',
       productPriceVary: this.form.value.productPriceVary ?? '',
       agentSuccessFee: this.form.value.agentSuccessFee ?? '',
-      dateInitiated: pickListDate
+      dateInitiated: pickListDate,
     });
 
     this.form.reset();
@@ -419,7 +419,7 @@ export class DefineCampaignComponent {
     return date.toLocaleDateString('en-US', {
       month: '2-digit',
       day: '2-digit',
-      year: 'numeric'
+      year: 'numeric',
     });
   }
 }

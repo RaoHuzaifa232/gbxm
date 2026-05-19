@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddPickListsComponent } from './add-pick-lists.component';
+import { CampaignFilterComponent } from './campaign-filter.component';
 
-describe('AddPickListsComponent', () => {
-  let component: AddPickListsComponent;
-  let fixture: ComponentFixture<AddPickListsComponent>;
+describe('CampaignFilterComponent', () => {
+  let component: CampaignFilterComponent;
+  let fixture: ComponentFixture<CampaignFilterComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AddPickListsComponent],
+      imports: [CampaignFilterComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(AddPickListsComponent);
+    fixture = TestBed.createComponent(CampaignFilterComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -12,15 +12,15 @@ import { map } from 'rxjs';
   imports: [RouterOutlet, HeaderComponent, SidebarComponent, MatSidenavModule],
   templateUrl: './main-layout.component.html',
   styleUrl: './main-layout.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainLayoutComponent {
   private breakpointObserver = inject(BreakpointObserver);
 
   isMobile = toSignal(
-    this.breakpointObserver.observe([Breakpoints.Handset, Breakpoints.TabletPortrait]).pipe(
-      map(result => result.matches)
-    ),
+    this.breakpointObserver
+      .observe([Breakpoints.Handset, Breakpoints.TabletPortrait])
+      .pipe(map((result) => result.matches)),
     { initialValue: false }
   );
 }

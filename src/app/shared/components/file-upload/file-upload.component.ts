@@ -1,4 +1,15 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, inject, input, Optional, Self, signal, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  inject,
+  input,
+  Optional,
+  Self,
+  signal,
+  ViewChild,
+} from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -8,7 +19,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
   imports: [MatIconModule, MatTooltipModule],
   templateUrl: './file-upload.component.html',
   styleUrl: './file-upload.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FileUploadComponent implements ControlValueAccessor {
   public ngControl = inject(NgControl, { optional: true, self: true });
@@ -30,15 +41,16 @@ export class FileUploadComponent implements ControlValueAccessor {
   disabled = signal(false);
   isClearHovered = signal(false);
 
-  private onChange: (value: File | null) => void = () => { };
-  private onTouched: () => void = () => { };
+  private onChange: (value: File | null) => void = () => {};
+  private onTouched: () => void = () => {};
 
   onFileSelected(event: any): void {
     const file = event.target.files[0];
     if (file) {
       const fileName = file.name.toLowerCase();
       const extensions = this.allowedExtensions();
-      const isValid = extensions.length === 0 || extensions.some(ext => fileName.endsWith(ext.toLowerCase()));
+      const isValid =
+        extensions.length === 0 || extensions.some((ext) => fileName.endsWith(ext.toLowerCase()));
 
       if (isValid) {
         this.updateValue(file);

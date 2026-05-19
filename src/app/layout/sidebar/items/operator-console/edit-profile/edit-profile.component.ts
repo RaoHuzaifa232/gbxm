@@ -9,7 +9,7 @@ import { ProfileFormComponent } from '@gbxm/shared/components/profile-form/profi
   imports: [ProfileFormComponent, MatButtonModule, MatIconModule],
   templateUrl: './edit-profile.component.html',
   styleUrl: './edit-profile.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditProfileComponent {
   isPreviewing = signal(false);

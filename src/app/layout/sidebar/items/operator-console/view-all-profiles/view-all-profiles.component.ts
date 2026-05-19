@@ -7,7 +7,11 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialog } from '@angular/material/dialog';
 import { OperatorProfileService } from '@gbxm/core/services/operator-profile.service';
 import { OperatorProfile, OperatorStatus } from '@gbxm/core/models/operator-profile.model';
-import { GenericTableComponent, TableAction, TableColumn } from '@gbxm/shared/components/generic-table/generic-table.component';
+import {
+  GenericTableComponent,
+  TableAction,
+  TableColumn,
+} from '@gbxm/shared/components/generic-table/generic-table.component';
 import { ProfileFormComponent } from '@gbxm/shared/components/profile-form/profile-form.component';
 import { ConfirmationDialogComponent } from '@gbxm/shared/components/confirmation-dialog/confirmation-dialog.component';
 import { DIALOG_SIZES } from '@gbxm/core/models/dialog.model';
@@ -23,11 +27,11 @@ import { ToastService } from '@gbxm/core/services/toast.service';
     MatDividerModule,
     MatTooltipModule,
     GenericTableComponent,
-    ProfileFormComponent
+    ProfileFormComponent,
   ],
   templateUrl: './view-all-profiles.component.html',
   styleUrl: './view-all-profiles.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ViewAllProfilesComponent {
   private profileService = inject(OperatorProfileService);
@@ -36,12 +40,13 @@ export class ViewAllProfilesComponent {
 
   viewingProfile = signal<OperatorProfile | null>(null);
 
-  tableData = computed(() =>
-    this.profileService.profiles().map(p => ({
-      ...p,
-      fullName: `${p.firstName} ${p.lastName}`,
-      displayDate: this.formatDate(p.updatedAt)
-    })) as unknown as Record<string, unknown>[]
+  tableData = computed(
+    () =>
+      this.profileService.profiles().map((p) => ({
+        ...p,
+        fullName: `${p.firstName} ${p.lastName}`,
+        displayDate: this.formatDate(p.updatedAt),
+      })) as unknown as Record<string, unknown>[]
   );
 
   columns: TableColumn[] = [
@@ -58,12 +63,12 @@ export class ViewAllProfilesComponent {
           draft: { text: 'Draft', cssClass: 'badge-draft' },
           pending: { text: 'Pending', cssClass: 'badge-pending' },
           verified: { text: 'Verified', cssClass: 'badge-verified' },
-          rejected: { text: 'Rejected', cssClass: 'badge-rejected' }
+          rejected: { text: 'Rejected', cssClass: 'badge-rejected' },
         };
         return map[status] ?? null;
-      }
+      },
     },
-    { key: 'displayDate', header: 'Date', sortable: true }
+    { key: 'displayDate', header: 'Date', sortable: true },
   ];
 
   actions: TableAction[] = [
@@ -72,8 +77,8 @@ export class ViewAllProfilesComponent {
       icon: 'person',
       tooltip: 'View / Edit Profile',
       color: 'primary',
-      handler: (row) => this.openProfile(row as unknown as OperatorProfile)
-    }
+      handler: (row) => this.openProfile(row as unknown as OperatorProfile),
+    },
   ];
 
   openProfile(row: OperatorProfile): void {
@@ -94,26 +99,29 @@ export class ViewAllProfilesComponent {
       draft: 'Draft',
       pending: 'Pending',
       verified: 'Verify',
-      rejected: 'Reject'
+      rejected: 'Reject',
     };
 
-    this.dialog.open(ConfirmationDialogComponent, {
-      ...DIALOG_SIZES.small,
-      data: {
-        title: `${labels[status]} Operator`,
-        message: `Are you sure you want to set this operator's status to "${labels[status]}"?`,
-        confirmText: labels[status],
-        cancelText: 'Cancel'
-      }
-    }).afterClosed().subscribe(result => {
-      if (result) {
-        this.profileService.updateStatus(profile.userId, status);
-        // Reactively update the viewing profile from the signal
-        const updated = this.profileService.getProfile(profile.userId);
-        if (updated) this.viewingProfile.set(updated);
-        this.toast.success(`Status updated to "${labels[status]}".`);
-      }
-    });
+    this.dialog
+      .open(ConfirmationDialogComponent, {
+        ...DIALOG_SIZES.small,
+        data: {
+          title: `${labels[status]} Operator`,
+          message: `Are you sure you want to set this operator's status to "${labels[status]}"?`,
+          confirmText: labels[status],
+          cancelText: 'Cancel',
+        },
+      })
+      .afterClosed()
+      .subscribe((result) => {
+        if (result) {
+          this.profileService.updateStatus(profile.userId, status);
+          // Reactively update the viewing profile from the signal
+          const updated = this.profileService.getProfile(profile.userId);
+          if (updated) this.viewingProfile.set(updated);
+          this.toast.success(`Status updated to "${labels[status]}".`);
+        }
+      });
   }
 
   onFormSaved(): void {
@@ -134,7 +142,7 @@ export class ViewAllProfilesComponent {
       draft: 'Draft',
       pending: 'Pending',
       verified: 'Verified',
-      rejected: 'Rejected'
+      rejected: 'Rejected',
     };
     return map[status];
   }
@@ -151,7 +159,7 @@ export class ViewAllProfilesComponent {
         month: 'short',
         year: 'numeric',
         hour: '2-digit',
-        minute: '2-digit'
+        minute: '2-digit',
       });
     } catch {
       return iso;
@@ -164,7 +172,7 @@ export class ViewAllProfilesComponent {
       return new Date(iso).toLocaleDateString('en-GB', {
         day: '2-digit',
         month: 'short',
-        year: 'numeric'
+        year: 'numeric',
       });
     } catch {
       return iso;

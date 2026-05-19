@@ -8,9 +8,8 @@ describe('OperatorConsoleComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [OperatorConsoleComponent]
-    })
-    .compileComponents();
+      imports: [OperatorConsoleComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(OperatorConsoleComponent);
     component = fixture.componentInstance;

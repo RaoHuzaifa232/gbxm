@@ -1,10 +1,14 @@
 <aside class="sidebar">
-
   <!-- MENU label + (mobile) close -->
   <div class="sidebar__header">
     <span class="sidebar__label">MENU</span>
     @if (isMobile()) {
-      <button mat-icon-button class="sidebar__close" (click)="closeSidebar.emit()" aria-label="Close menu">
+      <button
+        mat-icon-button
+        class="sidebar__close"
+        (click)="closeSidebar.emit()"
+        aria-label="Close menu"
+      >
         <mat-icon>close</mat-icon>
       </button>
     }
@@ -13,13 +17,18 @@
   <!-- Navigation -->
   <mat-accordion class="sidebar__nav" displayMode="flat">
     @for (group of navData; track group.label) {
-      <mat-expansion-panel class="nav-section"
+      <mat-expansion-panel
+        class="nav-section"
         routerLinkActive="has-active"
         [expanded]="!isCollapsed(group.label)"
         (opened)="setCollapsed(group.label, false)"
-        (closed)="setCollapsed(group.label, true)">
-
-        <mat-expansion-panel-header class="nav-section__header" collapsedHeight="44px" expandedHeight="44px">
+        (closed)="setCollapsed(group.label, true)"
+      >
+        <mat-expansion-panel-header
+          class="nav-section__header"
+          collapsedHeight="44px"
+          expandedHeight="44px"
+        >
           <mat-panel-title class="nav-section__title">
             @if (group.matIcon) {
               <mat-icon class="nav-section__icon">{{ group.matIcon }}</mat-icon>
@@ -31,24 +40,38 @@
         <div class="nav-section__body">
           @for (item of group.children; track item.label) {
             @if (item.children) {
-              <mat-expansion-panel class="nav-subgroup"
+              <mat-expansion-panel
+                class="nav-subgroup"
                 [expanded]="!isCollapsed(item.label)"
                 (opened)="setCollapsed(item.label, false)"
-                (closed)="setCollapsed(item.label, true)">
+                (closed)="setCollapsed(item.label, true)"
+              >
                 <mat-expansion-panel-header collapsedHeight="34px" expandedHeight="34px">
                   <mat-panel-title class="nav-subgroup__title">
                     @if (item.icon) {
-                      <span class="nav-icon" [style.--icon-url]="getIconUrl(item.icon)" aria-hidden="true"></span>
+                      <span
+                        class="nav-icon"
+                        [style.--icon-url]="getIconUrl(item.icon)"
+                        aria-hidden="true"
+                      ></span>
                     }
                     <span>{{ item.label }}</span>
                   </mat-panel-title>
                 </mat-expansion-panel-header>
                 <div class="nav-subgroup__body">
                   @for (sub of item.children; track sub.label) {
-                    <a class="nav-item" (click)="onItemClick()"
-                      [routerLink]="sub.link" routerLinkActive="is-active">
+                    <a
+                      class="nav-item"
+                      (click)="onItemClick()"
+                      [routerLink]="sub.link"
+                      routerLinkActive="is-active"
+                    >
                       @if (sub.icon) {
-                        <span class="nav-icon" [style.--icon-url]="getIconUrl(sub.icon)" aria-hidden="true"></span>
+                        <span
+                          class="nav-icon"
+                          [style.--icon-url]="getIconUrl(sub.icon)"
+                          aria-hidden="true"
+                        ></span>
                       }
                       <span class="nav-item__label">{{ sub.label }}</span>
                     </a>
@@ -56,19 +79,25 @@
                 </div>
               </mat-expansion-panel>
             } @else {
-              <a class="nav-item" (click)="onItemClick()"
-                [routerLink]="item.link" routerLinkActive="is-active">
+              <a
+                class="nav-item"
+                (click)="onItemClick()"
+                [routerLink]="item.link"
+                routerLinkActive="is-active"
+              >
                 @if (item.icon) {
-                  <span class="nav-icon" [style.--icon-url]="getIconUrl(item.icon)" aria-hidden="true"></span>
+                  <span
+                    class="nav-icon"
+                    [style.--icon-url]="getIconUrl(item.icon)"
+                    aria-hidden="true"
+                  ></span>
                 }
                 <span class="nav-item__label">{{ item.label }}</span>
               </a>
             }
           }
         </div>
-
       </mat-expansion-panel>
     }
   </mat-accordion>
-
 </aside>

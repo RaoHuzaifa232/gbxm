@@ -66,7 +66,9 @@
   padding: 0 10px;
   height: 38px;
   max-width: 320px;
-  transition: border-color 0.15s ease, background 0.15s ease;
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease;
 
   @media (max-width: 479px) {
     max-width: 160px;
