@@ -17,10 +17,7 @@ export class SidebarComponent {
   closeSidebar = output<void>();
 
   navData = NAVIGATION_DATA;
-
-  // Tracks sections the user has manually collapsed. Default = all collapsed
-  // (accordion is single-select, so only one is open at a time anyway).
-  private collapsedSections = signal<Set<string>>(new Set());
+  private collapsedSections = signal<Set<string>>(new Set(NAVIGATION_DATA.map(g => g.label)));
 
   isCollapsed(label: string): boolean {
     return this.collapsedSections().has(label);
