@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatRadioModule } from '@angular/material/radio';
@@ -29,6 +30,7 @@ export interface CampaignFilterValue {
   standalone: true,
   imports: [
     ReactiveFormsModule,
+    MatButtonModule,
     MatCheckboxModule,
     MatFormFieldModule,
     MatRadioModule,
@@ -63,5 +65,15 @@ export class CampaignFilterComponent {
     this.form.valueChanges
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => this.filtersChange.emit(this.form.getRawValue() as CampaignFilterValue));
+  }
+
+  clearFilters(): void {
+    this.form.reset({
+      campaignId: '',
+      operatorId: 'all',
+      typeKey: 'all',
+      status: 'all',
+      viewNoPickLists: true,
+    });
   }
 }

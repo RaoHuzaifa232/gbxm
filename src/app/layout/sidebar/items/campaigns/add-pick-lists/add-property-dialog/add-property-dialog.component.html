@@ -1,0 +1,37 @@
+<h2 mat-dialog-title class="add-property-dialog__title">Add Property</h2>
+
+<mat-dialog-content class="add-property-dialog__content">
+  <p class="add-property-dialog__sub">
+    Adding to campaign <strong>{{ data.campaignName }}</strong>
+  </p>
+
+  <mat-form-field appearance="outline" subscriptSizing="dynamic" class="add-property-dialog__field">
+    <mat-label>Property Name</mat-label>
+    <input
+      matInput
+      [formControl]="nameControl"
+      placeholder="e.g. Allerton Chicago"
+      (keydown.enter)="onAdd()"
+      autocomplete="off"
+    />
+    @if (nameControl.touched && nameControl.hasError('required')) {
+      <mat-error>Property name is required</mat-error>
+    } @else if (nameControl.touched && nameControl.hasError('minlength')) {
+      <mat-error>Must be at least 2 characters</mat-error>
+    }
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="add-property-dialog__actions">
+  <button mat-button type="button" class="dialog-close-btn" (click)="onCancel()">Cancel</button>
+  <button
+    mat-flat-button
+    color="primary"
+    type="button"
+    class="dialog-save-btn"
+    [disabled]="nameControl.invalid && nameControl.touched"
+    (click)="onAdd()"
+  >
+    Add Property
+  </button>
+</mat-dialog-actions>

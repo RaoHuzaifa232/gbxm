@@ -12,12 +12,6 @@
     </button>
   </header>
 
-  <app-campaign-filter
-    [campaigns]="campaigns()"
-    [showCampaignSelect]="true"
-    (filtersChange)="onFiltersChange($event)"
-  />
-
   <app-generic-table
     [columns]="columns"
     [data]="tableData()"
@@ -26,7 +20,13 @@
     [defaultPageSize]="10"
     [mobileBreakpoint]="720"
     class="pick-lists__gt"
-  />
+  >
+    <app-campaign-filter
+      [campaigns]="campaigns()"
+      [showCampaignSelect]="true"
+      (filtersChange)="filters.set($event)"
+    />
+  </app-generic-table>
 }
 
 @if (viewState() === 'property-view') {
@@ -36,43 +36,7 @@
       Back
     </button>
     <h2 class="detail-view__title">Property View</h2>
-    <button mat-flat-button color="primary" type="button">Add</button>
-  </div>
-
-  <mat-divider />
-
-  <div class="property-view__filters">
-    <mat-form-field
-      appearance="outline"
-      subscriptSizing="dynamic"
-      class="property-view__filter-field"
-    >
-      <mat-label>Select Campaign Name</mat-label>
-      <mat-select
-        [value]="propertyViewCampaignId()"
-        (selectionChange)="onPropertyViewCampaignChange($event.value)"
-      >
-        @for (c of campaigns(); track c.id) {
-          <mat-option [value]="c.id">{{ c.name }}</mat-option>
-        }
-      </mat-select>
-    </mat-form-field>
-
-    <mat-form-field
-      appearance="outline"
-      subscriptSizing="dynamic"
-      class="property-view__filter-field"
-    >
-      <mat-label>Select Campaign Number</mat-label>
-      <mat-select
-        [value]="propertyViewCampaignId()"
-        (selectionChange)="onPropertyViewCampaignChange($event.value)"
-      >
-        @for (c of campaigns(); track c.id) {
-          <mat-option [value]="c.id">{{ c.id }}</mat-option>
-        }
-      </mat-select>
-    </mat-form-field>
+    <button mat-flat-button color="primary" type="button" (click)="onAddProperty()">Add</button>
   </div>
 
   <app-generic-table
@@ -82,7 +46,16 @@
     [pageSizeOptions]="pageSizeOptions"
     [searchable]="true"
     [exportable]="true"
+    [selectable]="true"
     [defaultPageSize]="10"
     [mobileBreakpoint]="720"
+  />
+}
+
+@if (viewState() === 'property-details') {
+  <app-property-details
+    [hotel]="selectedHotel()"
+    [campaign]="propertyViewCampaign()"
+    (backClicked)="backToPropertyView()"
   />
 }

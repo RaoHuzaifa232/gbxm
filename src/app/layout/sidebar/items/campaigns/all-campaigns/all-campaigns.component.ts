@@ -46,17 +46,13 @@ export class AllCampaignsComponent {
 
   // ── Filters (table view only) ────────────────────────────────────────────────
 
-  private filters = signal<CampaignFilterValue>({
+  filters = signal<CampaignFilterValue>({
     campaignId: '',
     operatorId: 'all',
     typeKey: 'all',
     status: 'all',
     viewNoPickLists: true,
   });
-
-  onFiltersChange(value: CampaignFilterValue): void {
-    this.filters.set(value);
-  }
 
   filteredCampaigns = computed(() => {
     const campaigns = this.campaignsService.campaigns();

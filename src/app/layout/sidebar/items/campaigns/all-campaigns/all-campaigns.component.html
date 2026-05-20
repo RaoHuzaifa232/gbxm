@@ -4,8 +4,6 @@
     <h2>All Campaigns</h2>
   </header>
 
-  <app-campaign-filter (filtersChange)="onFiltersChange($event)" />
-
   <app-generic-table
     [columns]="columns"
     [data]="tableData()"
@@ -18,7 +16,9 @@
     [mobileBreakpoint]="720"
     [searchable]="true"
     class="campaigns__gt"
-  />
+  >
+    <app-campaign-filter (filtersChange)="filters.set($event)" />
+  </app-generic-table>
 }
 
 <!-- ── Campaign details ── -->

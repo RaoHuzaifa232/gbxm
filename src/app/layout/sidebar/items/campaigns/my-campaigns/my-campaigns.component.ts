@@ -37,7 +37,7 @@ export class MyCampaignsComponent {
   viewState = signal<ViewState>('table');
   selectedCampaign = signal<Campaign | null>(null);
 
-  private filters = signal<CampaignFilterValue>({
+  filters = signal<CampaignFilterValue>({
     campaignId: '',
     operatorId: 'all',
     typeKey: 'all',
@@ -45,17 +45,17 @@ export class MyCampaignsComponent {
     viewNoPickLists: true,
   });
 
-  onFiltersChange(value: CampaignFilterValue): void {
-    this.filters.set(value);
-  }
-
   // ── Table view ────────────────────────────────────────────────────────────────
 
   filteredCampaigns = computed(() => {
-    const { status } = this.filters();
-    const campaigns = this.campaignService.campaigns();
-    if (status === 'live') return campaigns.filter((c) => c.pickListDate.trim().length > 0);
-    if (status === 'draft') return campaigns.filter((c) => c.pickListDate.trim() === '');
+    const { status, typeKey } = this.filters();
+    let campaigns = this.campaignService.campaigns();
+
+    if (status === 'live') campaigns = campaigns.filter((c) => c.pickListDate.trim().length > 0);
+    else if (status === 'draft') campaigns = campaigns.filter((c) => c.pickListDate.trim() === '');
+
+    if (typeKey !== 'all') campaigns = campaigns.filter((c) => c.typeKey === typeKey);
+
     return campaigns;
   });
 

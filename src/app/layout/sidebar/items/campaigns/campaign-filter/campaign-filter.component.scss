@@ -32,6 +32,10 @@
   width: 240px;
 }
 
+.filter__clear-btn {
+  margin-left: auto;
+}
+
 @media (max-width: 960px) {
   .campaign-filter {
     padding-left: $spacing-4;

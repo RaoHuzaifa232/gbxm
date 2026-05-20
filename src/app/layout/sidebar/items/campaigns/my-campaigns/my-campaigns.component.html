@@ -3,14 +3,6 @@
     <h2>My Campaigns</h2>
   </header>
 
-  <app-campaign-filter
-    [showOperator]="false"
-    [showType]="false"
-    [showStatus]="true"
-    [showViewNoPickLists]="false"
-    (filtersChange)="onFiltersChange($event)"
-  />
-
   <app-generic-table
     [columns]="columns"
     [data]="tableData()"
@@ -18,9 +10,18 @@
     [pageSizeOptions]="pageSizeOptions"
     [searchable]="true"
     [exportable]="true"
+    [selectable]="true"
     [defaultPageSize]="10"
     [mobileBreakpoint]="720"
-  />
+  >
+    <app-campaign-filter
+      [showOperator]="false"
+      [showType]="true"
+      [showStatus]="true"
+      [showViewNoPickLists]="false"
+      (filtersChange)="filters.set($event)"
+    />
+  </app-generic-table>
 }
 
 @if (viewState() === 'campaign-details') {

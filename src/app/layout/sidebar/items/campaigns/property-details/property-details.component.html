@@ -1,0 +1,432 @@
+<header class="card__header">
+  <button mat-button class="back-btn" type="button" (click)="backClicked.emit()">
+    <mat-icon>arrow_back</mat-icon>
+    Back
+  </button>
+
+  <div class="header-hotel">
+    <h2 class="header-hotel__name">{{ hotelDisplayName() }}</h2>
+    <div class="header-hotel__meta">
+      <span class="header-stars">
+        @for (i of starRange; track i) {
+          <mat-icon class="header-star">star</mat-icon>
+        }
+      </span>
+      @if (campaignDisplay()) {
+        <span class="meta-sep">·</span>
+        <span>{{ campaignDisplay() }}</span>
+      }
+    </div>
+  </div>
+
+  <div class="save-indicator" [class.save-indicator--dirty]="saveState() === 'unsaved'">
+    <span class="save-dot"></span>
+    {{ saveState() === 'unsaved' ? 'Unsaved changes' : 'All changes saved' }}
+  </div>
+
+  <button mat-flat-button color="primary" class="dialog-save-btn" type="button" (click)="onSave()">
+    <mat-icon>check</mat-icon>
+    Save
+  </button>
+</header>
+
+<form [formGroup]="form">
+  <mat-stepper [linear]="false" orientation="horizontal" class="prop-stepper">
+    <!-- ── 1 · Identity ────────────────────────────────────────── -->
+    <mat-step label="Identity">
+      <div class="step-body">
+        <div class="form-grid">
+          <mat-form-field class="col-6" appearance="outline" subscriptSizing="dynamic">
+            <mat-label>Name of Campaign</mat-label>
+            <input matInput formControlName="campaignName" />
+          </mat-form-field>
+          <mat-form-field class="col-6" appearance="outline" subscriptSizing="dynamic">
+            <mat-label>Campaign ID</mat-label>
+            <input matInput formControlName="campaignId" />
+          </mat-form-field>
+          <mat-form-field class="col-8" appearance="outline" subscriptSizing="dynamic">
+            <mat-label>Full Name</mat-label>
+            <input matInput formControlName="fullName" />
+          </mat-form-field>
+          <mat-form-field class="col-4" appearance="outline" subscriptSizing="dynamic">
+            <mat-label>Short Name</mat-label>
+            <input matInput formControlName="shortName" />
+          </mat-form-field>
+          <mat-form-field class="col-12" appearance="outline" subscriptSizing="dynamic">
+            <mat-label>Syndicate</mat-label>
+            <input matInput formControlName="syndicate" />
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="step-actions">
+        <button mat-flat-button color="primary" class="dialog-save-btn" matStepperNext>Next</button>
+      </div>
+    </mat-step>
+
+    <!-- ── 2 · Location ───────────────────────────────────────── -->
+    <mat-step label="Location">
+      <div class="step-body">
+        <div class="form-grid">
+          <mat-form-field class="col-6" appearance="outline" subscriptSizing="dynamic">
+            <mat-label>Street Address</mat-label>
+            <input matInput formControlName="streetAddress" />
+          </mat-form-field>
+          <mat-form-field class="col-6" appearance="outline" subscriptSizing="dynamic">
+            <mat-label>Address (2)</mat-label>
+            <input matInput formControlName="address2" placeholder="Suite, building…" />
+          </mat-form-field>
+          <mat-form-field class="col-6" appearance="outline" subscriptSizing="dynamic">
+            <mat-label>City</mat-label>
+            <input matInput formControlName="city" />
+          </mat-form-field>
+          <mat-form-field class="col-4" appearance="outline" subscriptSizing="dynamic">
+            <mat-label>State</mat-label>
+            <input matInput formControlName="state" />
+          </mat-form-field>
+          <mat-form-field class="col-2" appearance="outline" subscriptSizing="dynamic">
+            <mat-label>Zip</mat-label>
+            <input matInput formControlName="zip" />
+          </mat-form-field>
+          <mat-form-field class="col-6" appearance="outline" subscriptSizing="dynamic">
+            <mat-label>Country</mat-label>
+            <mat-select formControlName="country">
+              <mat-option value="United States">United States</mat-option>
+              <mat-option value="United Kingdom">United Kingdom</mat-option>
+              <mat-option value="Canada">Canada</mat-option>
+              <mat-option value="Australia">Australia</mat-option>
+              <mat-option value="Germany">Germany</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="col-6" appearance="outline" subscriptSizing="dynamic">
+            <mat-label>Region</mat-label>
+            <mat-select formControlName="region">
+              <mat-option value="North America">North America</mat-option>
+              <mat-option value="Europe">Europe</mat-option>
+              <mat-option value="Asia Pacific">Asia Pacific</mat-option>
+              <mat-option value="Latin America">Latin America</mat-option>
+              <mat-option value="Middle East & Africa">Middle East &amp; Africa</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="step-actions">
+        <button mat-stroked-button type="button" matStepperPrevious>Back</button>
+        <button mat-flat-button color="primary" class="dialog-save-btn" matStepperNext>Next</button>
+      </div>
+    </mat-step>
+
+    <!-- ── 3 · Brand & Inventory ──────────────────────────────── -->
+    <mat-step label="Brand & Inventory">
+      <div class="step-body">
+        <div class="form-grid">
+          <mat-form-field class="col-6" appearance="outline" subscriptSizing="dynamic">
+            <mat-label>Brand</mat-label>
+            <input matInput formControlName="brand" />
+          </mat-form-field>
+          <mat-form-field class="col-6" appearance="outline" subscriptSizing="dynamic">
+            <mat-label>Chain / Group</mat-label>
+            <input matInput formControlName="chainGroup" />
+          </mat-form-field>
+
+          <div class="col-6 stars-picker">
+            <span class="stars-picker__label">Stars</span>
+            <div class="stars-picker__row">
+              @for (i of starRange; track i) {
+                <button
+                  type="button"
+                  class="star-btn"
+                  [class.star-btn--on]="i <= stars()"
+                  (click)="setStars(i)"
+                  [attr.aria-label]="i + (i === 1 ? ' star' : ' stars')"
+                >
+                  <mat-icon>star</mat-icon>
+                </button>
+              }
+            </div>
+            <span class="stars-picker__text">{{ starLabel() }}-star</span>
+          </div>
+
+          <mat-form-field class="col-6" appearance="outline" subscriptSizing="dynamic">
+            <mat-label>Product price vary</mat-label>
+            <input matInput type="number" formControlName="priceVary" />
+            <span matSuffix>%</span>
+          </mat-form-field>
+
+          <mat-form-field class="col-3" appearance="outline" subscriptSizing="dynamic">
+            <mat-label>Rooms</mat-label>
+            <input matInput type="number" formControlName="rooms" />
+          </mat-form-field>
+          <mat-form-field class="col-3" appearance="outline" subscriptSizing="dynamic">
+            <mat-label>Suites</mat-label>
+            <input matInput type="number" formControlName="suites" />
+          </mat-form-field>
+          <mat-form-field class="col-3" appearance="outline" subscriptSizing="dynamic">
+            <mat-label>Total</mat-label>
+            <input matInput [value]="totalRooms()" readonly />
+          </mat-form-field>
+          <mat-form-field class="col-3" appearance="outline" subscriptSizing="dynamic">
+            <mat-label>Date opened</mat-label>
+            <input matInput formControlName="dateOpened" placeholder="MM/DD/YYYY" />
+          </mat-form-field>
+
+          <mat-form-field class="col-12" appearance="outline" subscriptSizing="dynamic">
+            <mat-label>Trip Advisor ranking</mat-label>
+            <input matInput formControlName="tripAdvisorRanking" />
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="step-actions">
+        <button mat-stroked-button type="button" matStepperPrevious>Back</button>
+        <button mat-flat-button color="primary" class="dialog-save-btn" matStepperNext>Next</button>
+      </div>
+    </mat-step>
+
+    <!-- ── 4 · Online ─────────────────────────────────────────── -->
+    <mat-step label="Online">
+      <div class="step-body">
+        <div class="form-grid">
+          <mat-form-field class="col-6" appearance="outline" subscriptSizing="dynamic">
+            <mat-label>Website</mat-label>
+            <input matInput formControlName="website" />
+          </mat-form-field>
+          <mat-form-field class="col-6" appearance="outline" subscriptSizing="dynamic">
+            <mat-label>Phone</mat-label>
+            <input matInput formControlName="phone" />
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="step-actions">
+        <button mat-stroked-button type="button" matStepperPrevious>Back</button>
+        <button mat-flat-button color="primary" class="dialog-save-btn" matStepperNext>Next</button>
+      </div>
+    </mat-step>
+
+    <!-- ── 5 · Media ──────────────────────────────────────────── -->
+    <mat-step label="Media">
+      <div class="step-body">
+        <p class="section-hint">
+          <strong>L1, R1</strong> appear on the landing page · <strong>L2, R2</strong> appear on the
+          detail page
+        </p>
+        <div class="uploads-grid">
+          @for (slot of mediaSlots; track slot.tag) {
+            <label class="upload-tile" [class.upload-tile--loaded]="uploadedFiles()[slot.tag]">
+              <span class="upload-tile__tag">{{ slot.tag }}</span>
+              @if (uploadedFiles()[slot.tag]) {
+                <mat-icon class="upload-tile__icon upload-tile__icon--done">check_circle</mat-icon>
+                <span class="upload-tile__label">{{ uploadedFiles()[slot.tag]!.name }}</span>
+              } @else {
+                <mat-icon class="upload-tile__icon">cloud_upload</mat-icon>
+                <span class="upload-tile__label">{{ slot.label }}</span>
+                <span class="upload-tile__hint">PNG · JPG · 5 MB</span>
+              }
+              <input
+                type="file"
+                accept="image/*"
+                class="upload-tile__input"
+                (change)="onFileSelected($event, slot.tag)"
+              />
+            </label>
+          }
+        </div>
+      </div>
+      <div class="step-actions">
+        <button mat-stroked-button type="button" matStepperPrevious>Back</button>
+        <button mat-flat-button color="primary" class="dialog-save-btn" matStepperNext>Next</button>
+      </div>
+    </mat-step>
+
+    <!-- ── 6 · Traveller Ratings ──────────────────────────────── -->
+    <mat-step label="Traveller Ratings">
+      <div class="step-body">
+        <p class="section-hint">
+          Synced from Trip Advisor · counts and bars stay in sync as you edit.
+        </p>
+        <div class="ratings-layout">
+          <div class="ratings-rows">
+            <div class="rating-row rating-row--excellent">
+              <span class="rating-row__name">Excellent</span>
+              <div class="rating-bar">
+                <div class="rating-bar__fill" [style.width.%]="ratingBars()[0]"></div>
+              </div>
+              <mat-form-field appearance="outline" subscriptSizing="dynamic" class="rating-input">
+                <input matInput type="number" min="0" formControlName="excellent" />
+              </mat-form-field>
+            </div>
+
+            <div class="rating-row rating-row--very-good">
+              <span class="rating-row__name">Very Good</span>
+              <div class="rating-bar">
+                <div class="rating-bar__fill" [style.width.%]="ratingBars()[1]"></div>
+              </div>
+              <mat-form-field appearance="outline" subscriptSizing="dynamic" class="rating-input">
+                <input matInput type="number" min="0" formControlName="veryGood" />
+              </mat-form-field>
+            </div>
+
+            <div class="rating-row rating-row--average">
+              <span class="rating-row__name">Average</span>
+              <div class="rating-bar">
+                <div class="rating-bar__fill" [style.width.%]="ratingBars()[2]"></div>
+              </div>
+              <mat-form-field appearance="outline" subscriptSizing="dynamic" class="rating-input">
+                <input matInput type="number" min="0" formControlName="average" />
+              </mat-form-field>
+            </div>
+
+            <div class="rating-row rating-row--poor">
+              <span class="rating-row__name">Poor</span>
+              <div class="rating-bar">
+                <div class="rating-bar__fill" [style.width.%]="ratingBars()[3]"></div>
+              </div>
+              <mat-form-field appearance="outline" subscriptSizing="dynamic" class="rating-input">
+                <input matInput type="number" min="0" formControlName="poor" />
+              </mat-form-field>
+            </div>
+
+            <div class="rating-row rating-row--terrible">
+              <span class="rating-row__name">Terrible</span>
+              <div class="rating-bar">
+                <div class="rating-bar__fill" [style.width.%]="ratingBars()[4]"></div>
+              </div>
+              <mat-form-field appearance="outline" subscriptSizing="dynamic" class="rating-input">
+                <input matInput type="number" min="0" formControlName="terrible" />
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="ratings-summary">
+            <div class="ratings-summary__score-row">
+              <span class="ratings-summary__score">{{ avgScore().toFixed(1) }}</span>
+              <span class="ratings-summary__of">/ 5</span>
+            </div>
+            <div class="ratings-summary__stars">
+              @for (i of starRange; track i) {
+                <mat-icon class="summary-star" [class.summary-star--on]="i <= avgStarCount()"
+                  >star</mat-icon
+                >
+              }
+            </div>
+            <div class="ratings-summary__total">
+              <strong>{{ totalReviews().toLocaleString() }}</strong> reviews
+            </div>
+            <div class="ratings-summary__synced">
+              <mat-icon class="synced-icon">sync</mat-icon>
+              Synced 07:04:26
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="step-actions">
+        <button mat-stroked-button type="button" matStepperPrevious>Back</button>
+        <button mat-flat-button color="primary" class="dialog-save-btn" matStepperNext>Next</button>
+      </div>
+    </mat-step>
+
+    <!-- ── 7 · Team Contacts ──────────────────────────────────── -->
+    <mat-step label="Team Contacts">
+      <div class="step-body">
+        <mat-tab-group class="contact-tabs">
+          <mat-tab>
+            <ng-template mat-tab-label>
+              General Manager
+              <span class="contact-pill contact-pill--complete">Complete</span>
+            </ng-template>
+            <div class="contact-panel">
+              <div class="form-grid">
+                <mat-form-field class="col-6" appearance="outline" subscriptSizing="dynamic">
+                  <mat-label>First name</mat-label>
+                  <input matInput formControlName="gmFirstName" />
+                </mat-form-field>
+                <mat-form-field class="col-6" appearance="outline" subscriptSizing="dynamic">
+                  <mat-label>Surname</mat-label>
+                  <input matInput formControlName="gmSurname" />
+                </mat-form-field>
+                <mat-form-field class="col-6" appearance="outline" subscriptSizing="dynamic">
+                  <mat-label>Phone</mat-label>
+                  <input matInput formControlName="gmPhone" />
+                </mat-form-field>
+                <mat-form-field class="col-6" appearance="outline" subscriptSizing="dynamic">
+                  <mat-label>Email</mat-label>
+                  <input matInput formControlName="gmEmail" />
+                </mat-form-field>
+                <mat-form-field class="col-12" appearance="outline" subscriptSizing="dynamic">
+                  <mat-label>LinkedIn</mat-label>
+                  <input matInput formControlName="gmLinkedIn" />
+                </mat-form-field>
+              </div>
+            </div>
+          </mat-tab>
+
+          <mat-tab>
+            <ng-template mat-tab-label>
+              Financial Controller
+              <span class="contact-pill contact-pill--incomplete">Incomplete</span>
+            </ng-template>
+            <div class="contact-panel">
+              <div class="form-grid">
+                <mat-form-field class="col-6" appearance="outline" subscriptSizing="dynamic">
+                  <mat-label>First name</mat-label>
+                  <input matInput formControlName="fcFirstName" />
+                </mat-form-field>
+                <mat-form-field class="col-6" appearance="outline" subscriptSizing="dynamic">
+                  <mat-label>Surname</mat-label>
+                  <input matInput formControlName="fcSurname" />
+                </mat-form-field>
+                <mat-form-field class="col-6" appearance="outline" subscriptSizing="dynamic">
+                  <mat-label>Phone</mat-label>
+                  <input matInput formControlName="fcPhone" />
+                </mat-form-field>
+                <mat-form-field class="col-6" appearance="outline" subscriptSizing="dynamic">
+                  <mat-label>Email</mat-label>
+                  <input matInput formControlName="fcEmail" />
+                </mat-form-field>
+                <mat-form-field class="col-12" appearance="outline" subscriptSizing="dynamic">
+                  <mat-label>LinkedIn</mat-label>
+                  <input matInput formControlName="fcLinkedIn" />
+                </mat-form-field>
+              </div>
+            </div>
+          </mat-tab>
+
+          <mat-tab>
+            <ng-template mat-tab-label>
+              Sales Director
+              <span class="contact-pill contact-pill--empty">Empty</span>
+            </ng-template>
+            <div class="contact-panel contact-panel--empty">
+              <mat-icon class="empty-icon">person_off</mat-icon>
+              <p class="empty-text">No Sales Director on record.</p>
+              <button mat-stroked-button type="button">Add contact</button>
+            </div>
+          </mat-tab>
+
+          <mat-tab>
+            <ng-template mat-tab-label>
+              Operations
+              <span class="contact-pill contact-pill--empty">Empty</span>
+            </ng-template>
+            <div class="contact-panel contact-panel--empty">
+              <mat-icon class="empty-icon">person_off</mat-icon>
+              <p class="empty-text">No Operations contact on record.</p>
+              <button mat-stroked-button type="button">Add contact</button>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+      <div class="step-actions">
+        <button mat-stroked-button type="button" matStepperPrevious>Back</button>
+        <button
+          mat-flat-button
+          color="primary"
+          class="dialog-save-btn"
+          type="button"
+          (click)="onSave()"
+        >
+          <mat-icon>check</mat-icon>
+          Save
+        </button>
+      </div>
+    </mat-step>
+  </mat-stepper>
+</form>

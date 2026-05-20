@@ -1,7 +1,7 @@
 @use '@gbxm/styles/_variables.scss' as *;
 @use '@gbxm/styles/_header-card.scss' as *;
 
-// ─── Primary action buttons — match profile-form style ────────────────────────
+// ─── Primary action buttons ───────────────────────────────────────────────────
 
 .card__header,
 .detail-view__header {
@@ -13,34 +13,6 @@
   }
 }
 
-.pick-lists__filters {
-  padding: $spacing-5 $spacing-5 $spacing-4;
-  display: flex;
-  flex-direction: column;
-  gap: $spacing-4;
-  border-bottom: 1px solid $color-divider;
-}
-
-.filters__row {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: $spacing-4;
-
-  &--type {
-    gap: $spacing-6;
-  }
-}
-
-.filters__campaign-field {
-  flex: 1;
-  min-width: 220px;
-}
-
-.filters__operator-field {
-  width: 240px;
-}
-
 // ─── Property view ────────────────────────────────────────────────────────────
 
 .detail-view {
@@ -48,7 +20,8 @@
     display: flex;
     align-items: center;
     gap: $spacing-3;
-    padding: $spacing-5;
+    padding: $spacing-4;
+    border-bottom: 1px solid $color-divider;
   }
 
   &__title {
@@ -70,37 +43,5 @@
     width: $font-size-lg;
     height: $font-size-lg;
     margin-right: 2px;
-  }
-}
-
-.property-view {
-  &__filters {
-    display: flex;
-    gap: $spacing-4;
-    padding: $spacing-5 $spacing-6 $spacing-1;
-    flex-wrap: wrap;
-  }
-
-  &__filter-field {
-    flex: 1;
-    min-width: 200px;
-  }
-}
-
-@media (max-width: 720px) {
-  .pick-lists__filters {
-    padding: $spacing-4;
-  }
-
-  .filters__campaign-field,
-  .filters__operator-field {
-    width: 100%;
-    min-width: unset;
-    flex: unset;
-  }
-
-  .filters__row--type {
-    flex-direction: column;
-    align-items: flex-start;
   }
 }

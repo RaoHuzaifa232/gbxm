@@ -2,11 +2,9 @@ import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@a
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
-import { MatSelectModule } from '@angular/material/select';
 import { DEFAULT_DIALOG_CONFIG, DIALOG_SIZES } from '@gbxm/core/models/dialog.model';
-import { Campaign, CampaignService } from '@gbxm/core/services/campaign.service';
+import { Campaign, CampaignHotel, CampaignService } from '@gbxm/core/services/campaign.service';
 import {
   GenericTableComponent,
   TableAction,
@@ -16,7 +14,13 @@ import {
   CampaignFilterComponent,
   CampaignFilterValue,
 } from '../campaign-filter/campaign-filter.component';
+import { PropertyDetailsComponent } from '../property-details/property-details.component';
 import { BrowseDialogComponent, BrowseDialogData } from './browse-dialog/browse-dialog.component';
+import {
+  AddPropertyDialogComponent,
+  AddPropertyDialogData,
+  AddPropertyDialogResult,
+} from './add-property-dialog/add-property-dialog.component';
 
 @Component({
   selector: 'app-add-pick-lists',
@@ -24,11 +28,11 @@ import { BrowseDialogComponent, BrowseDialogData } from './browse-dialog/browse-
   imports: [
     MatButtonModule,
     MatDividerModule,
-    MatFormFieldModule,
     MatIconModule,
-    MatSelectModule,
     GenericTableComponent,
     CampaignFilterComponent,
+    PropertyDetailsComponent,
+    AddPropertyDialogComponent,
   ],
   templateUrl: './add-pick-lists.component.html',
   styleUrl: './add-pick-lists.component.scss',
@@ -39,11 +43,11 @@ export class AddPickListsComponent {
   private dialog = inject(MatDialog);
 
   campaigns = this.campaignService.campaigns;
-  viewState = signal<'table' | 'property-view'>('table');
-  selectedCampaignId = signal<string>(this.campaignService.campaigns()[0]?.id ?? '');
+  viewState = signal<'table' | 'property-view' | 'property-details'>('table');
   propertyViewCampaignId = signal<string>('');
+  selectedHotel = signal<CampaignHotel | null>(null);
 
-  private filters = signal<CampaignFilterValue>({
+  filters = signal<CampaignFilterValue>({
     campaignId: '',
     operatorId: 'all',
     typeKey: 'all',
@@ -51,33 +55,38 @@ export class AddPickListsComponent {
     viewNoPickLists: true,
   });
 
-  onFiltersChange(value: CampaignFilterValue): void {
-    if (value.campaignId) {
-      this.selectedCampaignId.set(value.campaignId);
-    }
-    this.filters.set(value);
-  }
-
-  selectedCampaign = computed(
-    () => this.campaigns().find((c) => c.id === this.selectedCampaignId()) ?? null
-  );
+  selectedCampaign = computed(() => {
+    const id = this.filters().campaignId || (this.campaigns()[0]?.id ?? '');
+    return this.campaigns().find((c) => c.id === id) ?? null;
+  });
 
   filteredCampaigns = computed(() => {
     const f = this.filters();
     return this.campaigns().filter((c) => {
+      const campaignMatches = !f.campaignId || c.id === f.campaignId;
       const operatorMatches = f.operatorId === 'all' || c.operatorId === f.operatorId;
       const typeMatches = f.typeKey === 'all' || c.typeKey === f.typeKey;
       const pickListMatches = f.viewNoPickLists || c.pickListDate.trim().length > 0;
-      return operatorMatches && typeMatches && pickListMatches;
+      return campaignMatches && operatorMatches && typeMatches && pickListMatches;
     });
   });
 
   tableData = computed(() => this.filteredCampaigns() as unknown as Record<string, unknown>[]);
 
+  // Hotels added locally via the Add Property dialog, keyed by campaign ID
+  private addedHotels = signal<Record<string, CampaignHotel[]>>({});
+
   propertyViewData = computed(() => {
     const id = this.propertyViewCampaignId();
     if (!id) return [];
-    return this.campaignService.getHotelsForCampaign(id) as unknown as Record<string, unknown>[];
+    const fromService = this.campaignService.getHotelsForCampaign(id);
+    const fromLocal = this.addedHotels()[id] ?? [];
+    return [...fromService, ...fromLocal] as unknown as Record<string, unknown>[];
+  });
+
+  propertyViewCampaign = computed(() => {
+    const id = this.propertyViewCampaignId();
+    return this.campaigns().find((c) => c.id === id) ?? null;
   });
 
   pageSizeOptions = [5, 10, 25, 50];
@@ -113,7 +122,7 @@ export class AddPickListsComponent {
       label: 'View',
       icon: 'visibility',
       tooltip: 'View property',
-      handler: (_row) => {},
+      handler: (row) => this.openPropertyDetails(row as unknown as CampaignHotel),
     },
   ];
 
@@ -126,8 +135,42 @@ export class AddPickListsComponent {
     this.viewState.set('table');
   }
 
-  onPropertyViewCampaignChange(campaignId: string): void {
-    this.propertyViewCampaignId.set(campaignId);
+  openPropertyDetails(hotel: CampaignHotel): void {
+    this.selectedHotel.set(hotel);
+    this.viewState.set('property-details');
+  }
+
+  backToPropertyView(): void {
+    this.selectedHotel.set(null);
+    this.viewState.set('property-view');
+  }
+
+  onAddProperty(): void {
+    const campaign = this.propertyViewCampaign();
+    if (!campaign) return;
+
+    this.dialog
+      .open<AddPropertyDialogComponent, AddPropertyDialogData, AddPropertyDialogResult>(
+        AddPropertyDialogComponent,
+        {
+          ...DIALOG_SIZES.small,
+          ...DEFAULT_DIALOG_CONFIG,
+          data: { campaignName: campaign.name },
+        }
+      )
+      .afterClosed()
+      .subscribe((result) => {
+        if (!result) return;
+        const newHotel: CampaignHotel = {
+          name: result.propertyName,
+          location: '',
+          status: 'Pending',
+        };
+        this.addedHotels.update((map) => ({
+          ...map,
+          [campaign.id]: [...(map[campaign.id] ?? []), newHotel],
+        }));
+      });
   }
 
   onBrowseFile(): void {

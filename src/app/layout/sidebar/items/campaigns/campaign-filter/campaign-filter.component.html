@@ -4,6 +4,7 @@
       <mat-form-field appearance="outline" subscriptSizing="dynamic" class="filter__campaign-field">
         <mat-label>Select Campaign Name</mat-label>
         <mat-select formControlName="campaignId">
+          <mat-option value="">Any</mat-option>
           @for (c of campaigns(); track c.id) {
             <mat-option [value]="c.id">{{ c.name }}</mat-option>
           }
@@ -13,6 +14,7 @@
       <mat-form-field appearance="outline" subscriptSizing="dynamic" class="filter__campaign-field">
         <mat-label>Select Campaign Number</mat-label>
         <mat-select formControlName="campaignId">
+          <mat-option value="">Any</mat-option>
           @for (c of campaigns(); track c.id) {
             <mat-option [value]="c.id">{{ c.id }}</mat-option>
           }
@@ -55,5 +57,15 @@
     @if (showViewNoPickLists()) {
       <mat-checkbox formControlName="viewNoPickLists">View No Pick Lists</mat-checkbox>
     }
+
+    <button
+      mat-button
+      mat-dialog-close
+      type="button"
+      class="dialog-close-btn filter__clear-btn"
+      (click)="clearFilters()"
+    >
+      Clear Filters
+    </button>
   </div>
 </form>

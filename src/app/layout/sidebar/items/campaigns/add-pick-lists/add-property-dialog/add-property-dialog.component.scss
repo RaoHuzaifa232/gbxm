@@ -1,0 +1,32 @@
+@use '@gbxm/styles/_variables.scss' as *;
+
+.add-property-dialog {
+  &__title {
+    font-size: $font-size-xl !important;
+    font-weight: $font-weight-semibold !important;
+    color: $color-text-strong;
+  }
+
+  &__content {
+    padding-top: $spacing-2 !important;
+  }
+
+  &__sub {
+    margin: 0 0 $spacing-4;
+    font-size: $font-size-sm;
+    color: $color-text-muted;
+
+    strong {
+      color: $color-text-primary;
+      font-weight: $font-weight-medium;
+    }
+  }
+
+  &__field {
+    width: 100%;
+  }
+
+  &__actions {
+    gap: $spacing-2;
+  }
+}
